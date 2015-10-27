@@ -11,6 +11,7 @@ public class Main extends JavaPlugin{
 	public void onEnable() {
 	getLogger().info(getName()+"插件已被加载");
 	saveDefaultConfig();
+	Vars.configs = this.getConfig();
 	}
 	
 	//插件停用函数
