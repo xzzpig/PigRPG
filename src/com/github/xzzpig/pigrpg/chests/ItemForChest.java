@@ -5,23 +5,29 @@ import java.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+import org.bukkit.material.MaterialData;
+
+import com.github.xzzpig.BukkitTools.TString;
 
 public class ItemForChest
 {
+	@SuppressWarnings("deprecation")
 	protected static ItemStack playerInform(Player player)
 	{
-		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(14);
+		ItemStack is = new ItemStack(397);
+		MaterialData data = is.getData();
+		data.setData((byte) 3);
+		is.setData(data);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName("玩家信息");
+		im.setDisplayName(TString.Color(3)+ "玩家信息");
 		List<String> lore = new ArrayList<String>();
-		lore.add("昵名:"+player.getDisplayName());
-		lore.add("位置:"+player.getWorld().getName()+","+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ());
-		lore.add("游戏等级:"+((float)player.getLevel()+player.getExp()));
+		lore.add(TString.Color(2)+"昵名:"+player.getDisplayName());
+		lore.add(TString.Color(2)+"位置:"+player.getWorld().getName()+","+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ());
+		lore.add(TString.Color(2)+"游戏等级:"+((float)player.getLevel()+player.getExp()));
 		if(player.isOp())
-			lore.add("OP");
+			lore.add(TString.Color(4)+"OP");
 		if(player.getAllowFlight())
-			lore.add("运行飞行");
+			lore.add(TString.Color(8)+"允许飞行");
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
@@ -32,7 +38,7 @@ public class ItemForChest
 		@SuppressWarnings("deprecation")
 		ItemStack is = new ItemStack(14);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(player);
+		im.setDisplayName(TString.Color(3)+player);
 		List<String> lore = new ArrayList<String>();
 		im.setLore(lore);
 		is.setItemMeta(im);
