@@ -2,3 +2,8 @@ name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
 version: 0.1
 author: Mg_P
+commands:
+  pigrpg:
+    description: 幻猪的RPG插件的命令帮助
+    usage: §6[PigRPG]§2查看幻猪的RPG插件帮助:/pr help
+    aliases: [pr]

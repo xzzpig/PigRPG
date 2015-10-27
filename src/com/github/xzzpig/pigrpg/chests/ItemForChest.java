@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.*;
 import org.bukkit.material.MaterialData;
 
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.friend.Friend;
 
 public class ItemForChest
 {
@@ -33,12 +34,30 @@ public class ItemForChest
 		return is;
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected static ItemStack friendInform(String player)
 	{
-		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(14);
+		ItemStack is = new ItemStack(397);
+		MaterialData data = is.getData();
+		data.setData((byte) 3);
+		is.setData(data);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+player);
+		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+
+	protected static ItemStack AddFriend(String player,String target)
+	{
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(154);
+		ItemMeta im = is.getItemMeta();
+		if(Friend.hasFriend(player, target))
+			im.setDisplayName(TString.Color(3)+"对方已是你的好友");
+		else
+			im.setDisplayName(TString.Color(3)+"添加好友");			
 		List<String> lore = new ArrayList<String>();
 		im.setLore(lore);
 		is.setItemMeta(im);

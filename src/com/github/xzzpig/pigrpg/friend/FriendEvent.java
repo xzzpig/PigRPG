@@ -8,5 +8,6 @@ public class FriendEvent implements Listener
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		Friend.loadFriend(event.getPlayer().getName());
+		event.setJoinMessage(event.getJoinMessage()+"\n你的好友列表已加载");
 	}
 }
