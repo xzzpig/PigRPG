@@ -2,6 +2,8 @@ package com.github.xzzpig.pigrpg.chests;
 
 import java.util.*;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
@@ -12,6 +14,18 @@ import com.github.xzzpig.pigrpg.friend.Friend;
 
 public class ItemForChest
 {
+	@SuppressWarnings("deprecation")
+	protected static ItemStack customItem(String displayname,int type,List<String> lore)
+	{
+		ItemStack is = new ItemStack(type);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3)+ displayname);
+		if(lore != null)
+			im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+	
 	@SuppressWarnings("deprecation")
 	protected static ItemStack playerInform(Player player)
 	{
@@ -44,6 +58,20 @@ public class ItemForChest
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+player);
 		List<String> lore = new ArrayList<String>();
+		OfflinePlayer fplayer = Bukkit.getOfflinePlayer(player);
+		if(fplayer.isBanned())
+			lore.add(TString.Color(4)+"被BAN");
+		if(fplayer.isOnline())
+			lore.add(TString.Color(3)+"状态:在线");
+		else
+			lore.add(TString.Color(8)+"状态:离线");
+		if(fplayer.isOp())
+			lore.add(TString.Color(4)+"OP");
+		if(Bukkit.hasWhitelist())
+			if(fplayer.isWhitelisted())
+				lore.add(TString.Color(3)+"白名单");
+			else
+				lore.add(TString.Color(8)+"未在白名单");
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;

@@ -28,8 +28,8 @@ public class RCChestListener implements Listener
 	{
 		if(event.getInventory().getTitle().contains("的右键菜单"))
 			event.setCancelled(true);
-		if(event.getRawSlot() == 1){
-			if(event.getInventory().getItem(1).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"添加好友"))
+		if(event.getInventory().getItem(event.getRawSlot()) != null){
+			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"添加好友"))
 				Friend.addFriendQue((Player) event.getWhoClicked(), TEntity.toPlayer(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), "")));
 		}
 		((Player) event.getWhoClicked()).sendMessage(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), ""));
