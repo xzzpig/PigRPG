@@ -67,7 +67,7 @@ public class Friend
 				}
 				friendque.remove(friend);
 			}
-		}).start();;
+		}).start();
 	}
 
 	@SuppressWarnings("deprecation")

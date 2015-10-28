@@ -20,7 +20,7 @@ public class FriendCommand {
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("list")){
-			FriendListChest.getInventory((Player) sender);
+			((Player)sender).openInventory(FriendListChest.getInventory((Player) sender));
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("accept")){
