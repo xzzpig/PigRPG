@@ -17,7 +17,7 @@ premission:
     description: PigRPG的管理员权限
     default: op
     children:
-      pigrpg.default.*
+      pigrpg.default.*: true
       pigrpg.command.admin: true
   pigrpg.default.*:
     description: PigRPG的玩家基础权限

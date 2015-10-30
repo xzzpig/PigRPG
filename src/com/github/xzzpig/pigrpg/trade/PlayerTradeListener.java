@@ -1,6 +1,8 @@
 package com.github.xzzpig.pigrpg.trade;
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.inventory.*;
@@ -26,13 +28,14 @@ public class PlayerTradeListener implements Listener
 		Player clicker = (Player) event.getWhoClicked();
 		int type = 0;
 		int item = event.getRawSlot();
+		Debuger.print(item+"");
 		if(clicker == trade.getLauncher()){
-			if(item > 26)
+			if(item > 17&&item < 45)
 				event.setCancelled(true);
 			type = 1;
 		}
 		else if(clicker == trade.getTarget()){
-			if(item < 36&&item>-1)
+			if(item < 25&&item>-1)
 				event.setCancelled(true);
 			type = 2;
 		}
@@ -44,21 +47,21 @@ public class PlayerTradeListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		if(type == 1&&item == 27&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
+		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
 			trade.changeatTradeState(1,true);
-			inv.setItem(27,ItemForChest.customItem(TString.Color(3)+"↑更改交易↑",1,null));
+			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑更改交易↑",1,null));
 		}
-		if(type == 1&&item == 27&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
+		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
 			trade.changeatTradeState(1,false);
-			inv.setItem(27,ItemForChest.customItem(TString.Color(3)+"↑确认交易↑",1,null));
+			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑确认交易↑",1,null));
 		}
-		if(type == 2&&item == 35&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
+		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
 			trade.changeatTradeState(2,true);
-			inv.setItem(35,ItemForChest.customItem(TString.Color(3)+"↓更改交易↓",1,null));
+			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓更改交易↓",1,null));
 		}
-		if(type == 2&&item == 35&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
+		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
 			trade.changeatTradeState(2,false);
-			inv.setItem(35,ItemForChest.customItem(TString.Color(3)+"↓确认交易↓",1,null));
+			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓确认交易↓",1,null));
 		}
 		/*
 		

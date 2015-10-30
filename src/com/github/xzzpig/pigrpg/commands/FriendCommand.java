@@ -60,8 +60,15 @@ public class FriendCommand {
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有删除好友请求");
 				return true;
 			}
+			else if(getarg(args, 2).equalsIgnoreCase("help")){
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del accept -接受好友删除请求");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del deny   -拒绝好友删除请求");
+				return true;
+			}
+			sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr friend del help 获取帮助");
+			return false;
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr friend del help 获取帮助");
+		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr friend help 获取帮助");
 		return false;
 	}
 	

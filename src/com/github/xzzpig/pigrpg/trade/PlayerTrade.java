@@ -86,32 +86,45 @@ public class PlayerTrade
 	
 	public void finishTrade(){
 		int i = 0;
-		for(i = 0;i< 27;i++){
-			player2.getInventory().addItem(inv.getItem(i));
+		for(i = 0;i< 18;i++){
+			ItemStack item = inv.getItem(i);
+			if(item != null)
+				player2.getInventory().addItem(inv.getItem(i));
 		}
-		for(i = 36;i< 45;i++){
-			player1.getInventory().addItem(inv.getItem(i));
+		for(i = 26;i< 45;i++){
+			ItemStack item = inv.getItem(i);
+			if(item != null)
+				player1.getInventory().addItem(inv.getItem(i));
 		}
 		this.stopTrade();
 	}
 	
 	public void returnItems(){
+		if(inv == null)
+			return;
 		int i = 0;
-		for(i = 0;i< 27;i++){
-			player1.getInventory().addItem(inv.getItem(i));
+		for(i = 0;i< 18;i++){
+			ItemStack item = inv.getItem(i);
+			if(item != null)
+				player1.getInventory().addItem(inv.getItem(i));
 		}
-		for(i = 36;i< 45;i++){
-			player2.getInventory().addItem(inv.getItem(i));
+		for(i = 26;i< 45;i++){
+			ItemStack item = inv.getItem(i);
+			if(item != null)
+				player2.getInventory().addItem(inv.getItem(i));
 		}
 		player1.sendMessage(TString.Prefix("PigRPG",3)+"交易终止,返还物品");
 		player2.sendMessage(TString.Prefix("PigRPG",3)+"交易终止,返还物品");
+		this.stopTrade();
 	}
 	
 	public void changeatTradeState(int playerid,boolean state){
-		if(playerid == 1)
+		if(playerid == 1){
 			this.state1 = state;
-		else if(playerid == 2)
+		}
+		else if(playerid == 2){
 			this.state2 = state;
+		}
 		if(state1&&state2){
 			this.finishTrade();
 		}

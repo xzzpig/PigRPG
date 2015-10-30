@@ -19,6 +19,8 @@ public class FriendEvent implements Listener
 	{
 		if(event.getInventory().getTitle().contains("好友列表"))
 			event.setCancelled(true);
+		else
+			return;
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			String friend = event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().replaceAll(TString.Color(3),"");
 			Player player = (Player) event.getWhoClicked();
