@@ -108,14 +108,14 @@ public class PlayerTrade
 			if(item != null)
 				player1.getInventory().addItem(inv.getItem(i));
 		}
-		for(i = 26;i< 45;i++){
+		for(i = 27;i< 45;i++){
 			ItemStack item = inv.getItem(i);
 			if(item != null)
 				player2.getInventory().addItem(inv.getItem(i));
 		}
 		player1.sendMessage(TString.Prefix("PigRPG",3)+"交易终止,返还物品");
 		player2.sendMessage(TString.Prefix("PigRPG",3)+"交易终止,返还物品");
-		this.stopTrade();
+		inv.clear();
 	}
 	
 	public void changeatTradeState(int playerid,boolean state){

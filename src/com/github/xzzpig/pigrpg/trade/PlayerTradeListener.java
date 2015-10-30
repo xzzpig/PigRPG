@@ -1,5 +1,6 @@
 package com.github.xzzpig.pigrpg.trade;
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.*;
 
 import org.bukkit.entity.*;
@@ -49,20 +50,26 @@ public class PlayerTradeListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
+		Debuger.print(type+"|"+item+"|"+inv.getItem(item).getItemMeta().getDisplayName());
 		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
 			trade.changeatTradeState(1,true);
+			inv.clear(18);
 			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑更改交易↑",1,null));
 		}
 		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
 			trade.changeatTradeState(1,false);
+			inv.clear(18);
+
 			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑确认交易↑",1,null));
 		}
 		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
 			trade.changeatTradeState(2,true);
+			inv.clear(26);
 			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓更改交易↓",1,null));
 		}
 		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
 			trade.changeatTradeState(2,false);
+			inv.clear(26);
 			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓确认交易↓",1,null));
 		}
 		/*
