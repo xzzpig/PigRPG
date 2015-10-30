@@ -1,6 +1,5 @@
 package com.github.xzzpig.pigrpg.trade;
 import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.*;
 
 import org.bukkit.entity.*;
@@ -15,6 +14,10 @@ public class PlayerTradeListener implements Listener
 	{
 		if(!event.getInventory().getTitle().contains("玩家交易界面"))
 			return;
+		if(!event.getClick().isLeftClick()){
+			event.setCancelled(true);
+			return;
+		}
 		Inventory inv = event.getInventory();
 		PlayerTrade trade = PlayerTrade.getTrade(inv);
 		if(trade == null){
@@ -28,14 +31,13 @@ public class PlayerTradeListener implements Listener
 		Player clicker = (Player) event.getWhoClicked();
 		int type = 0;
 		int item = event.getRawSlot();
-		Debuger.print(item+"");
 		if(clicker == trade.getLauncher()){
 			if(item > 17&&item < 45)
 				event.setCancelled(true);
 			type = 1;
 		}
 		else if(clicker == trade.getTarget()){
-			if(item < 25&&item>-1)
+			if(item < 27&&item>-1)
 				event.setCancelled(true);
 			type = 2;
 		}
