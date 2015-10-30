@@ -30,6 +30,8 @@ public class FriendEvent implements Listener
 	{
 		if(event.getInventory().getTitle().contains("的好友菜单"))
 			event.setCancelled(true);
+		else
+			return;
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"删除好友"))
 				Friend.delFriendQue((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));

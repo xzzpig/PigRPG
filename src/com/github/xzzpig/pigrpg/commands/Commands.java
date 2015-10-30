@@ -11,6 +11,7 @@ public class Commands {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
 			if(getarg(args, 0).equalsIgnoreCase("help")){
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend -获取 好友系统 的帮助");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade  -获取 交易系统 的帮助");
 				return true;
 			}
 			if(getarg(args, 0).equalsIgnoreCase("friend")){
@@ -21,6 +22,15 @@ public class Commands {
 					return true;
 				}
 					
+			}
+			if(getarg(args, 0).equalsIgnoreCase("trade")){
+				if(sender instanceof Player)
+					return  PlayerTradeCommand.command(sender, cmd, label, args);
+				else{
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
+					return true;
+				}
+
 			}
 		}
 		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr help 获取帮助");

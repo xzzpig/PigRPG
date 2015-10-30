@@ -15,7 +15,7 @@ import com.github.xzzpig.pigrpg.friend.Friend;
 public class ItemForChest
 {
 	@SuppressWarnings("deprecation")
-	protected static ItemStack customItem(String displayname,int type,List<String> lore)
+	public static ItemStack customItem(String displayname,int type,List<String> lore)
 	{
 		ItemStack is = new ItemStack(type);
 		ItemMeta im = is.getItemMeta();
@@ -86,6 +86,17 @@ public class ItemForChest
 			im.setDisplayName(TString.Color(3)+"对方已是你的好友");
 		else
 			im.setDisplayName(TString.Color(3)+"添加好友");			
+		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+	protected static ItemStack tradeQue()
+	{
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(1);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3)+"申请交易");
 		List<String> lore = new ArrayList<String>();
 		im.setLore(lore);
 		is.setItemMeta(im);

@@ -8,7 +8,6 @@ import org.bukkit.inventory.*;
 
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.friend.Friend;
-import com.github.xzzpig.pigrpg.*;
 
 public class FriendListChest
 {

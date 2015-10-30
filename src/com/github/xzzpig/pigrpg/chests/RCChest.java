@@ -12,6 +12,7 @@ public class RCChest
 		Inventory inv =Bukkit.createInventory(null, 9,TString.Color(5)+ player.getName()+"的右键菜单");
 		inv.addItem(ItemForChest.playerInform(player));
 		inv.addItem(ItemForChest.AddFriend(opener.getName(), player.getName()));
+		inv.addItem(ItemForChest.tradeQue());
 		return inv;
 	}
 	

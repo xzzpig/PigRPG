@@ -7,3 +7,38 @@ commands:
     description: 幻猪的RPG插件的命令帮助
     usage: §6[PigRPG]§2查看幻猪的RPG插件帮助:/pr help
     aliases: [pr]
+premission: 
+  pigrpg.*:
+    description: PigRPG的所有权限
+    default: op
+    children:
+      pigrpg.admin.*: true
+  pigrpg.admin.*:
+    description: PigRPG的管理员权限
+    default: op
+    children:
+      pigrpg.default.*
+      pigrpg.command.admin: true
+  pigrpg.default.*:
+    description: PigRPG的玩家基础权限
+    default: op
+    children:
+      pigrpg.command.default: true
+  pigrpg.command.*:
+    description: PigRPG的所有命令权限
+    default: op
+    children:
+      pigrpg.command.admin: true
+  pigrpg.command.admin:
+    description: PigRPG的管理员命令权限
+    default: op
+    children:
+      pigrpg.command.default: true
+  pigrpg.command.default:
+    description: PigRPG的所有权限
+    default: op
+    children:
+      pigrpg.command.friend.default: true
+  pigrpg.command.friend.default:
+    description: friend命令的基础权限权限(list,accept,deny,del)
+    default: op
