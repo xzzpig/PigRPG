@@ -1,10 +1,15 @@
 package com.github.xzzpig.pigrpg.friend;
 import com.github.xzzpig.BukkitTools.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
+
 import com.github.xzzpig.pigrpg.chests.*;
+import com.github.xzzpig.pigrpg.*;
+
+import org.bukkit.*;
 
 public class FriendEvent implements Listener
 {
@@ -27,6 +32,7 @@ public class FriendEvent implements Listener
 			player.openInventory(FriendListChest.getFriendSubInventory(friend));
 		}
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onSubInvClick(InventoryClickEvent event)
 	{
@@ -37,6 +43,9 @@ public class FriendEvent implements Listener
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"删除好友"))
 				Friend.delFriendQue((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));
+			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"私聊"))
+				User.getUser((Player)event.getWhoClicked()).setSelfChat(User.getUser(Bukkit.getPlayer(event.getInventory().getTitle().replaceAll("的好友菜单", ""))));
+				//((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));
 		}
 	}
 }

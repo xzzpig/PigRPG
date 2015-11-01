@@ -27,6 +27,7 @@ public class FriendListChest
 		Inventory inv =Bukkit.createInventory(null,9 ,TString.Color(5)+ friend+"的好友菜单");
 		inv.addItem(ItemForChest.friendInform(friend));
 		if(Bukkit.getOfflinePlayer(friend).isOnline()){
+			inv.addItem(ItemForChest.customItem("私聊", 1, null));
 			inv.addItem(ItemForChest.customItem("删除好友", 1, null));
 		}
 		return inv;

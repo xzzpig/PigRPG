@@ -1,15 +1,15 @@
 package com.github.xzzpig.pigrpg.trade;
 
-import com.github.xzzpig.BukkitTools.*;
+import java.util.HashMap;
 
-import java.util.*;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-import org.bukkit.entity.*;
-import org.bukkit.inventory.*;
-
-import com.github.xzzpig.pigrpg.chests.*;
-
-import org.bukkit.*;
+import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.chests.PlayerTradeChest;
 
 public class PlayerTrade
 {
@@ -128,5 +128,10 @@ public class PlayerTrade
 		if(state1&&state2){
 			this.finishTrade();
 		}
+	}
+	@SuppressWarnings("deprecation")
+	public void freshInv(){
+		player1.updateInventory();
+		player2.updateInventory();
 	}
 }

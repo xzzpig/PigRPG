@@ -36,9 +36,7 @@ public class RCChestListener implements Listener
 				Friend.addFriendQue((Player) event.getWhoClicked(), TEntity.toPlayer(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), "")));
 			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"申请交易"))
 				new PlayerTrade((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), ""));
-			
+			event.getWhoClicked().closeInventory();
 			}
-		//((Player) event.getWhoClicked()).sendMessage(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), ""));
-			
 	}
 }

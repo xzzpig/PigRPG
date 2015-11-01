@@ -12,9 +12,10 @@ public class Commands {
 			if(getarg(args, 0).equalsIgnoreCase("help")){
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend -获取 好友系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade  -获取 交易系统 的帮助");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat   -获取 聊天系统 的帮助");
 				return true;
 			}
-			if(getarg(args, 0).equalsIgnoreCase("friend")){
+			else if(getarg(args, 0).equalsIgnoreCase("friend")){
 				if(sender instanceof Player)
 					return FriendCommand.command(sender, cmd, label, args);
 				else{
@@ -23,9 +24,17 @@ public class Commands {
 				}
 					
 			}
-			if(getarg(args, 0).equalsIgnoreCase("trade")){
+			else if(getarg(args, 0).equalsIgnoreCase("trade")){
 				if(sender instanceof Player)
 					return  PlayerTradeCommand.command(sender, cmd, label, args);
+				else{
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
+					return true;
+				}
+			}
+			else if(getarg(args, 0).equalsIgnoreCase("chat")){
+				if(sender instanceof Player)
+					return  ChatCommand.command(sender, cmd, label, args);
 				else{
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
 					return true;
