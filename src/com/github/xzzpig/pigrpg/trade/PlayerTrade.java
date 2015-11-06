@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.PlayerTradeChest;
 
 public class PlayerTrade
@@ -128,6 +129,9 @@ public class PlayerTrade
 		if(state1&&state2){
 			this.finishTrade();
 		}
+		Debuger.print("交易状态:"+player1.getName()+state1);
+		Debuger.print("交易状态:"+player2.getName()+state2);
+		this.freshInv();
 	}
 	@SuppressWarnings("deprecation")
 	public void freshInv(){

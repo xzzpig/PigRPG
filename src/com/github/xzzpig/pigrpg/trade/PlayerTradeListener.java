@@ -3,15 +3,17 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.ItemForChest;
 
 public class PlayerTradeListener implements Listener
-{
+{	
 	@EventHandler
 	public void onPutItem(InventoryClickEvent event)
 	{
@@ -31,6 +33,7 @@ public class PlayerTradeListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
+		Debuger.print("here");
 		Player clicker = (Player) event.getWhoClicked();
 		int type = 0;
 		int item = event.getRawSlot();
@@ -52,27 +55,28 @@ public class PlayerTradeListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
+		if(!event.getAction().equals(InventoryAction.PICKUP_ALL))
+			return;
 		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
+			inv.clear(18);
+			inv.setItem(19,ItemForChest.customItem(TString.Color(3)+"↑更改交易↑",76,null));
 			trade.changeatTradeState(1,true);
-			inv.clear(18);
-			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑更改交易↑",76,null));
 		}
-		if(type == 1&&item == 18&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
-			trade.changeatTradeState(1,false);
-			inv.clear(18);
+		if(type == 1&&item == 19&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
+			inv.clear(19);
 			inv.setItem(18,ItemForChest.customItem(TString.Color(3)+"↑确认交易↑",50,null));
+			trade.changeatTradeState(1,false);
 		}
 		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("确认交易")){
+			inv.clear(26);
+			inv.setItem(25,ItemForChest.customItem(TString.Color(3)+"↓更改交易↓",76,null));
 			trade.changeatTradeState(2,true);
-			inv.clear(26);
-			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓更改交易↓",76,null));
 		}
-		if(type == 2&&item == 26&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
-			trade.changeatTradeState(2,false);
-			inv.clear(26);
+		if(type == 2&&item == 25&&inv.getItem(item).getItemMeta().getDisplayName().contains("更改交易")){
+			inv.clear(25);
 			inv.setItem(26,ItemForChest.customItem(TString.Color(3)+"↓确认交易↓",50,null));
+			trade.changeatTradeState(2,false);
 		}
-		trade.freshInv();
 	}
 	
 	@EventHandler
@@ -81,15 +85,15 @@ public class PlayerTradeListener implements Listener
 		if(!event.getInventory().getTitle().contains("玩家交易界面"))
 			return;
 		Inventory inv = event.getInventory();
-		final PlayerTrade trade = PlayerTrade.getTrade(inv);
+		PlayerTrade trade = PlayerTrade.getTrade(inv);
 		if(trade == null)
 			return;
 		new Thread(new Runnable(){
-				@Override
-				public void run()
-				{
-					trade.returnItems();
-				}
-			}).start();
+			@Override
+			public void run()
+			{
+				trade.returnItems();
+			}
+		}).start();
 	}
 }

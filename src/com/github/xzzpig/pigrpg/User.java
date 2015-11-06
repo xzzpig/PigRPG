@@ -93,6 +93,7 @@ public class User
 	}
 	
 	public void setSelfChat(User target){
+		Debuger.print("setSelfChat");
 		this.setChatchannel(ChatChannel.Self);
 		this.chatTarget = target;
 		target.willChat = this;

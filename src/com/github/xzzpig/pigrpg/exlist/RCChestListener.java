@@ -6,6 +6,7 @@ import org.bukkit.entity.*;
 
 import com.github.xzzpig.BukkitTools.TEntity;
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.*;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.trade.*;
@@ -31,6 +32,7 @@ public class RCChestListener implements Listener
 			event.setCancelled(true);
 		else
 			return;
+		Debuger.print("箱子:右键菜单");
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"添加好友"))
 				Friend.addFriendQue((Player) event.getWhoClicked(), TEntity.toPlayer(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), "")));

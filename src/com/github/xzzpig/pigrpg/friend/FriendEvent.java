@@ -26,6 +26,7 @@ public class FriendEvent implements Listener
 			event.setCancelled(true);
 		else
 			return;
+		Debuger.print("箱子:好友列表");
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			String friend = event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().replaceAll(TString.Color(3),"");
 			Player player = (Player) event.getWhoClicked();
@@ -40,12 +41,12 @@ public class FriendEvent implements Listener
 			event.setCancelled(true);
 		else
 			return;
+		Debuger.print("箱子:好友菜单");
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"删除好友"))
 				Friend.delFriendQue((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));
 			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"私聊"))
 				User.getUser((Player)event.getWhoClicked()).setSelfChat(User.getUser(Bukkit.getPlayer(event.getInventory().getTitle().replaceAll("的好友菜单", ""))));
-				//((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));
 		}
 	}
 }

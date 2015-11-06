@@ -31,17 +31,18 @@ public class ChatListener implements Listener{
 			event.setCancelled(true);
 		else
 			return;
-		if(event.getInventory().getItem(event.getRawSlot()) != null){
-			ItemStack is = event.getInventory().getItem(event.getRawSlot());
-			String cn = is.getItemMeta().getDisplayName().replaceAll(TString.Color(3), "");
-			ChatChannel c = ChatChannel.getFromName(cn);
-			if(is.getTypeId() == 50)
-				User.getUser((Player)event.getWhoClicked()).addAcceptChatChannel(c);
-			if(is.getTypeId() == 76)
-				User.getUser((Player)event.getWhoClicked()).delAcceptChatChannel(c);
-			event.getWhoClicked().closeInventory();
-			event.getWhoClicked().openInventory(ChatChannelChest.getAcceptInventory(User.getUser((Player) event.getWhoClicked())));
-		}
+		try{
+			if(event.getInventory().getItem(event.getRawSlot()) != null){
+				ItemStack is = event.getInventory().getItem(event.getRawSlot());
+				String cn = is.getItemMeta().getDisplayName().replaceAll(TString.Color(3), "");
+				ChatChannel c = ChatChannel.getFromName(cn);
+				if(is.getTypeId() == 50)
+					User.getUser((Player)event.getWhoClicked()).addAcceptChatChannel(c);
+				if(is.getTypeId() == 76)
+					User.getUser((Player)event.getWhoClicked()).delAcceptChatChannel(c);
+				event.getWhoClicked().closeInventory();
+				event.getWhoClicked().openInventory(ChatChannelChest.getAcceptInventory(User.getUser((Player) event.getWhoClicked())));
+			}}catch(Exception e){}
 	}
 	
 	@EventHandler
