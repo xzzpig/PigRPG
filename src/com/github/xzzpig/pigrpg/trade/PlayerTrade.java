@@ -3,13 +3,12 @@ package com.github.xzzpig.pigrpg.trade;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.PlayerTradeChest;
 
 public class PlayerTrade
@@ -79,10 +78,8 @@ public class PlayerTrade
 		if(inv == null)
 			return;
 		inv.clear();
-		for(HumanEntity player:inv.getViewers()){
-			((Player)player).sendMessage(TString.Prefix("PigRPG",4)+"交易结束");
-			player.closeInventory();
-		}
+		player1.closeInventory();
+		player2.closeInventory();		
 	}
 	
 	public void finishTrade(){
@@ -129,13 +126,62 @@ public class PlayerTrade
 		if(state1&&state2){
 			this.finishTrade();
 		}
-		Debuger.print("交易状态:"+player1.getName()+state1);
-		Debuger.print("交易状态:"+player2.getName()+state2);
 		this.freshInv();
 	}
 	@SuppressWarnings("deprecation")
 	public void freshInv(){
 		player1.updateInventory();
 		player2.updateInventory();
+	}
+	
+	public void addItem(int playerid,InventoryClickEvent event) throws Exception {
+		ItemStack item = event.getCurrentItem();
+		if(event.getRawSlot()>=0&&event.getRawSlot()<45)
+			return;
+		int i = 0;
+		if(playerid == 1){
+			for(i = 0;i<18;i++){
+				if(this.inv.getItem(i) == null){
+					this.inv.setItem(i, item);
+					player1.getInventory().clear(event.getSlot());
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
+		else if(playerid == 2){
+			for(i = 27;i<45;i++){
+				if(this.inv.getItem(i) == null){
+					this.inv.setItem(i, item);
+					player2.getInventory().clear(event.getSlot());
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
+		this.freshInv();
+	}
+	public void delItem(int playerid,InventoryClickEvent event) throws Exception {
+		ItemStack item = event.getCurrentItem();
+		if(event.getRawSlot()>=45&&event.getRawSlot()<81)
+			return;
+		if(playerid == 1){
+			if(event.getRawSlot()>=18)
+				return;
+			player1.getInventory().addItem(item);
+			inv.clear(event.getRawSlot());
+			event.setCancelled(true);
+			return;
+		}
+		else if(playerid == 2){
+			if(event.getRawSlot()<=26)
+				return;
+			player2.getInventory().addItem(item);
+			inv.clear(event.getRawSlot());
+			event.setCancelled(true);
+			return;
+
+		}
+		this.freshInv();
 	}
 }

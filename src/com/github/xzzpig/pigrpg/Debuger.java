@@ -8,11 +8,12 @@ public class Debuger
 	@SuppressWarnings("deprecation")
 	public static void print(String s)
 	{
-		if(!isdebug)
-			return;
-		System.out.println(s);
-		for(Player p:Bukkit.getOnlinePlayers())
+		if(isdebug == false)return;
+		System.out.println("\n****************\n"+s+"\n****************");
+		for(Player p: Bukkit.getServer().getOnlinePlayers())
+		{
 			if(p.isOp())
-				System.out.println(s);
+				p.sendMessage(s);
+		}
 	}
 }

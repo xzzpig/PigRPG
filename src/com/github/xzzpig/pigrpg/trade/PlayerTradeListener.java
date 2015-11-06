@@ -9,20 +9,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.chests.ItemForChest;
 
 public class PlayerTradeListener implements Listener
 {	
 	@EventHandler
-	public void onPutItem(InventoryClickEvent event)
+	public void onChangeTradeState(InventoryClickEvent event)
 	{
 		if(!event.getInventory().getTitle().contains("玩家交易界面"))
 			return;
-		if(!event.getClick().isLeftClick()){
-			event.setCancelled(true);
-			return;
-		}
 		Inventory inv = event.getInventory();
 		PlayerTrade trade = PlayerTrade.getTrade(inv);
 		if(trade == null){
@@ -33,20 +28,14 @@ public class PlayerTradeListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		Debuger.print("here");
+		event.setCancelled(true);
 		Player clicker = (Player) event.getWhoClicked();
 		int type = 0;
 		int item = event.getRawSlot();
-		if(clicker == trade.getLauncher()){
-			if(item > 17&&item < 45)
-				event.setCancelled(true);
+		if(clicker == trade.getLauncher())
 			type = 1;
-		}
-		else if(clicker == trade.getTarget()){
-			if(item < 27&&item>-1)
-				event.setCancelled(true);
+		else if(clicker == trade.getTarget())
 			type = 2;
-		}
 		if(type == 0){
 			for(HumanEntity player:inv.getViewers()){
 				((Player)player).sendMessage(TString.Prefix("PigRPG",4)+"未知交易错误");
@@ -95,5 +84,43 @@ public class PlayerTradeListener implements Listener
 				trade.returnItems();
 			}
 		}).start();
+	}
+	@EventHandler
+	public void onClickItem(InventoryClickEvent event)
+	{
+		Inventory inv = event.getInventory();
+		Player clicker = (Player) event.getWhoClicked();
+		if(!event.getInventory().getTitle().contains("玩家交易界面"))
+			return;
+		if(!event.isLeftClick())
+			return;
+		PlayerTrade trade = PlayerTrade.getTrade(clicker);
+		if(trade == null){
+			for(HumanEntity player:inv.getViewers()){
+				((Player)player).sendMessage(TString.Prefix("PigRPG",4)+"未知交易错误");
+				player.closeInventory();
+			}
+			event.setCancelled(true);
+			return;
+		}
+		int type = 0;
+		if(clicker == trade.getLauncher())
+			type = 1;
+		else if(clicker == trade.getTarget())
+			type = 2;
+		if(type == 0){
+			for(HumanEntity player:inv.getViewers()){
+				((Player)player).sendMessage(TString.Prefix("PigRPG",4)+"未知交易错误");
+				player.closeInventory();
+			}
+			event.setCancelled(true);
+			return;
+		}
+		try {
+			trade.addItem(type, event);
+		} catch (Exception e) {}
+		try {
+			trade.delItem(type, event);
+		} catch (Exception e) {}
 	}
 }
