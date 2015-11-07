@@ -12,6 +12,10 @@ import com.github.xzzpig.pigrpg.friend.Friend;
 public class FriendCommand {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
+		if(!sender.hasPermission("pigrpg.command.friend.default")){
+			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+			return true;
+		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend list   -打开好友列表");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del    -处理好友删除请求");

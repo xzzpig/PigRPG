@@ -1,9 +1,13 @@
 package com.github.xzzpig.pigrpg;
 
 import org.bukkit.entity.*;
+
 import java.util.*;
+
 import com.github.xzzpig.pigrpg.chat.*;
+
 import org.bukkit.*;
+
 import com.github.xzzpig.pigrpg.friend.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.teleport.*;
@@ -136,6 +140,11 @@ public class User
 	}
 	
 	public void teleport(Warp warp){
+		if(!(player.hasPermission("pigrpg.teleport.warp.*")||player.hasPermission("pigrpg.teleport.warp."+warp.getName()))){
+			player.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限传送Warp"+warp.getName());
+			return;
+		}
+		
 		this.getPlayer().teleport(warp.getLocation());
 		this.sendPluginMessage("&2以将你传送到&3"+warp.getName());
 	}

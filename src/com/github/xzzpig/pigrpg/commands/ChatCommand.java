@@ -2,14 +2,20 @@ package com.github.xzzpig.pigrpg.commands;
 
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.chests.*;
+
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
+
 import com.github.xzzpig.pigrpg.*;
 
 public class ChatCommand
 {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
+		if(!sender.hasPermission("pigrpg.command.chat.default")){
+			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+			return true;
+		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat setaccept -打开设置接受聊天频道列表");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat change    -打开选择聊天频道列表");
