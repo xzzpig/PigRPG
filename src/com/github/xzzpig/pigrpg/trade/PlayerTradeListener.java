@@ -74,7 +74,7 @@ public class PlayerTradeListener implements Listener
 		if(!event.getInventory().getTitle().contains("玩家交易界面"))
 			return;
 		Inventory inv = event.getInventory();
-		PlayerTrade trade = PlayerTrade.getTrade(inv);
+		final PlayerTrade trade = PlayerTrade.getTrade(inv);
 		if(trade == null)
 			return;
 		new Thread(new Runnable(){

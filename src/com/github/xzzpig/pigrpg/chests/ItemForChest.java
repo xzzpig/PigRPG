@@ -1,16 +1,18 @@
 package com.github.xzzpig.pigrpg.chests;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.friend.Friend;
+import com.github.xzzpig.pigrpg.teleport.Warp;
 
 public class ItemForChest
 {
@@ -94,10 +96,22 @@ public class ItemForChest
 	protected static ItemStack tradeQue()
 	{
 		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(1);
+		ItemStack is = new ItemStack(175);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+"申请交易");
 		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+	protected static ItemStack warpInfo(Warp warp)
+	{
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(368);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3)+warp.getName());
+		List<String> lore = new ArrayList<String>();
+		lore.add(TString.Color(7)+"所在世界:"+warp.getLocation().getWorld().getName());
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;

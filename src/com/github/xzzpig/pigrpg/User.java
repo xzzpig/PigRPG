@@ -6,6 +6,7 @@ import com.github.xzzpig.pigrpg.chat.*;
 import org.bukkit.*;
 import com.github.xzzpig.pigrpg.friend.*;
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.teleport.*;
 
 public class User
 {
@@ -132,5 +133,10 @@ public class User
 	
 	public void sendPluginMessage(String message){
 		this.player.sendMessage(TString.Prefix("PigRPG",3)+message.replaceAll("&","§"));
+	}
+	
+	public void teleport(Warp warp){
+		this.getPlayer().teleport(warp.getLocation());
+		this.sendPluginMessage("&2以将你传送到&3"+warp.getName());
 	}
 }
