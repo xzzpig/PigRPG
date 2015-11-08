@@ -25,7 +25,11 @@ public class Main extends JavaPlugin{
 		Vars.configs = this.getConfig();
 		Vars.hasEco = setupEconomy();
 		Vars.hasEss = setupEss();
-		Warp.loadAll();
+		try {
+			Warp.loadAll();
+		} catch (Exception e) {
+			getLogger().info(" Warp读取失败,原因可能是暂无 Warp");
+		}
 		getServer().getPluginManager().registerEvents(new RCChestListener(), this);
 		getServer().getPluginManager().registerEvents(new FriendEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerTradeListener(), this);

@@ -2,12 +2,9 @@ package com.github.xzzpig.pigrpg.teleport;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ess3.api.InvalidWorldException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import com.earth2me.essentials.commands.WarpNotFoundException;
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.Vars;
@@ -45,20 +42,18 @@ public class Warp
 		new Warp(name,new Location(Bukkit.getWorld(world),xzy.get(0),xzy.get(1),xzy.get(2)));
 		TString.Print(TString.Prefix("PigRPG",3)+"warp "+ name + "("+world +"," + xzy.get(0)+","+xzy.get(1)+"," + xzy.get(2) + ")	已加载");
 	}
-	public static void loadAll(){
+	public static void loadAll() throws Exception{
+		if(Vars.ess != null){
+			for(String iwarp: Vars.ess.getWarps().getList()){
+				new Warp(iwarp, Vars.ess.getWarps().getWarp(iwarp));
+				TString.Print(TString.Prefix("PigRPG",3)+"Ess warp "+ iwarp + "	已加载");
+			}
+		}
 		for(String name:TConfig.getConfigPath("PigRPG","warp.yml","warp")){
 			load(name);
 		}
-		if(Vars.ess != null){
-			for(String iwarp: Vars.ess.getWarps().getList()){
-				try {
-					new Warp(iwarp, Vars.ess.getWarps().getWarp(iwarp));
-					TString.Print(TString.Prefix("PigRPG",3)+"Ess warp "+ iwarp + "	已加载");
-				} catch (WarpNotFoundException | InvalidWorldException e) {}
-			}
-		}
 	}
-
+	
 	public Location getLocation(){
 		return this.loc;
 	}
