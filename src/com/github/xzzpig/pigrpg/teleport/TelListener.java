@@ -10,6 +10,7 @@ import com.github.xzzpig.pigrpg.User;
 
 public class TelListener implements Listener
 {
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onWarpInvClick(InventoryClickEvent event)
 	{
@@ -17,8 +18,8 @@ public class TelListener implements Listener
 			event.setCancelled(true);
 		else
 			return;
-		if(event.getInventory().getItem(event.getRawSlot()) != null){
-			String swarp = event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().replaceAll(TString.Color(3),"");
+		if(event.getCurrentItem().getTypeId() != 0){
+			String swarp = event.getCurrentItem().getItemMeta().getDisplayName().replaceAll(TString.Color(3),"");
 			Player player = (Player) event.getWhoClicked();
 			Warp warp = Warp.getWarp(swarp);
 			if(warp == Warp.Null)

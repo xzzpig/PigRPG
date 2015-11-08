@@ -146,6 +146,6 @@ public class User
 		}
 		
 		this.getPlayer().teleport(warp.getLocation());
-		this.sendPluginMessage("&2以将你传送到&3"+warp.getName());
+		this.sendPluginMessage("&2已将你传送到&3"+warp.getName());
 	}
 }

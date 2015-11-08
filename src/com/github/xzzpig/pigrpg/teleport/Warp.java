@@ -1,9 +1,16 @@
 package com.github.xzzpig.pigrpg.teleport;
-import org.bukkit.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
+import net.ess3.api.InvalidWorldException;
 
-import com.github.xzzpig.BukkitTools.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+
+import com.earth2me.essentials.commands.WarpNotFoundException;
+import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.Vars;
 
 public class Warp
 {
@@ -41,6 +48,14 @@ public class Warp
 	public static void loadAll(){
 		for(String name:TConfig.getConfigPath("PigRPG","warp.yml","warp")){
 			load(name);
+		}
+		if(Vars.ess != null){
+			for(String iwarp: Vars.ess.getWarps().getList()){
+				try {
+					new Warp(iwarp, Vars.ess.getWarps().getWarp(iwarp));
+					TString.Print(TString.Prefix("PigRPG",3)+"Ess warp "+ iwarp + "	已加载");
+				} catch (WarpNotFoundException | InvalidWorldException e) {}
+			}
 		}
 	}
 

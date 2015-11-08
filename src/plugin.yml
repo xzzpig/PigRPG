@@ -2,6 +2,7 @@ name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
 version: 0.1
 author: Mg_P
+softdepend: [Essentials] 
 commands:
   pigrpg:
     description: 幻猪的RPG插件的命令帮助

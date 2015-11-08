@@ -1,15 +1,21 @@
 package com.github.xzzpig.pigrpg;
 
-import com.github.xzzpig.pigrpg.chat.*;
-import com.github.xzzpig.pigrpg.commands.*;
-import com.github.xzzpig.pigrpg.exlist.*;
-import com.github.xzzpig.pigrpg.friend.*;
-import com.github.xzzpig.pigrpg.teleport.*;
-import com.github.xzzpig.pigrpg.trade.*;
-import net.milkbowl.vault.economy.*;
-import org.bukkit.command.*;
-import org.bukkit.plugin.*;
-import org.bukkit.plugin.java.*;
+import net.milkbowl.vault.economy.Economy;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.earth2me.essentials.Essentials;
+import com.github.xzzpig.pigrpg.chat.ChatListener;
+import com.github.xzzpig.pigrpg.commands.Commands;
+import com.github.xzzpig.pigrpg.exlist.RCChestListener;
+import com.github.xzzpig.pigrpg.friend.FriendEvent;
+import com.github.xzzpig.pigrpg.teleport.TelListener;
+import com.github.xzzpig.pigrpg.teleport.Warp;
+import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -17,8 +23,9 @@ public class Main extends JavaPlugin{
 		getLogger().info(getName()+"插件已被加载");
 		saveDefaultConfig();
 		Vars.configs = this.getConfig();
-		Warp.loadAll();
 		Vars.hasEco = setupEconomy();
+		Vars.hasEss = setupEss();
+		Warp.loadAll();
 		getServer().getPluginManager().registerEvents(new RCChestListener(), this);
 		getServer().getPluginManager().registerEvents(new FriendEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerTradeListener(), this);
@@ -45,5 +52,12 @@ public class Main extends JavaPlugin{
         }
 
         return (Vars.economy != null);
+    }
+	private boolean setupEss()
+    {
+		if(Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials")){
+			Vars.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+		}
+        return (Vars.ess != null);
     }
 }
