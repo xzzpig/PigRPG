@@ -86,7 +86,7 @@ public class User
 		return Friend.hasFriend(player.getName(),friend);
 	}
 	
-	public Chat getChatInfo(){
+	public Chat getChatManager(){
 		return this.chat;
 	}
 	
@@ -124,11 +124,16 @@ public class User
 	
 	public void sendChatMessage(User fromuser){
 		for(String ban:Vars.banWords){
-			if(fromuser.getChatInfo().getJustSay().contains(ban)){
+			if(fromuser.getChatManager().getJustSay().contains(ban)){
 				if(fromuser == this)
 					fromuser.sendPluginMessage("&4你的话语中含敏感词汇"+ban);
 				return;
 			}
+		}
+		if(fromuser.getChatManager().ismute()){
+			if(this == fromuser)
+				fromuser.sendPluginMessage("&4你已被禁言");
+			return;
 		}
 		if(!this.isAcceptChatChannel(fromuser.getChatchannel()))
 			return;

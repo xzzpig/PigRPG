@@ -76,8 +76,11 @@
 				-pr chat self      进入私聊频道
 		聊天限制
 			屏蔽关键字
-*			玩家禁言
-*			全体禁言
+				相关命令:pr chat mute ban [关键字]
+			玩家禁言
+				相关命令:pr chat mute [玩家] <true|false>
+			全体禁言
+				相关命令:pr chat muteall <true|false>
 *	组队系统
 *	阵营系统
 *	悬赏系统

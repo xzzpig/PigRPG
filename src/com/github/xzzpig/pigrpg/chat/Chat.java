@@ -3,10 +3,21 @@ import com.github.xzzpig.pigrpg.*;
 
 public class Chat
 {
+	static boolean muteall = false;
+	
 	User user;
+	boolean mute = false;
 	
 	public Chat(User user){
 		this.user = user;
+	}
+	
+	public static void setMuteAll(boolean b){
+		muteall = b;
+	}
+	
+	public static boolean isMuteAll(){
+		return muteall;
 	}
 	
 	public boolean isAcceptChatChannel(ChatChannel c){
@@ -18,6 +29,21 @@ public class Chat
 	}
 	public void delAcceptChatChannel(ChatChannel c){
 		user.delAcceptChatChannel(c);
+	}
+	
+	public void mute(){
+		this.mute = true;
+		this.setChatchannel(ChatChannel.Disable);
+	}
+	public void mute(boolean b){
+		this.mute = b;
+		if(b)
+			this.setChatchannel(ChatChannel.Disable);
+		else
+			this.setChatchannel(ChatChannel.All);
+	}
+	public boolean ismute(){
+		return (this.mute||muteall);
 	}
 	
 	public void setChatchannel(ChatChannel chatchannel)
@@ -48,4 +74,5 @@ public class Chat
 	public void sendChatMessage(User fromuser){
 		user.sendChatMessage(fromuser);
 	}
+	
 } 
