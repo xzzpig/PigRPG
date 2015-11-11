@@ -21,6 +21,7 @@ public class User
 	private ChatChannel chatchannel;
 	private List<ChatChannel> acceptchannel;
 	private String justsay = "";
+	private Chat chat;
 	
 	public User(Player player){
 		this.player = player;
@@ -30,6 +31,7 @@ public class User
 		this.acceptchannel = ChatChannel.DefList();
 		this.chatTarget = this;
 		this.willChat = this;
+		this.chat = new Chat(this);
 	}
 	
 	public static User getUser(Player player){
@@ -82,6 +84,10 @@ public class User
 	
 	public boolean hasFriend(String friend){
 		return Friend.hasFriend(player.getName(),friend);
+	}
+	
+	public Chat getChatInfo(){
+		return this.chat;
 	}
 	
 	public void setJustSay(String justsay)
