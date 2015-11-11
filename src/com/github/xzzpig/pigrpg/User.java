@@ -123,14 +123,23 @@ public class User
 	}
 	
 	public void sendChatMessage(User fromuser){
+		for(String ban:Vars.banWords){
+			if(fromuser.getChatInfo().getJustSay().contains(ban)){
+				if(fromuser == this)
+					fromuser.sendPluginMessage("&4你的话语中含敏感词汇"+ban);
+				return;
+			}
+		}
 		if(!this.isAcceptChatChannel(fromuser.getChatchannel()))
 			return;
-		if(fromuser.getChatchannel() == ChatChannel.World&&fromuser.getPlayer().getWorld() != this.getPlayer().getWorld())
-			return;
-		if(fromuser.getChatchannel() == ChatChannel.Friend&&(!fromuser.hasFriend(player.getName()))&&fromuser != this)
-			return;
-		if(fromuser.getChatchannel() == ChatChannel.Self&&fromuser.chatTarget != this&&fromuser != this)
-			return;
+		if(fromuser != this){
+			if(fromuser.getChatchannel() == ChatChannel.World&&fromuser.getPlayer().getWorld() != this.getPlayer().getWorld())
+				return;
+			if(fromuser.getChatchannel() == ChatChannel.Friend&&(!fromuser.hasFriend(player.getName())))
+				return;
+			if(fromuser.getChatchannel() == ChatChannel.Self&&fromuser.chatTarget != this)
+				return;
+		}
 		String prefix = ChatColor.GREEN +"[" + fromuser.getChatchannel().getName();
 		if(fromuser.getChatchannel() != ChatChannel.World)
 			prefix = prefix+"_" + fromuser.getPlayer().getWorld().getName();

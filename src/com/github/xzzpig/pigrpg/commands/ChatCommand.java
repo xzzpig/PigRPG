@@ -34,6 +34,17 @@ public class ChatCommand
 			User.getUser((Player)sender).setSelfChat();
 			return true;
 		}
+		else if(getarg(args, 1).equalsIgnoreCase("ban")){
+			String ban = getarg(args,2);
+			if(ban.equalsIgnoreCase("")){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"禁止内容不可为空");
+				return true;
+			}
+			Vars.banWords.add(ban);
+			Voids.saveBanWords();
+			sender.sendMessage(TString.Prefix("PigRPG",2)+"已屏蔽关键字"+ban);
+			return true;
+		}
 		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr chat help 获取帮助");
 		return true;
 	}

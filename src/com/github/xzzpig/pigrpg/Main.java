@@ -22,6 +22,7 @@ public class Main extends JavaPlugin{
 		saveDefaultConfig();
 		Vars.configs = this.getConfig();
 		Vars.hasEss = setupEss();
+		Voids.loadBanWords();
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {
