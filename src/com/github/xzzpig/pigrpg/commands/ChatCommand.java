@@ -16,6 +16,7 @@ public class ChatCommand
 {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
+
 		if(!sender.hasPermission("pigrpg.command.chat.default")){
 			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
 			return true;
