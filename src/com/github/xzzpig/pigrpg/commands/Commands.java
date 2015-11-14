@@ -18,6 +18,7 @@ public class Commands {
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade  -获取 交易系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat   -获取 聊天系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel    -获取 传送系统 的帮助");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale   -获取 拍卖系统 的帮助");
 				return true;
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("friend")){
@@ -49,6 +50,15 @@ public class Commands {
 			else if(getarg(args, 0).equalsIgnoreCase("tel")){
 				if(sender instanceof Player)
 					return TeleportCommand.command(sender, cmd, label, args);
+				else{
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
+					return true;
+				}
+
+			}
+			else if(getarg(args, 0).equalsIgnoreCase("sale")){
+				if(sender instanceof Player)
+					return SaleCommand.command(sender, cmd, label, args);
 				else{
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
 					return true;
