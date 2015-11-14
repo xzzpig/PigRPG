@@ -22,6 +22,7 @@ public class User
 	private List<ChatChannel> acceptchannel;
 	private String justsay = "";
 	private Chat chat;
+	private TData data = new TData();
 	
 	public User(Player player){
 		this.player = player;
@@ -88,6 +89,10 @@ public class User
 	
 	public Chat getChatManager(){
 		return this.chat;
+	}
+	
+	public TData getDatas(){
+		return this.data;
 	}
 	
 	public void setJustSay(String justsay)

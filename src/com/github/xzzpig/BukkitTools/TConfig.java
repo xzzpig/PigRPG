@@ -22,6 +22,13 @@ public class TConfig {
 		config = YamlConfiguration.loadConfiguration(file);
 		return config;
 	}
+	public static void delConfigFile(String pl,String filename){
+		File file;
+		file = new File(Bukkit.getPluginManager().getPlugin(pl).getDataFolder().toString() + "/"+filename);
+		if (!file.exists())
+			return;
+		file.delete();
+	}
 	
 	public static Object getConfig(FileConfiguration configfile,String arg0){
 		return configfile.get(arg0);
