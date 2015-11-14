@@ -7,7 +7,9 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 
 import com.github.xzzpig.pigrpg.*;
+
 import org.bukkit.*;
+
 import com.github.xzzpig.pigrpg.chat.*;
 
 public class ChatCommand
@@ -57,6 +59,7 @@ public class ChatCommand
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"玩家不可为空");
 				return true;
 			}
+			@SuppressWarnings("deprecation")
 			User user = User.getUser(Bukkit.getPlayer(splayer));
 			
 			if(sboolean.equalsIgnoreCase("")){
@@ -79,7 +82,7 @@ public class ChatCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("muteall")){
-			String sboolean = getarg(args,3);
+			String sboolean = getarg(args,2);
 
 			if(sboolean.equalsIgnoreCase(""))
 				Chat.setMuteAll(true);
