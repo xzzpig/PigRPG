@@ -1,11 +1,8 @@
 package com.github.xzzpig.pigrpg;
 
-import net.milkbowl.vault.economy.Economy;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.earth2me.essentials.Essentials;
@@ -23,8 +20,8 @@ public class Main extends JavaPlugin{
 		getLogger().info(getName()+"插件已被加载");
 		saveDefaultConfig();
 		Vars.configs = this.getConfig();
-		Vars.hasEco = setupEconomy();
 		Vars.hasEss = setupEss();
+		Voids.loadBanWords();
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {
@@ -47,16 +44,6 @@ public class Main extends JavaPlugin{
 	public boolean onCommand(CommandSender sender,Command cmd,String label,String[] args)  {
 		return Commands.command(sender, cmd, label, args);
 	}
-	
-	private boolean setupEconomy()
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            Vars.economy = economyProvider.getProvider();
-        }
-
-        return (Vars.economy != null);
-    }
 	private boolean setupEss()
     {
 		if(Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials")){

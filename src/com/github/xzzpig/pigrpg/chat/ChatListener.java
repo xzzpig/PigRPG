@@ -52,11 +52,17 @@ public class ChatListener implements Listener{
 			event.setCancelled(true);
 		else
 			return;
+		User user = User.getUser((Player)event.getWhoClicked());
+		if(user.getChatManager().ismute()){
+			user.sendPluginMessage("&4你已被禁言，无法切换频道");
+			user.getPlayer().closeInventory();
+			return;
+		}
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
 			ItemStack is = event.getInventory().getItem(event.getRawSlot());
 			String cn = is.getItemMeta().getDisplayName().replaceAll(TString.Color(3), "");
 			ChatChannel c = ChatChannel.getFromName(cn);
-			User.getUser((Player)event.getWhoClicked()).setChatchannel(c);
+			user.setChatchannel(c);
 			event.getWhoClicked().closeInventory();
 			event.getWhoClicked().openInventory(ChatChannelChest.getChooseInventory((User.getUser((Player) event.getWhoClicked()))));
 		}

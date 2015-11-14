@@ -21,6 +21,7 @@ public class User
 	private ChatChannel chatchannel;
 	private List<ChatChannel> acceptchannel;
 	private String justsay = "";
+	private Chat chat;
 	
 	public User(Player player){
 		this.player = player;
@@ -30,6 +31,7 @@ public class User
 		this.acceptchannel = ChatChannel.DefList();
 		this.chatTarget = this;
 		this.willChat = this;
+		this.chat = new Chat(this);
 	}
 	
 	public static User getUser(Player player){
@@ -84,6 +86,10 @@ public class User
 		return Friend.hasFriend(player.getName(),friend);
 	}
 	
+	public Chat getChatManager(){
+		return this.chat;
+	}
+	
 	public void setJustSay(String justsay)
 	{
 		this.justsay = justsay;
@@ -117,14 +123,28 @@ public class User
 	}
 	
 	public void sendChatMessage(User fromuser){
+		for(String ban:Vars.banWords){
+			if(fromuser.getChatManager().getJustSay().contains(ban)){
+				if(fromuser == this)
+					fromuser.sendPluginMessage("&4你的话语中含敏感词汇"+ban);
+				return;
+			}
+		}
+		if(fromuser.getChatManager().ismute()){
+			if(this == fromuser)
+				fromuser.sendPluginMessage("&4你已被禁言");
+			return;
+		}
 		if(!this.isAcceptChatChannel(fromuser.getChatchannel()))
 			return;
-		if(fromuser.getChatchannel() == ChatChannel.World&&fromuser.getPlayer().getWorld() != this.getPlayer().getWorld())
-			return;
-		if(fromuser.getChatchannel() == ChatChannel.Friend&&(!fromuser.hasFriend(player.getName()))&&fromuser != this)
-			return;
-		if(fromuser.getChatchannel() == ChatChannel.Self&&fromuser.chatTarget != this&&fromuser != this)
-			return;
+		if(fromuser != this){
+			if(fromuser.getChatchannel() == ChatChannel.World&&fromuser.getPlayer().getWorld() != this.getPlayer().getWorld())
+				return;
+			if(fromuser.getChatchannel() == ChatChannel.Friend&&(!fromuser.hasFriend(player.getName())))
+				return;
+			if(fromuser.getChatchannel() == ChatChannel.Self&&fromuser.chatTarget != this)
+				return;
+		}
 		String prefix = ChatColor.GREEN +"[" + fromuser.getChatchannel().getName();
 		if(fromuser.getChatchannel() != ChatChannel.World)
 			prefix = prefix+"_" + fromuser.getPlayer().getWorld().getName();

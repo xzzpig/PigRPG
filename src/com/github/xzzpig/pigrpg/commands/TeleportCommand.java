@@ -27,7 +27,8 @@ public class TeleportCommand
 			}
 			new Warp(getarg(args,2),player.getLocation()).save();
 		}
-		return false;
+		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr tel help 获取帮助");
+		return true;
 	}
 
 	public static String getarg(String[] args,int num)
