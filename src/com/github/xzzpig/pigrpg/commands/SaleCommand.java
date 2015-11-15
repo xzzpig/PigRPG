@@ -9,6 +9,7 @@ import org.bukkit.inventory.*;
 import java.util.*;
 import org.bukkit.inventory.meta.*;
 import com.github.xzzpig.pigrpg.sale.*;
+import org.bukkit.*;
 
 public class SaleCommand
 {
@@ -30,6 +31,7 @@ public class SaleCommand
 		else if(getarg(args, 1).equalsIgnoreCase("sell")){
 			ItemStack item = player.getItemInHand();
 			int price,n;
+			boolean max = false;
 			TArgsSolver sargs = new TArgsSolver(args);
 			try
 			{
@@ -47,6 +49,11 @@ public class SaleCommand
 			catch (NumberFormatException e)
 			{
 				n = item.getAmount();
+				max = true;
+			}
+			if(n>item.getAmount()){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:你没有这么多物品");
+				return true;
 			}
 			ItemMeta im = item.getItemMeta();
 			List<String> lore = im.getLore();
@@ -54,8 +61,17 @@ public class SaleCommand
 				lore = new ArrayList<String>();
 			lore.add("-价格:"+price);
 			im.setLore(lore);
-			item.setItemMeta(im);
-			Sale.addItem(item);
+			ItemStack sellitem = item.clone();
+			sellitem.setItemMeta(im);
+			sellitem.setAmount(n);
+			Sale.addItem(sellitem);
+			if(max)
+				player.setItemInHand(null);
+			else{
+				item.setAmount(item.getAmount()-n);
+				player.setItemInHand(item);
+			}
+			sender.sendMessage(TString.Prefix("PigRPG",3)+"拍卖成功");
 			return true;
 		}
 		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr tel help 获取帮助");

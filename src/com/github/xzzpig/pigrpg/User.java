@@ -23,6 +23,7 @@ public class User
 	private String justsay = "";
 	private Chat chat;
 	private TData data = new TData();
+	private Eco eco;
 	
 	public User(Player player){
 		this.player = player;
@@ -33,6 +34,7 @@ public class User
 		this.chatTarget = this;
 		this.willChat = this;
 		this.chat = new Chat(this);
+		this.eco = new Eco(this);
 	}
 	
 	public static User getUser(Player player){
@@ -41,7 +43,7 @@ public class User
 		return userlist.get(player);
 	}
 	
-	public void autoRemove(){
+	private void autoRemove(){
 		new Thread(new Runnable(){
 				@Override
 				public void run()
@@ -93,6 +95,10 @@ public class User
 	
 	public TData getDatas(){
 		return this.data;
+	}
+	
+	public Eco getEcoAPI(){
+		return this.eco;
 	}
 	
 	public void setJustSay(String justsay)

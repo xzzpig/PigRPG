@@ -5,6 +5,8 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.chests.*;
+import com.github.xzzpig.pigrpg.*;
+import org.bukkit.entity.*;
 
 public class SaleListener implements Listener
 {	
@@ -35,5 +37,38 @@ public class SaleListener implements Listener
 				event.getWhoClicked().openInventory(SaleChest.getInventory(page+1));
 				break;
 		}
+	}
+	
+	@EventHandler
+	public void onBuyClick(InventoryClickEvent event){
+		if(!event.getInventory().getTitle().contains("拍卖行"))
+			return;
+		event.setCancelled(true);
+		if(!event.isLeftClick())
+			return;
+		User user = User.getUser((Player)event.getWhoClicked());
+		Inventory inv = event.getInventory();
+		int page = 1;
+		int price = 1;
+		try
+		{
+			page = Integer.valueOf(TString.sub(inv.getName(), "(第", "页)"));
+			price = Integer.valueOf(new TArgsSolver(event.getCurrentItem().getItemMeta().getLore().toArray(new String[0])).get("价格"));
+		}
+		catch (NumberFormatException e)
+		{
+			event.getWhoClicked().closeInventory();
+			user.sendPluginMessage("&4页数或价格错误");
+			return;
+		}
+		if(!user.getEcoAPI().takeMoney(price)){
+			user.sendPluginMessage("&4你没有足够的钱");
+			return;
+		}
+		user.getPlayer().getInventory().addItem(event.getCurrentItem());
+		Sale.removeItem(event.getCurrentItem());
+		user.getPlayer().openInventory(SaleChest.getInventory(page));
+		user.getPlayer().updateInventory();
+		user.sendPluginMessage("&3已购买了物品");
 	}
 }

@@ -38,4 +38,8 @@ public class Sale
 		items.add(item);
 		saveItems();
 	}
+	public static void removeItem(ItemStack item){
+		items.remove(item);
+		saveItems();
+	}
 }
