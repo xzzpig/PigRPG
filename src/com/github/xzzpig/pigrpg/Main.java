@@ -34,6 +34,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PlayerTradeListener(), this);
 		getServer().getPluginManager().registerEvents(new ChatListener(), this);
 		getServer().getPluginManager().registerEvents(new TelListener(), this);
+		getServer().getPluginManager().registerEvents(new SaleListener(), this);
 	}
 	
 	//插件停用函数
