@@ -60,6 +60,7 @@ public class SaleCommand
 			if(lore == null)
 				lore = new ArrayList<String>();
 			lore.add("-价格:"+price);
+			lore.add("-卖家:"+player.getName());
 			im.setLore(lore);
 			ItemStack sellitem = item.clone();
 			sellitem.setItemMeta(im);

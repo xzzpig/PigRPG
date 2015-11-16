@@ -7,6 +7,7 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.chests.*;
 import com.github.xzzpig.pigrpg.*;
 import org.bukkit.entity.*;
+import org.bukkit.*;
 
 public class SaleListener implements Listener
 {	
@@ -50,6 +51,7 @@ public class SaleListener implements Listener
 		Inventory inv = event.getInventory();
 		int page = 1;
 		int price = 1;
+		String seller = new TArgsSolver(event.getCurrentItem().getItemMeta().getLore().toArray(new String[0])).get("卖家");
 		try
 		{
 			page = Integer.valueOf(TString.sub(inv.getName(), "(第", "页)"));
@@ -61,7 +63,7 @@ public class SaleListener implements Listener
 			user.sendPluginMessage("&4页数或价格错误");
 			return;
 		}
-		if(!user.getEcoAPI().takeMoney(price)){
+		if(!user.getEcoAPI().pay(seller,(double)price)){
 			user.sendPluginMessage("&4你没有足够的钱");
 			return;
 		}

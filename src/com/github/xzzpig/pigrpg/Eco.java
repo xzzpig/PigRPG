@@ -1,5 +1,4 @@
 package com.github.xzzpig.pigrpg;
-import com.earth2me.essentials.*;
 import java.math.*;
 
 public class Eco
@@ -18,6 +17,18 @@ public class Eco
 	
 	public boolean hasMoney(double momey){
 		return momey <= this.getMoney();
+	}
+	
+	public boolean pay(String player,double money){
+		try
+		{
+			euser.payUser(Vars.ess.getUser(player),BigDecimal.valueOf(money));
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+		return true;
 	}
 	
 	public void setMoney(double money){
