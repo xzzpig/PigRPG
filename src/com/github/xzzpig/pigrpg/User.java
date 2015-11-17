@@ -187,7 +187,7 @@ public class User
 	}
 	
 	public void teleport(Warp warp){
-		if(!(player.hasPermission("pigrpg.teleport.warp.*")||player.hasPermission("pigrpg.teleport.warp."+warp.getName()))){
+		if(!(User.getUser(player).hasPremission(Premissions.pigrpg_teleport_warp_)||player.hasPermission("pigrpg.teleport.warp."+warp.getName()))){
 			player.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限传送Warp"+warp.getName());
 			return;
 		}

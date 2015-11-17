@@ -1,17 +1,16 @@
 package com.github.xzzpig.pigrpg.commands;
 
 import com.github.xzzpig.BukkitTools.*;
-
+import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.trade.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
-
-import com.github.xzzpig.pigrpg.trade.*;
 
 public class PlayerTradeCommand
 {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		if(!sender.hasPermission("pigrpg.trade.default")){
+		if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_trade_default)){
 			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
 			return true;
 		}

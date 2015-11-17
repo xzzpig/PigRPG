@@ -10,9 +10,6 @@ import com.github.xzzpig.pigrpg.Debuger;
 public class Commands {
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
-			Debuger.prints(sender.hasPermission("pigrpg.default.*")+"");
-			Debuger.prints(sender.hasPermission("pigrpg.command.default")+"");
-			Debuger.prints(sender.hasPermission("pigrpg.command.chat.default")+"");
 			if(getarg(args, 0).equalsIgnoreCase("help")){
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend -获取 好友系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade  -获取 交易系统 的帮助");

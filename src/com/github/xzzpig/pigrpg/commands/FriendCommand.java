@@ -8,11 +8,12 @@ import com.github.xzzpig.BukkitTools.TEntity;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.chests.FriendListChest;
 import com.github.xzzpig.pigrpg.friend.Friend;
+import com.github.xzzpig.pigrpg.*;
 
 public class FriendCommand {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		if(!sender.hasPermission("pigrpg.command.friend.default")){
+		if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_friend_default)){
 			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
 			return true;
 		}
