@@ -114,6 +114,22 @@ public class User
 		return this.player;
 	}
 	
+	public boolean hasPremission(String prmission){
+		if(player.hasPermission(prmission))
+			return true;
+		TPremission pre = TPremission.valueOf(prmission);
+		if(pre == null)
+			return false;
+		for(TPremission p:pre.getAllParents()){
+			if(player.hasPermission(p.getName()))
+				return true;
+		}
+		return false;
+	}
+	public boolean hasPremission(TPremission prmission){
+		return this.hasPremission(prmission.getName());
+	}
+	
 	public void setSelfChat(User target){
 		this.setChatchannel(ChatChannel.Self);
 		this.chatTarget = target;
