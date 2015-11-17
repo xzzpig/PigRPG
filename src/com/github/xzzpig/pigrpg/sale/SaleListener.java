@@ -69,13 +69,15 @@ public class SaleListener implements Listener
 			user.sendPluginMessage("&4你没有足够的钱");
 			return;
 		}
-		user.getPlayer().getInventory().addItem(event.getCurrentItem());
 		ItemStack is = event.getCurrentItem();
 		ItemMeta im = is.getItemMeta();
 		List<String> lore = im.getLore();
 		lore.remove(lore.size()-1);
 		lore.remove(lore.size()-1);
+		im.setLore(lore);
+		is.setItemMeta(im);
 		Sale.removeItem(event.getCurrentItem());
+		user.getPlayer().getInventory().addItem(event.getCurrentItem());
 		user.getPlayer().openInventory(SaleChest.getInventory(page));
 		user.getPlayer().updateInventory();
 		user.sendPluginMessage("&3已购买了物品");
