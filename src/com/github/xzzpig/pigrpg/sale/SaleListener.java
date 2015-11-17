@@ -8,6 +8,8 @@ import com.github.xzzpig.pigrpg.chests.*;
 import com.github.xzzpig.pigrpg.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
+import org.bukkit.inventory.meta.*;
+import java.util.*;
 
 public class SaleListener implements Listener
 {	
@@ -68,6 +70,11 @@ public class SaleListener implements Listener
 			return;
 		}
 		user.getPlayer().getInventory().addItem(event.getCurrentItem());
+		ItemStack is = event.getCurrentItem();
+		ItemMeta im = is.getItemMeta();
+		List<String> lore = im.getLore();
+		lore.remove(lore.size()-1);
+		lore.remove(lore.size()-1);
 		Sale.removeItem(event.getCurrentItem());
 		user.getPlayer().openInventory(SaleChest.getInventory(page));
 		user.getPlayer().updateInventory();
