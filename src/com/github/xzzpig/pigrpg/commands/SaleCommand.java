@@ -75,7 +75,7 @@ public class SaleCommand
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"拍卖成功");
 			return true;
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr tel help 获取帮助");
+		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr sale help 获取帮助");
 		return true;
 	}
 
