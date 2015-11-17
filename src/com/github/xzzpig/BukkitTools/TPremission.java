@@ -8,13 +8,14 @@ public class TPremission
 	private static List<TPremission> checked = new ArrayList<TPremission>();
 	
 	private String name;
-	private TPremission[] children;
+	private List<TPremission> children = new ArrayList<TPremission>();
 	
 	public TPremission(String name,TPremission[] children){
 		if(!prelist.contains(this))
 			prelist.add(this);
 		this.name = name;
-		this.children = children;
+		if(children != null)
+			this.children = new ArrayList<TPremission>(Arrays.asList(children));
 	}
 	
 	public static TPremission[] getAllPremissions()
@@ -30,6 +31,18 @@ public class TPremission
 		return null;
 	}
 	
+	public TPremission addChild(TPremission child){
+		if(this.children.contains(child))
+			return this;
+		children.add(child);
+		return this;
+	}
+	public TPremission delChild(TPremission child){
+		if(this.children.contains(child))
+			return this;
+		children.remove(child);
+		return this;
+	}
 	public List<TPremission> getAllChildren(){
 		if(this.children == null)
 			return null;
@@ -65,7 +78,7 @@ public class TPremission
 		return childlist;
 	}
 	public TPremission[] getChildren(){
-		return children;
+		return children.toArray(new TPremission[0]);
 	}
 	public boolean hasChild(TPremission premission){
 		List<TPremission> childlist = this.getAllChildren();
