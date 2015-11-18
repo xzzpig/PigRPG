@@ -19,7 +19,7 @@ public class SaleCommand
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale list -打开拍卖行");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale sell <?> -出售手上物品到拍卖行");
-			sender.sendMessage("<？>列表(可多个，空格隔开):");
+			sender.sendMessage("<？>列表(可多个，空格隔开,以-开头):");
 			sender.sendMessage("    -p:[整数_价格](默认1)");
 			sender.sendMessage("    -n:[整数_数量](默认 全部)");
 			return true;
