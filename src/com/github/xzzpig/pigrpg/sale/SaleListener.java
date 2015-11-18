@@ -65,6 +65,11 @@ public class SaleListener implements Listener
 			user.sendPluginMessage("&4页数或价格错误");
 			return;
 		}
+		if(user.getPlayer().getInventory().firstEmpty() == -1){
+			user.sendPluginMessage("&4你背包没有足够空间");
+			user.getPlayer().closeInventory();
+			return;
+		}
 		if(!user.getEcoAPI().pay(seller,(double)price)){
 			user.sendPluginMessage("&4你没有足够的钱");
 			return;
