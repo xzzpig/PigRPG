@@ -24,6 +24,7 @@ public class User
 	private Chat chat;
 	private TData data = new TData();
 	private Eco eco;
+	private State state;
 	
 	public User(Player player){
 		this.player = player;
@@ -35,6 +36,7 @@ public class User
 		this.willChat = this;
 		this.chat = new Chat(this);
 		this.eco = new Eco(this);
+		this.state = new State(player);
 	}
 	
 	public static User getUser(Player player){
@@ -128,6 +130,11 @@ public class User
 	}
 	public boolean hasPremission(TPremission prmission){
 		return this.hasPremission(prmission.getName());
+	}
+	
+	public State getState()
+	{
+		return state;
 	}
 	
 	public void setSelfChat(User target){
