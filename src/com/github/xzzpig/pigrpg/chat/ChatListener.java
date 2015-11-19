@@ -16,6 +16,8 @@ public class ChatListener implements Listener{
 	@EventHandler
 	public void onPlayerChat(PlayerChatEvent event){
 		event.setCancelled(true);
+		if(event.getMessage().startsWith("@"))
+			atsolve(event);
 		User user = User.getUser(event.getPlayer());
 		user.setJustSay(event.getMessage());
 		for(Player p:Bukkit.getOnlinePlayers()){
@@ -65,6 +67,16 @@ public class ChatListener implements Listener{
 			user.setChatchannel(c);
 			event.getWhoClicked().closeInventory();
 			event.getWhoClicked().openInventory(ChatChannelChest.getChooseInventory((User.getUser((Player) event.getWhoClicked()))));
+		}
+	}
+	private void atsolve(PlayerChatEvent event){
+		User user = User.getUser(event.getPlayer());
+		String[] messages = event.getMessage().replaceAll("@","").split(" ");
+		if(messages[0].equalsIgnoreCase("?")){
+			user.sendPluginMessage("&3@[玩家] -发起与该玩家的私聊");
+		}
+		else{
+			user.setSelfChat(User.getUser(Bukkit.getPlayer(messages[0])));
 		}
 	}
 }

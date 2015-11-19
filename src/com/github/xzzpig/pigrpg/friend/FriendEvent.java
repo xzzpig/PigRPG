@@ -44,7 +44,7 @@ public class FriendEvent implements Listener
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"删除好友"))
 				Friend.delFriendQue((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""));
 			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"私聊"))
-				User.getUser((Player)event.getWhoClicked()).setSelfChat(User.getUser(Bukkit.getPlayer(event.getInventory().getTitle().replaceAll("的好友菜单", ""))));
+				User.getUser((Player)event.getWhoClicked()).setSelfChat(User.getUser(Bukkit.getPlayer(event.getInventory().getTitle().replaceAll("的好友菜单", "").replaceAll(TString.Color(5), ""))));
 		}
 	}
 }
