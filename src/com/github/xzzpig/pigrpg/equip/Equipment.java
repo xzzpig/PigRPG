@@ -7,6 +7,8 @@ import org.bukkit.inventory.meta.*;
 public class Equipment extends ItemStack
 {
 	private EquipType etype;
+	private EquipQuality equality = EquipQuality.Common;
+	private ItemMeta im;
 	
 	public Equipment(int id)
 	{
@@ -21,6 +23,30 @@ public class Equipment extends ItemStack
 		if(this.getType() == Material.AIR)
 			super.setTypeId(1);
 		loadEnums();
+	}
+	
+	public Equipment setDisplayName(String name)
+	{
+		return this.setDisplayName(name,this.equality);
+	}
+	public Equipment setDisplayName(String name,EquipQuality eq)
+	{
+		this.getItemMeta().setDisplayName(eq+name);
+		this.saveItemMeta();
+		return this;
+	}
+	
+	public Equipment setEquipQuality(EquipQuality equality)
+	{
+		if(equality == null)
+			equality = EquipQuality.Common;
+		this.setDisplayName(this.getItemMeta().getDisplayName().replaceFirst(this.equality.toString(),""),equality);
+		this.equality = equality;
+		return this;
+	}
+	public EquipQuality getEquipQuality()
+	{
+		return equality;
 	}
 	
 	public Equipment setEquiptype(EquipType etype)
@@ -46,6 +72,20 @@ public class Equipment extends ItemStack
 	{
 		return etype;
 	}
+	public Equipment saveItemMeta()
+	{
+		super.setItemMeta(this.im);
+		return this;
+	}
+	
+	
+	@Override
+	public ItemMeta getItemMeta()
+	{
+		this.im = super.getItemMeta();
+		return this.im;
+	}
+	
 	
 	public boolean hasLoreType(){
 		ItemMeta im = this.getItemMeta();
@@ -67,5 +107,15 @@ public class Equipment extends ItemStack
 			this.setEquiptype(EquipType.getFrom(lore.get(0).replaceAll(" ","")));
 		else
 			this.setEquiptype(EquipType.Default);
+		if(this.getItemMeta().getDisplayName() == null)
+			this.setDisplayName(this.getType().toString());
+		else{
+			String dis = this.getItemMeta().getDisplayName();
+			EquipQuality eq = EquipQuality.fromColor(dis);
+			if(eq != null){
+				this.setEquipQuality(eq);
+			}
+		}
+			
 	}
 }
