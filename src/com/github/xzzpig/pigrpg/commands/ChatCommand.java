@@ -11,6 +11,7 @@ import com.github.xzzpig.pigrpg.*;
 import org.bukkit.*;
 
 import com.github.xzzpig.pigrpg.chat.*;
+import me.confuser.barapi.*;
 
 public class ChatCommand
 {
@@ -27,6 +28,7 @@ public class ChatCommand
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat ban [关键字] -屏蔽含关键字聊天");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat mute [玩家] <true|false> -设置玩家禁言");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat muteall <true|false> -设置群体玩家禁言");
+			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat borad [公告] -用Boss血条发送广播(空格用 _ 替代)");
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setaccept")){
@@ -95,6 +97,11 @@ public class ChatCommand
 				return true;
 			}
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"已改变全体禁言之状态");
+			return true;
+		}
+		else if(getarg(args, 1).equalsIgnoreCase("broad")){
+			String message = getarg(args,2);
+			BarAPI.setMessage("[广播]"+message.replaceAll("_"," "),5);
 			return true;
 		}
 		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr chat help 获取帮助");
