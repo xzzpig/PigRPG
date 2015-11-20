@@ -7,6 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TString;
+import org.bukkit.*;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
+import com.github.xzzpig.pigrpg.*;
 
 public class Commands {
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
@@ -17,6 +20,7 @@ public class Commands {
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat   -获取 聊天系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel    -获取 传送系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale   -获取 拍卖系统 的帮助");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr showhand <展示玩家(不填为全部)   -展示手中物品");
 				return true;
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("friend")){
@@ -62,9 +66,25 @@ public class Commands {
 					return true;
 				}
 			}
-			else if(getarg(args, 0).equalsIgnoreCase("test")){
+			else if(getarg(args, 0).equalsIgnoreCase("showhand")){
 				if(sender instanceof Player){
-					BarAPI.setMessage((Player)sender, "broadtest", 10);
+					String target = getarg(args,1);
+					Player player = (Player)sender;
+					if(player.getItemInHand() == null||player.getItemInHand().getType() == Material.AIR){
+						User.getUser(player).sendPluginMessage("&4无法展示 空气");
+						return true;
+					}
+					FancyMessage fm = FanMessage.getBy(player.getItemInHand()).then(ChatColor.BLUE+"由玩家"+player.getName()+"展示");
+					if(target.equalsIgnoreCase("")){
+						for(Player p:Bukkit.getOnlinePlayers()){
+							User.getUser(p).sendPluginMessage("玩家"+player.getName()+"展示物品:");
+							fm.send(p);
+						}
+					}
+					else{
+						User.getUser(Bukkit.getPlayer(target)).sendPluginMessage("玩家"+player.getName()+"展示物品:");
+						fm.send(Bukkit.getPlayer(target));
+					}
 				}
 				else{
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");

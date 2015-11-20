@@ -11,6 +11,7 @@ import org.bukkit.*;
 import com.github.xzzpig.pigrpg.friend.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.teleport.*;
+import me.confuser.barapi.*;
 
 public class User
 {
@@ -154,6 +155,10 @@ public class User
 		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有" + target.getPlayer().getName() + "才能看到");
 		this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
 		target.sendPluginMessage(this.getPlayer().getName()+"与你发起了私聊");
+	}
+	
+	public void sendBroadMessage(String message,int second){
+		BarAPI.setMessage(player,message,second);
 	}
 	
 	public void sendChatMessage(User fromuser){
