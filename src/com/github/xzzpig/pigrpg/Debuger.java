@@ -6,7 +6,7 @@ public class Debuger
 {
 	public static boolean isdebug = true;
 	@SuppressWarnings("deprecation")
-	public static void prints(String s)
+	public static void print(String s)
 	{
 		if(isdebug == false)return;
 		System.out.println("\n****************\n"+s+"\n****************");

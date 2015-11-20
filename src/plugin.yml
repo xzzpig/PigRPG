@@ -11,50 +11,50 @@ commands:
 premission: 
   pigrpg.*:
     description: PigRPG的所有权限
-    default: false
+    default: op
     children:
       pigrpg.admin.*: true
   pigrpg.admin.*:
     description: PigRPG的管理员权限
-    default: false
+    default: op
     children:
       pigrpg.default.*: true
       pigrpg.command.admin: true
   pigrpg.default.*:
     description: PigRPG的玩家基础权限
-    default: true
+    default: op
     children:
       pigrpg.command.default: true
       pigrpg.trade.default: true
       pigrpg.teleport.default: true
   pigrpg.command.*:
     description: PigRPG的所有命令权限
-    default: false
+    default: op
     children:
       pigrpg.command.admin: true
   pigrpg.command.admin:
     description: PigRPG的管理员命令权限
-    default: false
+    default: op
     children:
       pigrpg.command.default: true
   pigrpg.command.default:
     description: PigRPG的基础命令权限
-    default: false
+    default: op
     children:
       pigrpg.command.friend.default: true
       pigrpg.command.chat.default: true
   pigrpg.command.friend.default:
     description: friend命令的基础权限(list,accept,deny,del)
-    default: false
+    default: op
   pigrpg.command.chat.default:
     description: chat命令的基础权限(setaccept,change,self)
-    default: false
+    default: op
   pigrpg.trade.default:
     description: 交易的基础权限
-    default: false
+    default: op
   pigrpg.teleport.default:
     description: 传送的基础权限
-    default: false
+    default: op
     children:
       pigrpg.teleport.warp.*: true
   pigrpg.teleport.warp.*:

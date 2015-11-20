@@ -1,5 +1,6 @@
 package com.github.xzzpig.pigrpg.equip;
 import java.util.*;
+
 import org.bukkit.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
@@ -10,6 +11,7 @@ public class Equipment extends ItemStack
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
 	
+	@SuppressWarnings("deprecation")
 	public Equipment(int id)
 	{
 		super(id);
@@ -17,6 +19,7 @@ public class Equipment extends ItemStack
 			super.setTypeId(1);
 		this.loadEnums();
 	}
+	@SuppressWarnings("deprecation")
 	public Equipment(ItemStack is)
 	{
 		super(is);

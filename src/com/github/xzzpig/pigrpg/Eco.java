@@ -3,6 +3,7 @@ import java.math.*;
 
 public class Eco
 {
+	@SuppressWarnings("unused")
 	private User user;
 	private com.earth2me.essentials.User euser;
 	

@@ -1,15 +1,20 @@
 package com.github.xzzpig.pigrpg.sale;
 
-import org.bukkit.event.*;
-import org.bukkit.event.inventory.*;
-import org.bukkit.inventory.*;
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.chests.*;
-import com.github.xzzpig.pigrpg.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import org.bukkit.inventory.meta.*;
-import java.util.*;
+import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import com.github.xzzpig.BukkitTools.TArgsSolver;
+import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.chests.SaleChest;
 
 public class SaleListener implements Listener
 {	
@@ -42,6 +47,7 @@ public class SaleListener implements Listener
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBuyClick(InventoryClickEvent event){
 		if(!event.getInventory().getTitle().contains("拍卖行"))
@@ -53,6 +59,8 @@ public class SaleListener implements Listener
 		Inventory inv = event.getInventory();
 		int page = 1;
 		int price = 1;
+		if(event.getCurrentItem().getType() == Material.AIR||event.getRawSlot()>51)
+			return;
 		String seller = new TArgsSolver(event.getCurrentItem().getItemMeta().getLore().toArray(new String[0])).get("卖家");
 		try
 		{
@@ -82,7 +90,7 @@ public class SaleListener implements Listener
 		lore.remove(lore.size()-1);
 		im.setLore(lore);
 		is.setItemMeta(im);
-		user.getPlayer().getInventory().addItem(event.getCurrentItem());
+		user.getPlayer().getInventory().addItem(is);
 		user.getPlayer().openInventory(SaleChest.getInventory(page));
 		user.getPlayer().updateInventory();
 		user.sendPluginMessage("&3已购买了物品");

@@ -1,18 +1,18 @@
 package com.github.xzzpig.pigrpg.equip;
-import java.util.*;
-import com.github.xzzpig.BukkitTools.*;
-import java.lang.annotation.*;
+import java.util.HashMap;
 
-public enum EquipType{
-	Default("无",false),
-	Weapon("武器",false),
-	Core("核心"),
-	Head("头盔"),
-	Chest("护甲"),
-	Leg("战靴"),
-	Hand("首饰"),
-	Neck("项链"),
-	Consume("消耗品");
+import com.github.xzzpig.BukkitTools.TPremission;
+
+public class EquipType{
+	public static final EquipType Default = new EquipType("无",false);
+	public static final EquipType Weapon = new EquipType("武器",false);
+	public static final EquipType Core = new EquipType("核心");
+	public static final EquipType Head = new EquipType("头盔");
+	public static final EquipType Chest = new EquipType("护甲");
+	public static final EquipType Leg = new EquipType("战靴");
+	public static final EquipType Hand = new EquipType("首饰");
+	public static final EquipType Neck = new EquipType("项链");
+	public static final EquipType Consume = new EquipType("消耗品");
 	
 	private static HashMap<String,EquipType> typelist = new HashMap<String,EquipType>();
 	
@@ -45,6 +45,14 @@ public enum EquipType{
 	public TPremission getInherit()
 	{
 		return Inherit;
+	}
+	
+	public boolean isShow() {
+		return show;
+	}
+	public EquipType setShow(boolean show) {
+		this.show = show;
+		return this;
 	}
 	
 	@Override

@@ -1,7 +1,10 @@
 package com.github.xzzpig.pigrpg;
-import com.github.xzzpig.pigrpg.*;
-import java.util.*;
-import org.bukkit.entity.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 public class State
 {

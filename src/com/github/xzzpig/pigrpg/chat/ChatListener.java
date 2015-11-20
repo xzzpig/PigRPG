@@ -69,6 +69,7 @@ public class ChatListener implements Listener{
 			event.getWhoClicked().openInventory(ChatChannelChest.getChooseInventory((User.getUser((Player) event.getWhoClicked()))));
 		}
 	}
+	@SuppressWarnings("deprecation")
 	private void atsolve(PlayerChatEvent event){
 		User user = User.getUser(event.getPlayer());
 		String[] messages = event.getMessage().replaceAll("@","").split(" ");

@@ -3,7 +3,6 @@ import java.util.*;
 import org.bukkit.inventory.*;
 import com.github.xzzpig.BukkitTools.*;
 import org.bukkit.configuration.file.*;
-import java.io.*;
 
 public class Sale
 {
