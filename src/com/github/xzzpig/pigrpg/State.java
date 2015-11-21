@@ -6,22 +6,19 @@ import java.util.List;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import com.github.xzzpig.pigrpg.power.*;
+import org.bukkit.metadata.*;
+import org.bukkit.*;
 
 public class State
 {
-	private static HashMap<LivingEntity,State> statelist = new HashMap<LivingEntity,State>();
-	private static List<State> ids = new ArrayList<State>();
-	private static int maxid = -1;
-	
 	private User user;
 	private LivingEntity entity;
-	private int id = maxid+1,hp=20,mp,pda,mda,pde,mde;
+	private int hp=20,mp,pda,mda,pde,mde;
 	private List<Power> powers = new ArrayList<Power>();
 	
 	public State(LivingEntity entity){
-		statelist.put(entity,this);
-		maxid = maxid + 1;
-		ids.add(id,this);
+		FixedMetadataValue fd = new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("PigRPG"),this);
+		entity.setMetadata("state",fd);
 		this.entity = entity;
 		if(entity instanceof Player){
 			this.user = User.getUser((Player)entity);
@@ -39,17 +36,14 @@ public class State
 	}
 	
 	public static State getFrom(LivingEntity entity){
-		if(!statelist.containsKey(entity))
-			return new State(entity);
-		return statelist.get(entity);
-	}
-	public static State getFrom(int id){
-		if(id > maxid)
-			return null;
-		return ids.get(id);
+		for(MetadataValue mv : entity.getMetadata("state")){
+			if(mv.value() instanceof State)
+				return (State)mv.value();
+		}
+		return null;
 	}
 	public static boolean hasState(LivingEntity entity){
-		return statelist.containsKey(entity);
+		return getFrom(entity) != null;
 	}
 
 	public void setHp(int hp)
@@ -106,7 +100,6 @@ public class State
 	}
 	
 	public void remove(){
-		statelist.remove(entity);
-		ids.remove(id);
+		entity.removeMetadata("state",Bukkit.getPluginManager().getPlugin("PigPG"));
 	}
 }
