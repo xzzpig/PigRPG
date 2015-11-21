@@ -21,6 +21,7 @@ public class Commands {
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel    -获取 传送系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale   -获取 拍卖系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr showhand <展示玩家(不填为全部)   -展示手中物品");
+				FanMessage.helpweb().send((Player)sender);
 				return true;
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("friend")){

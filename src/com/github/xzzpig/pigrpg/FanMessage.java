@@ -29,4 +29,12 @@ public class FanMessage
 		fm.suggest("/"+command);
 		return fm;
 	}
+	
+	public static FancyMessage helpweb(){
+		String help = "https://github.com/xzzpig/PigRPG/blob/Aide/Help.txt";
+		FancyMessage fm = Vars.nms.newFancyMessage("点击打开帮助网页");
+		fm.tooltip(help).link(help);
+		return fm;
+	}
+	
 }
