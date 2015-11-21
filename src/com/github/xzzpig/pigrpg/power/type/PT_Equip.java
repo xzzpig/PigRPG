@@ -5,5 +5,5 @@ import com.github.xzzpig.BukkitTools.*;
 
 public interface PT_Equip
 {
-	public void runEquip(TData data);
+	public void runEquip();
 }

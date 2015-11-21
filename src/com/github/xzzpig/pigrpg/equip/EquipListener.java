@@ -5,6 +5,9 @@ import org.bukkit.inventory.*;
 import com.github.xzzpig.pigrpg.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
+import com.github.xzzpig.pigrpg.power.*;
+import com.github.xzzpig.pigrpg.power.type.*;
+import com.github.xzzpig.BukkitTools.*;
 
 public class EquipListener implements Listener
 {
@@ -21,6 +24,11 @@ public class EquipListener implements Listener
 				user.setEquip((Equipment)is);
 			else
 				user.setEquip(new Equipment(is));
+		}
+		for(Power p:Power.values()){
+			if(!(p instanceof PT_Equip))
+				return;
+			((PT_Equip)p.clone(new TData().setObject("user",user))).runEquip();
 		}
 	}
 
@@ -40,7 +48,6 @@ public class EquipListener implements Listener
 	@EventHandler
 	public void onPutItem(InventoryClickEvent event){
 		Inventory inv = event.getInventory();
-		Player clicker = (Player) event.getWhoClicked();
 		if(!event.getInventory().getTitle().contains("装备栏"))
 			return;
 		if(event.getAction()!=InventoryAction.PLACE_ALL)
@@ -62,10 +69,10 @@ public class EquipListener implements Listener
 			equip = (Equipment)is;
 		else
 			equip = new Equipment(is);
-		if(equip.getEquiptype()==targettype)
+		if(equip.getEquiptype()!=targettype&&(!targettype.getInherit().getAllChildren().contains(equip.getEquiptype()))){
+			event.setCancelled(true);
 			return;
-		if(targettype.getInherit().getAllChildren().contains(equip.getEquiptype()))
-			return;
-		event.setCancelled(true);
+		}
+		event.setCurrentItem(equip);
 	}
 }

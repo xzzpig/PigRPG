@@ -1,13 +1,28 @@
 package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.BukkitTools.*;
+import java.util.*;
 
-public abstract class Power
-{
+public abstract class Power{
+	public static final Power SetHealth = new Power_SetHealth();
+	
+	
+	protected static List<Power> powers = new ArrayList<Power>();
+	
+	public static Power valueOf(String powername){
+		for(Power p:powers)
+			if(p.getPowerName().equalsIgnoreCase(powername))
+				return p;
+		return null;
+	}
+	public static Power[] values(){
+		return powers.toArray(new Power[0]);
+	}
+
 	protected Power(){};
-	
+
 	public abstract String getPowerName();
-	
+
 	public abstract boolean isCloned();
-	
+
 	public abstract Power clone(TData data);
 }

@@ -4,6 +4,7 @@ import java.util.*;
 import org.bukkit.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+import com.github.xzzpig.BukkitTools.*;
 
 public class Equipment extends ItemStack
 {
@@ -101,7 +102,9 @@ public class Equipment extends ItemStack
 		return this.im;
 	}
 	
-	
+	public String getLoreData(String key){
+		return new TArgsSolver(getItemMeta().getLore().toArray(new String[0])).get(key);
+	}
 	public boolean hasLoreType(){
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();

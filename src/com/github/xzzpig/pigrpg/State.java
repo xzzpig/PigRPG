@@ -49,6 +49,7 @@ public class State
 	public void setHp(int hp)
 	{
 		this.hp = hp;
+		entity.setHealth(hp);
 	}
 	public int getHp()
 	{
