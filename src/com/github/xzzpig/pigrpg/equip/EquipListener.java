@@ -23,4 +23,19 @@ public class EquipListener implements Listener
 				user.setEquip(new Equipment(is));
 		}
 	}
+	
+	@EventHandler
+	public void onClickBanItem(InventoryClickEvent event)
+	{
+		Inventory inv = event.getInventory();
+		Player clicker = (Player) event.getWhoClicked();
+		int iitem = event.getRawSlot();
+		if(!event.getInventory().getTitle().contains("物品栏"))
+			return;
+		if(iitem >= inv.getSize())
+			return;
+		int line = iitem/9;
+		if((line%2) == 0)
+			event.setCancelled(true);
+	}
 }
