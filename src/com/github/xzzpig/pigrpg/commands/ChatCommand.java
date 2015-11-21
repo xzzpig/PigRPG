@@ -28,7 +28,7 @@ public class ChatCommand
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat ban [关键字] -屏蔽含关键字聊天");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat mute [玩家] <true|false> -设置玩家禁言");
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat muteall <true|false> -设置群体玩家禁言");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat borad [公告] -用Boss血条发送广播(空格用 _ 替代)");
+			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat broad [公告] -用Boss血条发送广播(空格用 _ 替代)");
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setaccept")){

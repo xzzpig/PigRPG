@@ -15,6 +15,7 @@ import com.github.xzzpig.BukkitTools.TArgsSolver;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.SaleChest;
+import com.github.xzzpig.pigrpg.*;
 
 public class SaleListener implements Listener
 {	
@@ -93,6 +94,7 @@ public class SaleListener implements Listener
 		user.getPlayer().getInventory().addItem(is);
 		user.getPlayer().openInventory(SaleChest.getInventory(page));
 		user.getPlayer().updateInventory();
-		user.sendPluginMessage("&3已购买了物品");
+		user.sendPluginMessage("&3已购买了物品:");
+		FanMessage.getBy(is).send(user.getPlayer());
 	}
 }

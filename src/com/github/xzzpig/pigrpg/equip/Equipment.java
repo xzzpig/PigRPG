@@ -28,6 +28,18 @@ public class Equipment extends ItemStack
 		loadEnums();
 	}
 	
+	public static boolean isEquipItem(ItemStack is){
+		if(is instanceof Equipment)
+			return true;
+		ItemMeta im = is.getItemMeta();
+		List<String> lore = im.getLore();
+		if(lore == null)
+			return false;
+		if(EquipType.hasType(lore.get(0).replaceAll(" ","")))
+			return true;
+		return false;
+	}
+	
 	public Equipment setDisplayName(String name)
 	{
 		return this.setDisplayName(name,this.equality);

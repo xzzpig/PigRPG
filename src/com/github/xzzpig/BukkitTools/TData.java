@@ -6,6 +6,7 @@ public class TData
 	private HashMap<String,String> strs = new HashMap<String,String>();
 	private HashMap<String,Integer> ints = new HashMap<String,Integer>();
 	private HashMap<String,Boolean> boos = new HashMap<String,Boolean>();
+	private HashMap<String,Object> obs = new HashMap<String,Object>();
 	
 	public TData(){}
 	
@@ -43,5 +44,17 @@ public class TData
 	}
 	public HashMap<String,Boolean> getBooleans(){
 		return this.boos;
+	}
+	
+	public Object getObject(String key){
+		if(!this.obs.containsKey(key))
+			return null;
+		return this.obs.get(key);
+	}
+	public void setObject(String key,Object value){
+		obs.put(key,value);
+	}
+	public HashMap<String,Object> getaObjects(){
+		return this.obs;
 	}
 }

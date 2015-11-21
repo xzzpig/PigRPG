@@ -91,7 +91,7 @@
 			-pr chat ban [关键字] 屏蔽含关键字聊天
 			-pr chat mute [玩家] <true|false> 设置玩家禁言
 			-pr chat muteall <true|false> 设置群体玩家禁言
-			-pr chat borad [公告] 用Boss血条发送广播(空格用 _ 替代)
+			-pr chat broad [公告] 用Boss血条发送广播(空格用 _ 替代)
 *	组队系统
 *	阵营系统
 *	悬赏系统

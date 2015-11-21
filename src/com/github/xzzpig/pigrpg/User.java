@@ -12,6 +12,8 @@ import com.github.xzzpig.pigrpg.friend.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.teleport.*;
 import me.confuser.barapi.*;
+import com.github.xzzpig.pigrpg.equip.*;
+import org.bukkit.inventory.*;
 
 public class User
 {
@@ -21,6 +23,7 @@ public class User
 	private User chatTarget,willChat;
 	private ChatChannel chatchannel;
 	private List<ChatChannel> acceptchannel;
+	private static HashMap<EquipType,Equipment> equiplist = new HashMap<EquipType,Equipment>();
 	private String justsay = "";
 	private Chat chat;
 	private TData data = new TData();
@@ -38,6 +41,25 @@ public class User
 		this.chat = new Chat(this);
 		this.eco = new Eco(this);
 		this.state = new State(player);
+		loadEquis();
+	}
+	
+	private void loadEquis(){
+		for(EquipType type:EquipType.values()){
+			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip.yml").getItemStack("equip."+player.getName()+"."+type);
+			if(iequip == null)
+				return;
+			equiplist.put(type,new Equipment(iequip));
+		}
+	}
+	public void setEquip(Equipment equip){
+		equiplist.put(equip.getEquiptype(),equip);
+		TConfig.saveConfig("PigRPG","equip.yml","equip."+player.getName()+"."+equip.getEquiptype(),(ItemStack)equip);
+	}
+	public Equipment getEquip(EquipType type){
+		if(equiplist.containsKey(type))
+			return equiplist.get(type);
+		return new Equipment(1);
 	}
 	
 	public static User getUser(Player player){
@@ -156,6 +178,8 @@ public class User
 		this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
 		target.sendPluginMessage(this.getPlayer().getName()+"与你发起了私聊");
 	}
+	
+	public void saveEquips(){}
 	
 	public void sendBroadMessage(String message,int second){
 		BarAPI.setMessage(player,message,second);

@@ -13,6 +13,7 @@ import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.*;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
+import com.github.xzzpig.pigrpg.equip.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -22,6 +23,7 @@ public class Main extends JavaPlugin{
 		Vars.configs = this.getConfig();
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
+		loadNms();
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {
@@ -34,6 +36,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new ChatListener(), this);
 		getServer().getPluginManager().registerEvents(new TelListener(), this);
 		getServer().getPluginManager().registerEvents(new SaleListener(), this);
+		getServer().getPluginManager().registerEvents(new EquipListener(), this);
 	}
 	
 	//插件停用函数
@@ -53,7 +56,7 @@ public class Main extends JavaPlugin{
 		}
         return (Vars.ess != null);
     }
-	public void l(){
+	public void loadNms(){
 		String version = VersionUtils.getBukkitVersion();
 
 		if (version == null) {

@@ -61,4 +61,8 @@ public class EquipType{
 		return this.typename;
 	}
 	
+	public static EquipType[] values(){
+		return typelist.values().toArray(new EquipType[0]);
+	}
+	
 }

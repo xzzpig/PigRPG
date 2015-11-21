@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import com.github.xzzpig.pigrpg.power.*;
 
 public class State
 {
@@ -15,6 +16,7 @@ public class State
 	private User user;
 	private LivingEntity entity;
 	private int id = maxid+1,hp=20,mp,pda,mda,pde,mde;
+	private List<Power> powers = new ArrayList<Power>();
 	
 	public State(LivingEntity entity){
 		statelist.put(entity,this);
