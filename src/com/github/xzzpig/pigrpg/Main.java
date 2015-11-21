@@ -29,6 +29,7 @@ public class Main extends JavaPlugin{
 		} catch (Exception e) {
 			getLogger().info(" Warp读取失败,原因可能是暂无 Warp");
 		}
+		EquipType.load();
 		Sale.loadItems();
 		getServer().getPluginManager().registerEvents(new RCChestListener(), this);
 		getServer().getPluginManager().registerEvents(new FriendEvent(), this);

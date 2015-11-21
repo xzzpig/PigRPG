@@ -7,7 +7,7 @@ import org.bukkit.inventory.meta.*;
 
 public class Equipment extends ItemStack
 {
-	private EquipType etype;
+	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
 	
@@ -120,8 +120,6 @@ public class Equipment extends ItemStack
 		}
 		if(this.hasLoreType())
 			this.setEquiptype(EquipType.getFrom(lore.get(0).replaceAll(" ","")));
-		else
-			this.setEquiptype(EquipType.Default);
 		if(this.getItemMeta().getDisplayName() == null)
 			this.setDisplayName(this.getType().toString());
 		else{
