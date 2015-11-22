@@ -1,17 +1,19 @@
 package com.github.xzzpig.pigrpg.commands;
 
-import me.confuser.barapi.BarAPI;
-
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TString;
-import org.bukkit.*;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
-import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.FanMessage;
+import com.github.xzzpig.pigrpg.User;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class Commands {
+	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
 			if(getarg(args, 0).equalsIgnoreCase("help")){

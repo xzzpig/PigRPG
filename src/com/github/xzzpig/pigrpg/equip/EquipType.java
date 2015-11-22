@@ -66,7 +66,7 @@ public class EquipType
 	
 	public static void saveAll(){
 		for(EquipType et : EquipType.values())
-			et.saveAll();
+			et.save();
 	}
 
 	public static EquipType[] values(){

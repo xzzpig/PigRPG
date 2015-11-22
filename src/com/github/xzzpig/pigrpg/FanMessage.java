@@ -1,12 +1,14 @@
 package com.github.xzzpig.pigrpg;
 import com.github.xzzpig.BukkitTools.*;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
+
 import org.bukkit.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
 
 public class FanMessage
 {
+	@SuppressWarnings("deprecation")
 	public static FancyMessage getBy(ItemStack is){
 		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD+"物品信息");
 		ItemMeta im = is.getItemMeta();

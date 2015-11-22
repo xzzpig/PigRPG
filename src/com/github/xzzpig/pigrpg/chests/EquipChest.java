@@ -1,11 +1,12 @@
 package com.github.xzzpig.pigrpg.chests;
 
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.chests.*;
-import org.bukkit.*;
-import org.bukkit.inventory.*;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.*;
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+
+import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.equip.EquipType;
+import com.github.xzzpig.pigrpg.equip.Equipment;
 
 public class EquipChest
 {

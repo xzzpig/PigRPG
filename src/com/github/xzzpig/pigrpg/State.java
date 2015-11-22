@@ -1,11 +1,12 @@
 package com.github.xzzpig.pigrpg;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
 import com.github.xzzpig.pigrpg.power.*;
+
 import org.bukkit.metadata.*;
 import org.bukkit.*;
 
@@ -46,54 +47,78 @@ public class State
 		return getFrom(entity) != null;
 	}
 
-	public void setHp(int hp)
+	@SuppressWarnings("deprecation")
+	public State setHp(int hp)
 	{
 		this.hp = hp;
 		entity.setMaxHealth(hp);
+		return this;
 	}
 	public int getHp()
 	{
 		return hp;
 	}
 	
-	public void setMp(int mp)
+	public State setMp(int mp)
 	{
 		this.mp = mp;
+		return this;
 	}
 	public int getMp()
 	{
 		return mp;
 	}
-	public void setPhysicDamage(int pda)
+	public State setPhysicDamage(int pda)
 	{
 		this.pda = pda;
+		return this;
 	}
 	public int getPhysicDamage()
 	{
 		return pda;
 	}
 
-	public void setMagicDamage(int mda)
+	public State setMagicDamage(int mda)
 	{
 		this.mda = mda;
+		return this;
 	}
 	public int getMagicDamage()
 	{
 		return mda;
 	}
 
-	public void setPhysicDefine(int pde)
+	public State setPhysicDefine(int pde)
 	{
 		this.pde = pde;
+		return this;
 	}
 	public int getPhysicDefine()
 	{
 		return pde;
 	}
+	
+	public State addPowers(Power power) {
+		this.powers.add(power);
+		return this;
+	}
+	public State delPowers(Power power) {
+		this.powers.remove(power);
+		return this;
+	}
+	public List<Power> getPowers() {
+		return powers;
+	}
+	public State setPowers(List<Power> powers) {
+		this.powers = powers;
+		return this;
+	}
+	
 
-	public void setMagicDefine(int mde)
+	public State setMagicDefine(int mde)
 	{
 		this.mde = mde;
+		return this;
 	}
 	public int getMagicDefine()
 	{
