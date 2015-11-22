@@ -62,7 +62,7 @@ public class EquipListener implements Listener
 		if((line%2)==0)
 			return;
 		Debuger.print("singleline");
-		ItemStack is = event.getCurrentItem();
+		ItemStack is = event.getCursor();
 		if(is==null||is.getType()==Material.AIR){
 			Debuger.print("isair");return;}
 		Debuger.print("notair");
@@ -76,13 +76,6 @@ public class EquipListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		event.setCurrentItem(equip);
-	}
-	
-	public void onPickItem(InventoryClickEvent event){
-		if(!event.getInventory().getTitle().contains("装备栏"))
-			return;
-		if(!(event.getAction()==InventoryAction.PICKUP_ONE||event.getAction()==InventoryAction.PICKUP_ALL||event.getAction()==InventoryAction.PICKUP_SOME))
-			return;
+		event.setCursor(equip);
 	}
 }
