@@ -1,12 +1,16 @@
 package com.github.xzzpig.pigrpg.equip;
 import java.util.HashMap;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
+import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TPremission;
-import org.bukkit.configuration.file.*;
-import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.BukkitTools.TString;
 
 public class EquipType
 {
+	private static HashMap<String,EquipType> typelist = new HashMap<String,EquipType>();
+	
 	public static final EquipType Default = new EquipType("无",false,280);
 	public static final EquipType Weapon = new EquipType("武器",false,268);
 	public static final EquipType Core = new EquipType("核心",268);
@@ -17,8 +21,7 @@ public class EquipType
 	public static final EquipType Neck = new EquipType("项链",111);
 	public static final EquipType Consume = new EquipType("消耗品",260);
 
-	private static HashMap<String,EquipType> typelist = new HashMap<String,EquipType>();
-
+	
 	private String typename;
 	private boolean show = true;
 	private TPremission Inherit;
@@ -50,18 +53,22 @@ public class EquipType
 	
 	public static void load(){
 		FileConfiguration config = TConfig.getConfigFile("PigRPG","equiptype.yml");
-		for(String typename : TConfig.getConfigPath("PigRPG","equiptype.yml","type")){
-			boolean show = config.getBoolean("type."+typename+".show",false);
-			if(hasType(typename))
-				continue;
-			String parent = "无";
-			if(!show)
-				parent = config.getString("type."+typename+".parent","无");
-			int typeid = config.getInt("type."+typename+".typeid",1);
-			new EquipType(typename,show,typeid,parent).getInherit();
-			TString.Print(TString.Prefix("PigRPG",3)+"装备类型 "+ typename + ")	已加载");
+		try {
+			for(String typename : TConfig.getConfigPath("PigRPG","equiptype.yml","type")){
+				boolean show = config.getBoolean("type."+typename+".show",false);
+				if(hasType(typename))
+					continue;
+				String parent = "无";
+				if(!show)
+					parent = config.getString("type."+typename+".parent","无");
+				int typeid = config.getInt("type."+typename+".typeid",1);
+				new EquipType(typename,show,typeid,parent).getInherit();
+				TString.Print(TString.Prefix("PigRPG",3)+"装备类型 "+ typename + ")	已加载");
+			}
+		} catch (Exception e) {
 		}
-		resetParents();
+		EquipType.resetParents();
+		EquipType.saveAll();
 	}
 	
 	public static void saveAll(){

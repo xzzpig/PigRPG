@@ -4,6 +4,7 @@ import java.util.*;
 import org.bukkit.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+
 import com.github.xzzpig.BukkitTools.*;
 
 public class Equipment extends ItemStack
@@ -78,6 +79,8 @@ public class Equipment extends ItemStack
 		else{
 			ItemMeta im = this.getItemMeta();
 			List<String> lore = im.getLore();
+			if(lore == null)
+				lore = new ArrayList<String>();
 			lore.add(0,"        "+etype.toString());
 			im.setLore(lore);
 			this.setItemMeta(im);
@@ -119,10 +122,12 @@ public class Equipment extends ItemStack
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();
 		if(lore == null){
-			return;
+			lore = new ArrayList<String>();
 		}
 		if(this.hasLoreType())
 			this.setEquiptype(EquipType.getFrom(lore.get(0).replaceAll(" ","")));
+		else
+			this.setEquiptype(EquipType.Default);
 		if(this.getItemMeta().getDisplayName() == null)
 			this.setDisplayName(this.getType().toString());
 		else{
@@ -132,6 +137,6 @@ public class Equipment extends ItemStack
 				this.setEquipQuality(eq);
 			}
 		}
-			
+		
 	}
 }

@@ -99,8 +99,8 @@ public class Commands {
 				}
 				else{
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
-					return true;
 				}
+				return true;
 			}
 		}
 		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr help 获取帮助");

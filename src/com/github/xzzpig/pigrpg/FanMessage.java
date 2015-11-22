@@ -10,7 +10,7 @@ public class FanMessage
 {
 	@SuppressWarnings("deprecation")
 	public static FancyMessage getBy(ItemStack is){
-		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD+"物品信息");
+		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD+"  物品信息");
 		ItemMeta im = is.getItemMeta();
 		String tip = ChatColor.RESET+"  物品名称:"+im.getDisplayName()+"\n"+
 				   ChatColor.GRAY +"  类型:"+is.getType()+"("+is.getTypeId()+")"+"\n"+

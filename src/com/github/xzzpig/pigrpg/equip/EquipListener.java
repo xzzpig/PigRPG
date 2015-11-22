@@ -36,7 +36,7 @@ public class EquipListener implements Listener
 	public void onClickBanItem(InventoryClickEvent event){
 		Inventory inv = event.getInventory();
 		int iitem = event.getRawSlot();
-		if(!event.getInventory().getTitle().contains("物品栏"))
+		if(!event.getInventory().getTitle().contains("装备栏"))
 			return;
 		if(iitem>=inv.getSize())
 			return;
@@ -50,19 +50,22 @@ public class EquipListener implements Listener
 		Inventory inv = event.getInventory();
 		if(!event.getInventory().getTitle().contains("装备栏"))
 			return;
-		if(event.getAction()!=InventoryAction.PLACE_ALL)
+		Debuger.print("zbl");
+		if(event.getAction()==InventoryAction.PICKUP_ONE||event.getAction()==InventoryAction.PICKUP_ALL||event.getAction()==InventoryAction.PICKUP_SOME)
 			return;
-		if(!event.isLeftClick())
-			return;
+		Debuger.print("nopickup");
 		int iitem = event.getRawSlot();
 		if(iitem>=inv.getSize())
 			return;
+		Debuger.print("fixsize");
 		int line = iitem/9;
 		if((line%2)==0)
 			return;
+		Debuger.print("singleline");
 		ItemStack is = event.getCurrentItem();
-		if(is==null||is.getType()==Material.AIR)
-			return;
+		if(is==null||is.getType()==Material.AIR){
+			Debuger.print("isair");return;}
+		Debuger.print("notair");
 		EquipType targettype = ((Equipment)inv.getItem(iitem-9)).getEquiptype();
 		Equipment equip;
 		if(is instanceof Equipment)
@@ -74,5 +77,12 @@ public class EquipListener implements Listener
 			return;
 		}
 		event.setCurrentItem(equip);
+	}
+	
+	public void onPickItem(InventoryClickEvent event){
+		if(!event.getInventory().getTitle().contains("装备栏"))
+			return;
+		if(!(event.getAction()==InventoryAction.PICKUP_ONE||event.getAction()==InventoryAction.PICKUP_ALL||event.getAction()==InventoryAction.PICKUP_SOME))
+			return;
 	}
 }

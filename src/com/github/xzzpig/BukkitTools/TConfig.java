@@ -37,7 +37,7 @@ public class TConfig {
 		return getConfig(getConfigFile(pl,filename),arg0);
 	}
 	
-	public static String[] getConfigPath(String pl,String filename,String arg0){
+	public static String[] getConfigPath(String pl,String filename,String arg0) throws Exception{
 		FileConfiguration config = getConfigFile(pl, filename);
 		Set<String> key = config.getConfigurationSection(arg0).getKeys(false);
 		if(key == null)
