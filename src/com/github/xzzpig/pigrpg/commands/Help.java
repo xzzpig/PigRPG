@@ -11,13 +11,16 @@ public class Help
 		CommandHelp pr_chat = PIGRPG.addSubCommandHelp(  "chat","  获取 聊天系统 的帮助","输入/pr trade help 查看帮助","");
 		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr trade help 查看帮助","");
 		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr trade help 查看帮助","");
-		@SuppressWarnings("unused")
-		CommandHelp pr_showhand = PIGRPG.addSubCommandHelp( "showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
+		CommandHelp pr_equip = PIGRPG.addSubCommandHelp( "equip"," 获取 装备系统 的帮助","输入/pr equip help 查看帮助","");
+		PIGRPG.addSubCommandHelp("showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
 		
 		pr_friend.addSubCommandHelp("list","  打开好友列表","","");
-		pr_friend.addSubCommandHelp("del","   处理好友删除请求","","");
+		CommandHelp pr_friend_del = pr_friend.addSubCommandHelp("del","   处理好友删除请求","","");
 		pr_friend.addSubCommandHelp("accept","接受好友请求","","");
 		pr_friend.addSubCommandHelp("deny","  拒绝好友请求","","");
+		
+		pr_friend_del.addSubCommandHelp("accept","接受好友删除请求","","");
+		pr_friend_del.addSubCommandHelp("deny","  拒绝好友删除请求","","");
 		
 		pr_trade.addSubCommandHelp("accept","接受交易请求","","");
 		pr_trade.addSubCommandHelp("deny","  拒绝交易请求","","");
@@ -34,7 +37,10 @@ public class Help
 		pr_tel.addSubCommandHelp("setwarp","设置warp","","[地标名]");
 		
 		pr_sale.addSubCommandHelp("list","打开拍卖行","","");
-		pr_sale.addSubCommandHelp("sell","出售手上物品到拍卖行","","<?>");
+		pr_sale.addSubCommandHelp("sell","出售手上物品到拍卖行","<?>列表(可多个，空格隔开)  \n-\"-p:[整数_价格](默认1)\"  \n-\"-n:[整数_数量](默认 全部)\"","<?>");
+		
+		pr_equip.addSubCommandHelp("open","打开装备栏","","");
+		pr_equip.addSubCommandHelp("change","将手中物品变成装备","","");
 		
 	}
 }

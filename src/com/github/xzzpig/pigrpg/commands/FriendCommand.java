@@ -1,14 +1,12 @@
 package com.github.xzzpig.pigrpg.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.chests.FriendListChest;
-import com.github.xzzpig.pigrpg.friend.Friend;
+import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.chests.*;
+import com.github.xzzpig.pigrpg.friend.*;
+import org.bukkit.*;
+import org.bukkit.command.*;
+import org.bukkit.entity.*;
 
 public class FriendCommand {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
@@ -64,14 +62,24 @@ public class FriendCommand {
 				return true;
 			}
 			else if(getarg(args, 2).equalsIgnoreCase("help")){
-				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del accept -接受好友删除请求");
-				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del deny   -拒绝好友删除请求");
+				for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg friend del").getSubCommandHelps())
+					ch.getHelpMessage().send((Player)sender);
 				return true;
 			}
-			sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr friend del help 获取帮助");
+			Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr friend del help")
+				.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg friend del").getDescribe())
+				.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+				.suggest("/pr friend del help")
+				.tooltip("")
+				.send((Player)sender);
 			return false;
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr friend help 获取帮助");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr friend help")
+			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg friend").getDescribe())
+			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+			.suggest("/pr friend help")
+			.tooltip("")
+			.send((Player)sender);
 		return false;
 	}
 	

@@ -1,14 +1,15 @@
 package com.github.xzzpig.pigrpg.commands;
 
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.chests.*;
+import com.github.xzzpig.pigrpg.sale.*;
+import java.util.*;
+import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
-import java.util.*;
 import org.bukkit.inventory.meta.*;
-import com.github.xzzpig.pigrpg.sale.*;
-import com.github.xzzpig.pigrpg.*;
 
 public class SaleCommand
 {
@@ -71,7 +72,12 @@ public class SaleCommand
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"拍卖成功");
 			return true;
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr sale help 获取帮助");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr sale help")
+			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg sale").getDescribe())
+			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+			.suggest("/pr sale help")
+			.tooltip("")
+			.send((Player)sender);
 		return true;
 	}
 

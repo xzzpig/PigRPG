@@ -54,6 +54,7 @@ public class ChatCommand
 					sboolean = getarg(args,3);
 			if(splayer.equalsIgnoreCase("")){
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"玩家不可为空");
+				CommandHelp.valueOf(Help.PIGRPG,"pigrpg chat mute").getHelpMessage().send((Player)sender);
 				return true;
 			}
 			@SuppressWarnings("deprecation")
@@ -72,10 +73,18 @@ public class ChatCommand
 				user.sendPluginMessage("&4你已解除禁言");
 			}
 			else{
-				sender.sendMessage(TString.Prefix("PigRPG",4)+"请设置true 或 false");
+				Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"请设置")
+					.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"true")
+					.tooltip("/pr chat mute "+splayer+" true")
+					.suggest("/pr chat mute "+splayer+" true")
+					.then(ChatColor.RED+" 或 ")
+					.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"false")
+					.tooltip("/pr chat mute "+splayer+" false")
+					.suggest("/pr chat mute "+splayer+" false")
+					.send((Player)sender);
 				return true;
 			}
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"已改变玩家"+user.getPlayer().getName()+"禁言之状态");
+			sender.sendMessage(TString.Prefix("PigRPG",3)+"已改变玩家"+user.getPlayer().getName()+"禁言的状态");
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("muteall")){
@@ -88,7 +97,15 @@ public class ChatCommand
 			else if(sboolean.equalsIgnoreCase("false"))
 				Chat.setMuteAll(false);
 			else{
-				sender.sendMessage(TString.Prefix("PigRPG",4)+"请设置true 或 false");
+				Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"请设置")
+					.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"true")
+					.tooltip("/pr chat muteall true")
+					.suggest("/pr chat muteall true")
+					.then(ChatColor.RED+" 或 ")
+					.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"false")
+					.tooltip("/pr chat muteall false")
+					.suggest("/pr chat muteall false")
+					.send((Player)sender);
 				return true;
 			}
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"已改变全体禁言之状态");
@@ -96,10 +113,15 @@ public class ChatCommand
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("broad")){
 			String message = getarg(args,2);
-			BarAPI.setMessage("[广播]"+message.replaceAll("_"," "),5);
+			BarAPI.setMessage("[广播]"+message.replaceAll("_"," ").replaceAll("&",TString.s),5);
 			return true;
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr chat help 获取帮助");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr chat help")
+			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg chat").getDescribe())
+			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+			.suggest("/pr chat help")
+			.tooltip("")
+			.send((Player)sender);
 		return true;
 	}
 	public static String getarg(String[] args,int num)

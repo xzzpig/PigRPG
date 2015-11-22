@@ -31,6 +31,22 @@ public class CommandHelp
 		this.uphelp = uphelp;
 	}
 	
+	public String getCommand(){
+		return command;
+	}
+	
+	public String getDescribe(){
+		return describe;
+	}
+	
+	public String getUseage(){
+		return useage;
+	}
+
+	public String getVar(){
+		return var;
+	}
+	
 	public static CommandHelp valueOf(CommandHelp basichelp,String command){
 		for(CommandHelp ch:basichelp.getAllSubs())
 			if(ch.toString().equalsIgnoreCase(command))

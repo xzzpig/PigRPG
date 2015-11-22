@@ -1,9 +1,11 @@
 package com.github.xzzpig.pigrpg.commands;
-import org.bukkit.command.*;
+import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
-import org.bukkit.entity.*;
 import com.github.xzzpig.pigrpg.chests.*;
 import com.github.xzzpig.pigrpg.equip.*;
+import org.bukkit.*;
+import org.bukkit.command.*;
+import org.bukkit.entity.*;
 
 public class EquipCommand
 {
@@ -11,8 +13,8 @@ public class EquipCommand
 	{
 		Player player = (Player)sender;
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			FanMessage.commandhelp("pr equip open","  打开装备栏").send(player);
-			FanMessage.commandhelp("pr equip change","将手中物品变成装备").send(player);
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg equip").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		if(getarg(args, 1).equalsIgnoreCase("open")){
@@ -23,6 +25,12 @@ public class EquipCommand
 			player.setItemInHand(new Equipment(player.getItemInHand()));
 			return true;
 		}
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr equip help")
+			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg equip").getDescribe())
+			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+			.suggest("/pr equip help")
+			.tooltip("")
+			.send((Player)sender);
 		return false;
 	}
 	

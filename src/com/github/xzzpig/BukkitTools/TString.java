@@ -5,6 +5,8 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 public class TString {
+	public static final String s = "§";
+	
 	private TString(){}
 	public static String Prefix(String prefix){
 		return "§6["+prefix+"]§f";

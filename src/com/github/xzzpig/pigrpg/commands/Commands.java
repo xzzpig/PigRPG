@@ -30,6 +30,7 @@ public class Commands {
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat   -获取 聊天系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel    -获取 传送系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale   -获取 拍卖系统 的帮助");
+				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr equip  -获取 装备系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr showhand <展示玩家>(不填为全部)   -展示手中物品");
 				return true;
 			}
@@ -118,8 +119,13 @@ public class Commands {
 				return true;
 			}
 		}
-		sender.sendMessage(TString.Prefix("PigRPG",4)+"输入/pr help 获取帮助");
-		return false;
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr help")
+			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg").getDescribe())
+			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
+			.suggest("/pr help")
+			.tooltip("")
+			.send((Player)sender);
+		return true;
 	}
 	
 	public static String getarg(String[] args,int num)
