@@ -2,9 +2,12 @@ package com.github.xzzpig.pigrpg.equip;
 import org.bukkit.event.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
+
 import com.github.xzzpig.pigrpg.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.*;
+
 import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
@@ -18,7 +21,7 @@ public class EquipListener implements Listener
 		User user = User.getUser((Player)event.getPlayer());
 		Inventory inv = event.getInventory();
 		for(ItemStack is:inv.getContents()){
-			if(is.getItemMeta().getLore()==null)
+			if(is.getItemMeta()==null)
 				continue;
 			if(is instanceof Equipment)
 				user.setEquip((Equipment)is);
@@ -50,23 +53,18 @@ public class EquipListener implements Listener
 		Inventory inv = event.getInventory();
 		if(!event.getInventory().getTitle().contains("装备栏"))
 			return;
-		Debuger.print("zbl");
 		if(event.getAction()==InventoryAction.PICKUP_ONE||event.getAction()==InventoryAction.PICKUP_ALL||event.getAction()==InventoryAction.PICKUP_SOME)
 			return;
-		Debuger.print("nopickup");
 		int iitem = event.getRawSlot();
 		if(iitem>=inv.getSize())
 			return;
-		Debuger.print("fixsize");
 		int line = iitem/9;
 		if((line%2)==0)
 			return;
-		Debuger.print("singleline");
 		ItemStack is = event.getCursor();
 		if(is==null||is.getType()==Material.AIR){
 			Debuger.print("isair");return;}
-		Debuger.print("notair");
-		EquipType targettype = ((Equipment)inv.getItem(iitem-9)).getEquiptype();
+		EquipType targettype = new Equipment(inv.getItem(iitem-9)).getEquiptype(); 
 		Equipment equip;
 		if(is instanceof Equipment)
 			equip = (Equipment)is;
@@ -74,8 +72,8 @@ public class EquipListener implements Listener
 			equip = new Equipment(is);
 		if(equip.getEquiptype()!=targettype&&(!targettype.getInherit().getAllChildren().contains(equip.getEquiptype()))){
 			event.setCancelled(true);
+			User.getUser((Player)event.getWhoClicked()).sendPluginMessage("&4请将装备放入对应的装备栏");
 			return;
 		}
-		event.setCursor(equip);
 	}
 }
