@@ -3,6 +3,7 @@ import java.util.*;
 
 public class TCommandHelp
 {
+	@SuppressWarnings("unused")
 	private String command,describe,useage,var;
 	private List<TCommandHelp> subs = new ArrayList<TCommandHelp>();
 	private TCommandHelp uphelp;

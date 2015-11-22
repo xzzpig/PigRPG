@@ -11,6 +11,7 @@ public class Help
 		CommandHelp pr_chat = PIGRPG.addSubCommandHelp(  "chat","  获取 聊天系统 的帮助","输入/pr trade help 查看帮助","");
 		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr trade help 查看帮助","");
 		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr trade help 查看帮助","");
+		@SuppressWarnings("unused")
 		CommandHelp pr_showhand = PIGRPG.addSubCommandHelp( "showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
 		
 		pr_friend.addSubCommandHelp("list","  打开好友列表","","");

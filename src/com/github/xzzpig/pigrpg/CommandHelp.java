@@ -46,7 +46,7 @@ public class CommandHelp
 	}
 	
 	public FancyMessage getHelpMessage(){
-		FancyMessage help = Vars.nms.newFancyMessage(TString.Prefix("PigRPG",3));
+		FancyMessage help = Vars.nms.newFancyMessage(TString.Prefix("PigRPG",3)+"/");
 		String parts[] = this.toStrings();
 		String com = "";
 		for(String arg:parts){
@@ -58,10 +58,8 @@ public class CommandHelp
 			then(" ");
 			com = com + " ";
 		}
-		help.then(ChatColor.GRAY+useage)
-			.then(ChatColor.BLUE +" -"+describe)
-			.then("\n")
-			.then(ChatColor.GREEN+""+ChatColor.UNDERLINE+"点击获取帮助").suggest(command+" "+var);
+		help.then(ChatColor.BLUE +" -"+describe).tooltip(ChatColor.GRAY+useage)
+			.then("\n"+ChatColor.GREEN+""+ChatColor.UNDERLINE+"点我").suggest("/"+command+" "+var).tooltip("快速匹配命令\n"+"/"+command+" "+var);
 		return help;
 	}
 	
