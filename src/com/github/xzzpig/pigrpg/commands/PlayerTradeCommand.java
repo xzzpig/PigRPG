@@ -16,8 +16,8 @@ public class PlayerTradeCommand
 		}
 		Player player = (Player) sender;
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade accept -接受交易请求");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade deny   -拒绝交易请求");
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg trade").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("accept")){

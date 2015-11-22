@@ -8,6 +8,7 @@ import org.bukkit.inventory.*;
 import java.util.*;
 import org.bukkit.inventory.meta.*;
 import com.github.xzzpig.pigrpg.sale.*;
+import com.github.xzzpig.pigrpg.*;
 
 public class SaleCommand
 {
@@ -15,11 +16,8 @@ public class SaleCommand
 	{
 		Player player = (Player) sender;
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale list -打开拍卖行");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr sale sell <?> -出售手上物品到拍卖行");
-			sender.sendMessage("<？>列表(可多个，空格隔开,以-开头):");
-			sender.sendMessage("    -p:[整数_价格](默认1)");
-			sender.sendMessage("    -n:[整数_数量](默认 全部)");
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg sale").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("list")){

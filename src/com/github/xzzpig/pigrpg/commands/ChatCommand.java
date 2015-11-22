@@ -22,13 +22,8 @@ public class ChatCommand
 			return true;
 		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat setaccept   -打开设置接受聊天频道列表");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat change      -打开设置接受聊天频道列表");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat self        -进入私聊频道\n在聊天栏中以@[玩家]开头发起与该玩家的私聊(非命令)");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat ban [关键字] -屏蔽含关键字聊天");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat mute [玩家] <true|false> -设置玩家禁言");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat muteall <true|false> -设置群体玩家禁言");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat broad [公告] -用Boss血条发送广播(空格用 _ 替代)");
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg chat").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setaccept")){

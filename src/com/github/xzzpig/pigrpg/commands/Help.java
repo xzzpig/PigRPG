@@ -29,5 +29,11 @@ public class Help
 		pr_chat.addSubCommandHelp("muteall","设置群体玩家禁言","未填默认为true","<true|false>");
 		pr_chat.addSubCommandHelp("broad","用Boss血条发送广播(空格用 _ 替代)","","[公告]");
 		
+		pr_tel.addSubCommandHelp("list","打开传送列表","","");
+		pr_tel.addSubCommandHelp("setwarp","设置warp","","[地标名]");
+		
+		pr_sale.addSubCommandHelp("list","打开拍卖行","","");
+		pr_sale.addSubCommandHelp("sell","出售手上物品到拍卖行","","<?>");
+		
 	}
 }

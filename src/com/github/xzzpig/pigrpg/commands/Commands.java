@@ -11,12 +11,18 @@ import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
+import com.github.xzzpig.pigrpg.*;
 
 public class Commands {
 	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
 			if(getarg(args, 0).equalsIgnoreCase("help")){
+				if(sender instanceof Player){
+					for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg").getSubCommandHelps())
+						ch.getHelpMessage().send((Player)sender);
+						return true;
+				}
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend -获取 好友系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr trade  -获取 交易系统 的帮助");
 				sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr chat   -获取 聊天系统 的帮助");

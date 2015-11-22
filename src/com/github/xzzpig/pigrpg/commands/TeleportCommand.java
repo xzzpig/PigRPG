@@ -5,6 +5,7 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import com.github.xzzpig.pigrpg.teleport.*;
 import com.github.xzzpig.pigrpg.chests.*;
+import com.github.xzzpig.pigrpg.*;
 
 public class TeleportCommand
 {
@@ -12,8 +13,8 @@ public class TeleportCommand
 	{
 		Player player = (Player) sender;
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel list            -打开传送列表");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr tel setwarp [地标名] -设置warp");
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg tel").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("list")){

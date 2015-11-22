@@ -18,10 +18,8 @@ public class FriendCommand {
 			return true;
 		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend list   -打开好友列表");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend del    -处理好友删除请求");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend accept -接受好友请求");
-			sender.sendMessage(TString.Prefix("PigRPG",3)+"/pr friend deny   -拒绝好友请求");
+			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg friend").getSubCommandHelps())
+				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("list")){
