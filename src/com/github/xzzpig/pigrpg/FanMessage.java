@@ -33,9 +33,9 @@ public class FanMessage
 	}
 	
 	public static FancyMessage helpweb(){
-		String help = "https://github.com/xzzpig/PigRPG/blob/Aide/Help.txt";
+		String help = "https://github.com/xzzpig/PigRPG/wiki/HelpIndx";
 		FancyMessage fm = Vars.nms.newFancyMessage("点击打开帮助网页");
-		fm.tooltip(help).link(help);
+		fm.tooltip(ChatColor.UNDERLINE + help).link(help);
 		return fm;
 	}
 	
