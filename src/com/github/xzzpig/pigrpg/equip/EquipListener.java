@@ -21,7 +21,7 @@ public class EquipListener implements Listener
 		User user = User.getUser((Player)event.getPlayer());
 		Inventory inv = event.getInventory();
 		for(ItemStack is:inv.getContents()){
-			if(is.getItemMeta()==null)
+			if(is == null||is.getItemMeta()==null||is.getItemMeta().getLore() == null)
 				continue;
 			if(is instanceof Equipment)
 				user.setEquip((Equipment)is);
@@ -30,7 +30,7 @@ public class EquipListener implements Listener
 		}
 		for(Power p:Power.values()){
 			if(!(p instanceof PT_Equip))
-				return;
+				continue;
 			((PT_Equip)p.clone(new TData().setObject("user",user))).runEquip();
 		}
 	}
