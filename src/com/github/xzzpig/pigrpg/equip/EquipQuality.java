@@ -35,6 +35,11 @@ public enum EquipQuality
 		}
 		return null;
 	}
+
+	public String getName()
+	{
+		return name;
+	}
 	
 	@Override
 	public String toString()
