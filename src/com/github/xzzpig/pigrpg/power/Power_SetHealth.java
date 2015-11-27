@@ -52,5 +52,6 @@ public class Power_SetHealth extends Power implements PT_Equip
 			}
 		}
 		user.getState().setHp(health);
+		user.sendPluginMessage("&2你的血量已更改为"+health);
 	}
 }

@@ -201,13 +201,14 @@ public class EquipCommand
 			{
 				if(lore.size()<=0)
 				{
-					sender.sendMessage((TString.Prefix("新世纪RPG",4)+"lore行数应大于0"));
+					sender.sendMessage((TString.Prefix("PigRPG",4)+"lore行数应大于0"));
 					return true;
 				}
 				lore.add(line,args[2].replaceAll("_", " "));
 			}
 			im.setLore(lore);
 			is.setItemMeta(im);
+			player.setItemInHand(new Equipment(is));
 			sender.sendMessage((TString.Prefix("PigRPG",4)+"lore已修改"));
 			return true;
 		}
