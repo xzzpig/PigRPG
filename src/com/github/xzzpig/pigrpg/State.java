@@ -12,10 +12,14 @@ import org.bukkit.*;
 
 public class State
 {
+	public static final State Null = new State();
+	
 	private User user;
 	private LivingEntity entity;
 	private int hp=20,mp,pda,mda,pde,mde;
 	private List<Power> powers = new ArrayList<Power>();
+	
+	private State(){}
 	
 	public State(LivingEntity entity){
 		FixedMetadataValue fd = new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("PigRPG"),this);
@@ -41,7 +45,7 @@ public class State
 			if(mv.value() instanceof State)
 				return (State)mv.value();
 		}
-		return null;
+		return Null;
 	}
 	public static boolean hasState(LivingEntity entity){
 		return getFrom(entity) != null;
@@ -50,6 +54,8 @@ public class State
 	@SuppressWarnings("deprecation")
 	public State setHp(int hp)
 	{
+		if(this == Null)
+			return Null;
 		this.hp = hp;
 		entity.setMaxHealth(hp);
 		return this;
@@ -61,6 +67,8 @@ public class State
 	
 	public State setMp(int mp)
 	{
+		if(this == Null)
+			return Null;
 		this.mp = mp;
 		return this;
 	}
@@ -70,6 +78,8 @@ public class State
 	}
 	public State setPhysicDamage(int pda)
 	{
+		if(this == Null)
+			return Null;
 		this.pda = pda;
 		return this;
 	}
@@ -80,6 +90,8 @@ public class State
 
 	public State setMagicDamage(int mda)
 	{
+		if(this == Null)
+			return Null;
 		this.mda = mda;
 		return this;
 	}
@@ -88,17 +100,21 @@ public class State
 		return mda;
 	}
 
-	public State setPhysicDefine(int pde)
+	public State setPhysicDefence(int pde)
 	{
+		if(this == Null)
+			return Null;
 		this.pde = pde;
 		return this;
 	}
-	public int getPhysicDefine()
+	public int getPhysicDefence()
 	{
 		return pde;
 	}
 	
 	public State addPowers(Power power) {
+		if(this == Null)
+			return Null;
 		this.powers.add(power);
 		return this;
 	}
@@ -110,6 +126,8 @@ public class State
 		return powers;
 	}
 	public State setPowers(List<Power> powers) {
+		if(this == Null)
+			return Null;
 		this.powers = powers;
 		return this;
 	}
@@ -126,6 +144,8 @@ public class State
 	}
 	
 	public void remove(){
+		if(this == Null)
+			return;
 		entity.removeMetadata("state",Bukkit.getPluginManager().getPlugin("PigPG"));
 	}
 }

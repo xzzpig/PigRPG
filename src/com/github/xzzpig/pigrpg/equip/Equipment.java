@@ -14,7 +14,7 @@ public class Equipment extends ItemStack
 	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
-	private static HashMap<String,Power> powers = new HashMap<String,Power>();
+	private static List<Power> powers = new ArrayList<Power>();
 
 	
 	@SuppressWarnings("deprecation")
@@ -144,13 +144,9 @@ public class Equipment extends ItemStack
 		loadPowers();
 	}
 	public void loadPowers(){
-		for(Power p:Power.values()){
-			if(!(p instanceof PT_Equip))
-				continue;
-			powers.put(p.getPowerName(),p);
-		}
+		
 	}
 	public Power[] getPowers(){
-		return powers.values().toArray(new Power[0]);
+		return powers.toArray(new Power[0]);
 	}
 }

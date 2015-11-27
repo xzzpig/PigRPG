@@ -14,6 +14,7 @@ import org.bukkit.command.*;
 import org.bukkit.plugin.java.*;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
 import com.github.xzzpig.pigrpg.equip.*;
+import com.github.xzzpig.pigrpg.power.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -38,6 +39,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new TelListener(), this);
 		getServer().getPluginManager().registerEvents(new SaleListener(), this);
 		getServer().getPluginManager().registerEvents(new EquipListener(), this);
+		getServer().getPluginManager().registerEvents(new PowerListener(), this);
 	}
 	
 	//插件停用函数
