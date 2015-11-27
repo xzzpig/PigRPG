@@ -3,7 +3,9 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.chests.*;
 import com.github.xzzpig.pigrpg.equip.*;
+
 import java.util.*;
+
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
@@ -12,6 +14,7 @@ import org.bukkit.inventory.meta.*;
 
 public class EquipCommand
 {
+	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		Player player = (Player)sender;

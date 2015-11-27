@@ -44,24 +44,6 @@ public class User
 		loadEquis();
 	}
 
-	private void loadEquis(){
-		for(EquipType type:EquipType.values()){
-			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip.yml").getItemStack("equip."+player.getName()+"."+type);
-			if(iequip==null)
-				return;
-			equiplist.put(type,new Equipment(iequip));
-		}
-	}
-	public void setEquip(Equipment equip){
-		equiplist.put(equip.getEquiptype(),equip);
-		TConfig.saveConfig("PigRPG","equip.yml","equip."+player.getName()+"."+equip.getEquiptype(),(ItemStack)equip);
-	}
-	public Equipment getEquip(EquipType type){
-		if(equiplist.containsKey(type))
-			return equiplist.get(type);
-		return new Equipment(1).setEquiptype(type);
-	}
-
 	public static User getUser(Player player){
 		if(!userlist.containsKey(player))
 			return new User(player);
@@ -76,11 +58,10 @@ public class User
 						try{
 							Thread.sleep(10000);
 						}
-						catch(InterruptedException e){}
-					}
+						catch(InterruptedException e){}					}
 					userlist.remove(player);
 				}
-			});
+			}).start();;
 	}
 
 	public boolean isAcceptChatChannel(ChatChannel c){
@@ -104,7 +85,25 @@ public class User
 	public ChatChannel getChatchannel(){
 		return chatchannel;
 	}
-
+	
+	private void loadEquis(){
+		for(EquipType type:EquipType.values()){
+			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip"+"_"+type+".yml").getItemStack("equip."+player.getName());
+			if(iequip==null)
+				continue;
+			equiplist.put(type,new Equipment(iequip));
+		}
+	}
+	public void setEquip(Equipment equip){
+		equiplist.put(equip.getEquiptype(),equip);
+		TConfig.saveConfig("PigRPG","equip"+"_"+equip.getEquiptype()+".yml","equip."+player.getName(),new ItemStack(equip));
+	}
+	public Equipment getEquip(EquipType type){
+		if(equiplist.containsKey(type))
+			return equiplist.get(type);
+		return new Equipment(1).setEquiptype(type);
+	}
+	
 	public boolean hasFriend(String friend){
 		return Friend.hasFriend(player.getName(),friend);
 	}

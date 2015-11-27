@@ -1,16 +1,17 @@
 package com.github.xzzpig.pigrpg.equip;
-import org.bukkit.event.*;
-import org.bukkit.event.inventory.*;
-import org.bukkit.inventory.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-import com.github.xzzpig.pigrpg.*;
-
-import org.bukkit.entity.*;
-import org.bukkit.*;
-
-import com.github.xzzpig.pigrpg.power.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.power.Power;
+import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 
 public class EquipListener implements Listener
 {
@@ -21,7 +22,7 @@ public class EquipListener implements Listener
 		User user = User.getUser((Player)event.getPlayer());
 		Inventory inv = event.getInventory();
 		for(ItemStack is:inv.getContents()){
-			if(is == null||is.getItemMeta()==null||is.getItemMeta().getLore() == null)
+			if(is == null)
 				continue;
 			if(is instanceof Equipment)
 				user.setEquip((Equipment)is);
@@ -62,8 +63,6 @@ public class EquipListener implements Listener
 		if((line%2)==0)
 			return;
 		ItemStack is = event.getCursor();
-		if(is==null||is.getType()==Material.AIR){
-			Debuger.print("isair");return;}
 		EquipType targettype = new Equipment(inv.getItem(iitem-9)).getEquiptype(); 
 		Equipment equip;
 		if(is instanceof Equipment)

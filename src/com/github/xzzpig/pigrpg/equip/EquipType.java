@@ -63,7 +63,7 @@ public class EquipType
 					parent = config.getString("type."+typename+".parent","无");
 				int typeid = config.getInt("type."+typename+".typeid",1);
 				new EquipType(typename,show,typeid,parent).getInherit();
-				TString.Print(TString.Prefix("PigRPG",3)+"装备类型 "+ typename + ")	已加载");
+				TString.Print(TString.Prefix("PigRPG",3)+"自定义装备类型 "+ typename + "	已加载");
 			}
 		} catch (Exception e) {
 		}
@@ -122,6 +122,7 @@ public class EquipType
 		config.set("type."+typename+".show",show);
 		config.set("type."+typename+".parent",parent);
 		config.set("type."+typename+".typeid",type);
+		TConfig.saveConfig("PigRPG", config, "equiptype.yml");
 	}
 
 	@Override

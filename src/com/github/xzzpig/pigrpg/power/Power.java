@@ -3,10 +3,10 @@ import com.github.xzzpig.BukkitTools.*;
 import java.util.*;
 
 public abstract class Power{
+	protected static List<Power> powers = new ArrayList<Power>();
+
 	public static final Power SetHealth = new Power_SetHealth();
 	
-	
-	protected static List<Power> powers = new ArrayList<Power>();
 	
 	public static Power valueOf(String powername){
 		for(Power p:powers)

@@ -8,9 +8,9 @@ public class Help
 	static{
 		CommandHelp pr_friend = PIGRPG.addSubCommandHelp("friend","获取 好友系统 的帮助","输入/pr friend help 查看帮助","");
 		CommandHelp pr_trade = PIGRPG.addSubCommandHelp( "trade"," 获取 交易系统 的帮助","输入/pr trade help 查看帮助","");
-		CommandHelp pr_chat = PIGRPG.addSubCommandHelp(  "chat","  获取 聊天系统 的帮助","输入/pr trade help 查看帮助","");
-		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr trade help 查看帮助","");
-		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr trade help 查看帮助","");
+		CommandHelp pr_chat = PIGRPG.addSubCommandHelp(  "chat","  获取 聊天系统 的帮助","输入/pr chat help 查看帮助","");
+		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr tel help 查看帮助","");
+		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr sale help 查看帮助","");
 		CommandHelp pr_equip = PIGRPG.addSubCommandHelp( "equip"," 获取 装备系统 的帮助","输入/pr equip help 查看帮助","");
 		PIGRPG.addSubCommandHelp("showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
 		
