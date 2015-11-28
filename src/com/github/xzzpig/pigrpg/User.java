@@ -91,17 +91,22 @@ public class User
 			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip"+"_"+type+".yml").getItemStack("equip."+player.getName());
 			if(iequip==null)
 				continue;
-			equiplist.put(type,new Equipment(iequip));
+			setEquip(new Equipment(iequip));
 		}
 	}
 	public void setEquip(Equipment equip){
-		equiplist.put(equip.getEquiptype(),equip);
+		equiplist.put(equip.getEquiptype().getFinalParent(),equip);
 		TConfig.saveConfig("PigRPG","equip"+"_"+equip.getEquiptype()+".yml","equip."+player.getName(),new ItemStack(equip));
 	}
 	public Equipment getEquip(EquipType type){
 		if(equiplist.containsKey(type))
 			return equiplist.get(type);
 		return new Equipment(1).setEquiptype(type);
+	}
+	public Equipment getHandEquip(){
+		if(player.getItemInHand() instanceof Equipment)
+			return (Equipment)player.getItemInHand();
+		return new Equipment(player.getItemInHand());
 	}
 	
 	public boolean hasFriend(String friend){

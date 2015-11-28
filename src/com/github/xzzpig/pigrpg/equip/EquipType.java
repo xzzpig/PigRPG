@@ -100,6 +100,14 @@ public class EquipType
 			tparent.addChild(TPremission.valueOf(et.toString()));
 		}
 	}
+	
+	public EquipType getFinalParent(){
+		EquipType type = this;
+		while(type.parent.equalsIgnoreCase("无")){
+			type = type.getFrom(type.parent);
+		}
+		return type;
+	}
 
 	public TPremission getInherit(){
 		return Inherit;

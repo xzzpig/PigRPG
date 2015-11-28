@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
+import com.github.xzzpig.pigrpg.power.type.*;
 
 public class Equipment extends ItemStack
 {
@@ -89,6 +90,10 @@ public class Equipment extends ItemStack
 			im.setLore(lore);
 			this.setItemMeta(im);
 		}
+		if(EquipType.Consume.getInherit().hasChild(TPremission.valueOf(etype.toString()))){
+			powers.remove(Power.Consume);
+			powers.add(Power.Consume);
+		}
 		return this;
 	}
 	public EquipType getEquiptype()
@@ -144,7 +149,18 @@ public class Equipment extends ItemStack
 		loadPowers();
 	}
 	public void loadPowers(){
-		
+		powers.clear();
+		if(EquipType.Consume.getInherit().hasChild(TPremission.valueOf(etype.toString()))){
+			powers.remove(Power.Consume);
+			powers.add(Power.Consume);
+		}
+		TArgsSolver map = new TArgsSolver(this.getItemMeta().getLore().toArray(new String[0]));
+		for(Power p:Power.values()){
+			if(!(p instanceof PT_RightClick))
+				continue;
+			if(map.get(p.getPowerName()) != null)
+				powers.add(p);
+		}
 	}
 	public Power[] getPowers(){
 		return powers.toArray(new Power[0]);

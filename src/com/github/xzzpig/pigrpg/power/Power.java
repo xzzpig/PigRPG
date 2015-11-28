@@ -8,6 +8,9 @@ public abstract class Power{
 	public static final Power SetHealth = new Power_SetHealth();
 	public static final Power SetPhysicDamage = new Power_SetPhysicDamage();
 	public static final Power SetPhysicDefence = new Power_SetPhysicDefence();
+	public static final Power Consume = new Power_Consume();
+	public static final Power Command = new Power_Command();
+	public static final Power OpCommand = new Power_OpCommand();
 	
 	public static Power valueOf(String powername){
 		for(Power p:powers)
