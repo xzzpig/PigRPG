@@ -6,6 +6,7 @@ public class StringMatcher
 	public static String solve(String ps){
 		return ps.replaceAll("&",TString.s);
 	}
+	@SuppressWarnings("deprecation")
 	public static String solve(String arg,User user){
 		arg = solve(arg);
 		arg = arg.replaceAll("<Player>",user.getPlayer().getName()).

@@ -7,7 +7,6 @@ import org.bukkit.inventory.meta.*;
 
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.power.Power;
-import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 import com.github.xzzpig.pigrpg.power.type.*;
 
 public class Equipment extends ItemStack

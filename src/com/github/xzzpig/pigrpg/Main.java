@@ -19,7 +19,7 @@ import com.github.xzzpig.pigrpg.power.*;
 public class Main extends JavaPlugin{
 	@Override
 	public void onEnable() {
-		getLogger().info(getName()+"插件已被加载");
+		getLogger().info(getName()+getDescription().getVersion()+"插件已被加载");
 		saveDefaultConfig();
 		Vars.configs = this.getConfig();
 		Vars.hasEss = setupEss();

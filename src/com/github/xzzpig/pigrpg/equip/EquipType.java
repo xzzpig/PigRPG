@@ -19,7 +19,7 @@ public class EquipType
 	public static final EquipType Leg = new EquipType("战靴",300);
 	public static final EquipType Hand = new EquipType("首饰",40);
 	public static final EquipType Neck = new EquipType("项链",111);
-	public static final EquipType Consume = new EquipType("消耗品",260);
+	public static final EquipType Consume = new EquipType("消耗品",false,260);
 
 	
 	private String typename;
@@ -103,8 +103,8 @@ public class EquipType
 	
 	public EquipType getFinalParent(){
 		EquipType type = this;
-		while(type.parent.equalsIgnoreCase("无")){
-			type = type.getFrom(type.parent);
+		while(!type.parent.equalsIgnoreCase("无")){
+			type = EquipType.getFrom(type.parent);
 		}
 		return type;
 	}

@@ -17,6 +17,7 @@ public class EquipCommand
 	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
+		Debuger.print("here3");
 		Player player = (Player)sender;
 		User user = User.getUser(player);
 		if(getarg(args, 1).equalsIgnoreCase("help")){
@@ -25,6 +26,7 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("open")){
+			Debuger.print("here");
 			player.openInventory(EquipChest.getInventory(User.getUser(player)));
 			return true;
 		}

@@ -1,16 +1,21 @@
 package com.github.xzzpig.pigrpg.power;
 
 import org.bukkit.event.*;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
+
 import com.github.xzzpig.pigrpg.*;
+
 import org.bukkit.event.player.*;
+
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 
 public class PowerListener implements Listener
 {
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event)
 	{
@@ -18,10 +23,10 @@ public class PowerListener implements Listener
 			return;
 		if(!(event.getEntity() instanceof LivingEntity))
 			return;
-		
+		Debuger.print("onDamage");
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
-		int damage = event.getDamage();
+		int damage = (int) event.getDamage();
 		
 		damage = damage + State.getFrom(damager).getPhysicDamage() - State.getFrom(target).getPhysicDefence();
 		if(damage < 0)
@@ -32,6 +37,9 @@ public class PowerListener implements Listener
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event)
 	{
+		Debuger.print("onRightClick()");
+		if(event.getAction() != Action.RIGHT_CLICK_AIR || event.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
 		User user = User.getUser(event.getPlayer());
 		Equipment equip = user.getHandEquip();
 		if(equip.getEquiptype() == EquipType.Core)

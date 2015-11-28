@@ -1,8 +1,10 @@
 package com.github.xzzpig.pigrpg.power;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
-import com.github.xzzpig.pigrpg.equip.*;
 
 public class Power_Consume extends Power implements PT_RightClick
 {
@@ -40,7 +42,14 @@ public class Power_Consume extends Power implements PT_RightClick
 		if(!(data.getObject("user") instanceof User))
 			return;
 		User user = (User)data.getObject("user");
-		user.getPlayer().setItemInHand(null);
+		int amount = user.getPlayer().getItemInHand().getAmount();
+		Debuger.print(amount+"");
+		if(amount == 1){
+			user.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+			Debuger.print("null");
+		}
+		else
+			user.getPlayer().getItemInHand().setAmount(amount-1);
 	}
 	
 }

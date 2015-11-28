@@ -51,7 +51,8 @@ public class Power_SetPhysicDefence extends Power implements PT_Equip
 				continue;
 			}
 		}
-		user.getState().setPhysicDefence(defence);
+		if(user.getState().getPhysicDefence() != defence)
 		user.sendPluginMessage("&2你的物理防御力已更改为"+defence);
+		user.getState().setPhysicDefence(defence);
 	}
 }

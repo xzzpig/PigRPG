@@ -11,8 +11,11 @@ import org.bukkit.*;
 import com.github.xzzpig.pigrpg.friend.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.teleport.*;
+
 import me.confuser.barapi.*;
+
 import com.github.xzzpig.pigrpg.equip.*;
+
 import org.bukkit.inventory.*;
 
 public class User
@@ -45,6 +48,7 @@ public class User
 	}
 
 	public static User getUser(Player player){
+		Debuger.print("here2");
 		if(!userlist.containsKey(player))
 			return new User(player);
 		return userlist.get(player);

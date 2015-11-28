@@ -51,8 +51,9 @@ public class Power_SetPhysicDamage extends Power implements PT_Equip
 				continue;
 			}
 		}
+		if(user.getState().getPhysicDamage() != damage)
+			user.sendPluginMessage("&2你的物理攻击力已更改为"+damage);
 		user.getState().setPhysicDamage(damage);
-		user.sendPluginMessage("&2你的物理攻击力已更改为"+damage);
 	}
 	
 }
