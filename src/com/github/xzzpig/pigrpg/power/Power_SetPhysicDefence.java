@@ -4,7 +4,7 @@ import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 
-public class Power_SetPhysicDefence extends Power implements PT_Equip
+public class Power_SetPhysicDefence extends Power implements PT_Equip,PT_Lore
 {
 	private boolean clone = false;
 	private TData data;
@@ -16,6 +16,12 @@ public class Power_SetPhysicDefence extends Power implements PT_Equip
 		clone = true;
 		this.data = data;
 	}
+
+	@Override
+	public String getUsage(){
+		return "-pdefence:[整数.物防]1";
+	}
+
 
 	@Override
 	public String getPowerName(){

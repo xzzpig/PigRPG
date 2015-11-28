@@ -23,7 +23,6 @@ public class PowerListener implements Listener
 			return;
 		if(!(event.getEntity() instanceof LivingEntity))
 			return;
-		Debuger.print("onDamage");
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
 		int damage = (int) event.getDamage();
@@ -37,7 +36,6 @@ public class PowerListener implements Listener
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event)
 	{
-		Debuger.print("onRightClick()");
 		if(event.getAction() != Action.RIGHT_CLICK_AIR || event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 		User user = User.getUser(event.getPlayer());

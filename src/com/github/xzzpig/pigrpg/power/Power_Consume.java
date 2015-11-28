@@ -6,7 +6,7 @@ import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Consume extends Power implements PT_RightClick
+public class Power_Consume extends Power implements PT_RightClick,PT_Lore
 {
 	private boolean clone = false;
 	private TData data;
@@ -17,6 +17,11 @@ public class Power_Consume extends Power implements PT_RightClick
 	private Power_Consume(TData data){
 		clone = true;
 		this.data = data;
+	}
+
+	@Override
+	public String getUsage(){
+		return "-Consume:";
 	}
 
 	@Override
@@ -43,10 +48,8 @@ public class Power_Consume extends Power implements PT_RightClick
 			return;
 		User user = (User)data.getObject("user");
 		int amount = user.getPlayer().getItemInHand().getAmount();
-		Debuger.print(amount+"");
 		if(amount == 1){
 			user.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-			Debuger.print("null");
 		}
 		else
 			user.getPlayer().getItemInHand().setAmount(amount-1);

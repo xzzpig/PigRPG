@@ -30,7 +30,6 @@ public class EquipListener implements Listener
 			else
 				user.setEquip(new Equipment(is));
 		}
-		Debuger.print("onCloseInv");
 		for(Power p:Power.values()){
 			if(!(p instanceof PT_Equip))
 				continue;

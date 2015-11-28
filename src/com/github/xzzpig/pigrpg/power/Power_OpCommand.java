@@ -6,7 +6,7 @@ import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 import org.bukkit.entity.*;
 
-public class Power_OpCommand extends Power implements PT_RightClick
+public class Power_OpCommand extends Power implements PT_RightClick,PT_Lore
 {
 	private boolean clone = false;
 	private TData data;
@@ -17,6 +17,11 @@ public class Power_OpCommand extends Power implements PT_RightClick
 	private Power_OpCommand(TData data){
 		clone = true;
 		this.data = data;
+	}
+
+	@Override
+	public String getUsage(){
+		return "-OpCommand:[文本.命令]…";
 	}
 
 	@Override

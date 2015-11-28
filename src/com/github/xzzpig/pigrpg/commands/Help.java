@@ -40,6 +40,7 @@ public class Help
 		pr_sale.addSubCommandHelp("sell","出售手上物品到拍卖行","<?>列表(可多个，空格隔开)  \n-\"-p:[整数_价格](默认1)\"  \n-\"-n:[整数_数量](默认 全部)\"","<?>");
 		
 		pr_equip.addSubCommandHelp("open","打开装备栏","","");
+		pr_equip.addSubCommandHelp("list","列出所有特殊lore(可快速匹配)","","");
 		pr_equip.addSubCommandHelp("change","将手中物品变成装备","","");
 		pr_equip.addSubCommandHelp("setdisplayname","设置手中装备的名称(开头无需加颜色)","","<装备名称>");
 		pr_equip.addSubCommandHelp("setid","设置手中装备的物品id","","<物品ID>");

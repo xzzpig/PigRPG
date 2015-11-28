@@ -48,7 +48,6 @@ public class User
 	}
 
 	public static User getUser(Player player){
-		Debuger.print("here2");
 		if(!userlist.containsKey(player))
 			return new User(player);
 		return userlist.get(player);

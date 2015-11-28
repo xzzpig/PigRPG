@@ -4,7 +4,7 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 
-public class Power_SetHealth extends Power implements PT_Equip
+public class Power_SetHealth extends Power implements PT_Equip,PT_Lore
 {
 	private boolean clone = false;
 	private TData data;
@@ -16,6 +16,12 @@ public class Power_SetHealth extends Power implements PT_Equip
 		clone = true;
 		this.data = data;
 	}
+
+	@Override
+	public String getUsage(){
+		return "-health:[整数.血量]";
+	}
+
 	
 	@Override
 	public String getPowerName(){

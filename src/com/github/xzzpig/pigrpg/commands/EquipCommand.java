@@ -11,13 +11,14 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+import com.github.xzzpig.pigrpg.power.*;
+import com.github.xzzpig.pigrpg.power.type.*;
 
 public class EquipCommand
 {
 	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		Debuger.print("here3");
 		Player player = (Player)sender;
 		User user = User.getUser(player);
 		if(getarg(args, 1).equalsIgnoreCase("help")){
@@ -25,8 +26,20 @@ public class EquipCommand
 				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
+		if(getarg(args, 1).equalsIgnoreCase("list")){
+			user.sendPluginMessage("&3特殊Lore列表:");
+			for(Power p:Power.values()){
+				if(!(p instanceof PT_Lore))
+					continue;
+				PT_Lore pl = (PT_Lore)p;
+				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p).
+				tooltip(ChatColor.YELLOW+"用法:"+pl.getUsage()+"\n点击匹配").
+				suggest("/pr equip addlore "+pl.getUsage()).
+				send(player);
+			}
+			return true;
+		}
 		else if(getarg(args, 1).equalsIgnoreCase("open")){
-			Debuger.print("here");
 			player.openInventory(EquipChest.getInventory(User.getUser(player)));
 			return true;
 		}
@@ -258,7 +271,7 @@ public class EquipCommand
 				sender.sendMessage((TString.Prefix("PigRPG",4)+"lore行数应大于0"));
 				return true;
 			}
-			lore.remove(line-1);
+			lore.remove(line);
 			im.setLore(lore);
 			is.setItemMeta(im);
 			sender.sendMessage((TString.Prefix("PigRPG",4)+"lore已删除"));
