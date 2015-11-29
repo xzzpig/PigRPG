@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.*;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.*;
+import com.github.xzzpig.BukkitTools.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -25,6 +26,8 @@ public class Main extends JavaPlugin{
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
 		loadNms();
+		if(TUpdate.hasUpdate(this,"Aide"))
+			getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.mess.split("||")[0]);
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {

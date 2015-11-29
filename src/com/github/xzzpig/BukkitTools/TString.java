@@ -62,7 +62,7 @@ public class TString {
 	public static String sub(String s,String pre,String suf)
 	{
 		int f = s.indexOf(pre);
-		int e = s.indexOf(suf);
+		int e = s.indexOf(suf,f);
 		return s.substring(f+pre.length(),e);
 	}
 	
