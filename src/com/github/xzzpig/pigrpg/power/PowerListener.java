@@ -26,11 +26,18 @@ public class PowerListener implements Listener
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
 		int damage = (int) event.getDamage();
-		
 		damage = damage + State.getFrom(damager).getPhysicDamage() - State.getFrom(target).getPhysicDefence();
 		if(damage < 0)
 			damage = 0;
 		event.setDamage(damage);
+		if(event.getDamager() instanceof Player){
+		User user = User.getUser((Player)event.getDamager());
+		Equipment equip = user.getHandEquip();
+		for(Power p : equip.getPowers()){
+			if(!(p instanceof PT_Damge))
+				continue;
+			((PT_Damge)p.clone(null)).runDamage(event);
+		}}
 	}
 	
 	@EventHandler
@@ -51,7 +58,14 @@ public class PowerListener implements Listener
 				return;
 			 }
 		}
-			
+		for(Power p : equip.getPowers()){
+			if(!(p instanceof PT_Limit))
+				continue;
+			if(!((PT_Limit)p).can()){
+				user.sendPluginMessage(((PT_Limit)p).cantMessage());
+				return;
+			}
+		}
 		for(Power p : equip.getPowers()){
 			if(!(p instanceof PT_RightClick))
 				continue;

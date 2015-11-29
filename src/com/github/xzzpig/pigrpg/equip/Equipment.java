@@ -14,7 +14,7 @@ public class Equipment extends ItemStack
 	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
-	private static List<Power> powers = new ArrayList<Power>();
+	public static List<Power> powers = new ArrayList<Power>();
 
 	
 	@SuppressWarnings("deprecation")
@@ -155,7 +155,7 @@ public class Equipment extends ItemStack
 		}
 		TArgsSolver map = new TArgsSolver(this.getItemMeta().getLore().toArray(new String[0]));
 		for(Power p:Power.values()){
-			if(!(p instanceof PT_RightClick))
+			if(!(p instanceof PT_Lore))
 				continue;
 			if(map.get(p.getPowerName()) != null)
 				powers.add(p);

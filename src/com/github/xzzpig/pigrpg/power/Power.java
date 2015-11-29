@@ -11,11 +11,18 @@ public abstract class Power{
 	public static final Power Consume = new Power_Consume();
 	public static final Power Command = new Power_Command();
 	public static final Power OpCommand = new Power_OpCommand();
+	public static final Power Cooldown = new Power_Cooldown();
+	public static final Power Arrow = new Power_Arrow();
+	public static final Power Fireball = new Power_Fireball();
+	public static final Power Flame = new Power_Flame();
 	
 	public static Power valueOf(String powername){
 		for(Power p:powers)
 			if(p.getPowerName().equalsIgnoreCase(powername))
 				return p;
+			else for(String an:p.getAnotherName())
+				if(an.equalsIgnoreCase(powername))
+					return p;
 		return null;
 	}
 	public static Power[] values(){
@@ -25,7 +32,9 @@ public abstract class Power{
 	protected Power(){};
 
 	public abstract String getPowerName();
-
+	
+	public String[] getAnotherName(){return new String[]{};};
+	
 	public abstract boolean isCloned();
 
 	public abstract Power clone(TData data);

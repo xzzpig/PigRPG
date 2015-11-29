@@ -1,32 +1,32 @@
 package com.github.xzzpig.pigrpg.power;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
-import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.power.type.*;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 
-public class Power_Consume extends Power implements PT_RightClick,PT_Lore
+public class Power_Fireball extends Power implements PT_RightClick,PT_Lore
 {
 	private boolean clone = false;
 	private TData data;
 
-	protected Power_Consume(){
+	protected Power_Fireball(){
 		powers.add(this);
 	}
-	private Power_Consume(TData data){
+	private Power_Fireball(TData data){
 		clone = true;
 		this.data = data;
 	}
 
 	@Override
 	public String getUsage(){
-		return "-Consume:";
+		return "-Fireball:";
 	}
 
 	@Override
 	public String getPowerName(){
-		return "Consume";
+		return "Fireball";
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class Power_Consume extends Power implements PT_RightClick,PT_Lore
 
 	@Override
 	public Power clone(TData data){
-		return new Power_Consume(data);
+		return new Power_Fireball(data);
 	}
-	
+
 	//user:User
 	@Override
 	public void runRC(){
@@ -47,14 +47,8 @@ public class Power_Consume extends Power implements PT_RightClick,PT_Lore
 		if(!(data.getObject("user") instanceof User))
 			return;
 		User user = (User)data.getObject("user");
-		ItemStack item = user.getPlayer().getItemInHand();
-		int count = item.getAmount() - 1;
-        if (count == 0) {
-            item.setAmount(0);
-            user.getPlayer().setItemInHand(null);
-        } else {
-            item.setAmount(count);
-        }
-	}
-	
+		Player player = user.getPlayer();
+		player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1.0f, 1.0f);
+		player.launchProjectile(SmallFireball.class);
+		}
 }

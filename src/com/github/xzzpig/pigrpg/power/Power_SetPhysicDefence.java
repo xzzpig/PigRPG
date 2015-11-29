@@ -29,6 +29,11 @@ public class Power_SetPhysicDefence extends Power implements PT_Equip,PT_Lore
 	}
 
 	@Override
+	public String[] getAnotherName(){
+		return new String[]{"pdefence"};
+	}
+
+	@Override
 	public boolean isCloned(){
 		return clone;
 	}
