@@ -18,10 +18,16 @@ public class TUpdate
 	
 	public static boolean hasUpdate(Plugin plugin,String branch){
 		String 
-			message = TConfig.getConfigFile(plugin.getName(),"info.bin").getString("message",""),
-			newmessage = getNewestMessgae(plugin,branch);
-		mess = message;
-		TConfig.saveConfig(plugin.getName(),"info.bin","message",newmessage);
-		return !message.equalsIgnoreCase(newmessage);
+			cversin = plugin.getDescription().getVersion(),
+			verson = getNewestVersion(plugin,branch);
+		return !cversin.equalsIgnoreCase(verson);
+	}
+	
+	public static String getNewestVersion(Plugin plugin,String branch){
+		String 
+			auther = plugin.getDescription().getAuthors().get(0),
+			pluginname = plugin.getName();
+		String html = TUrl.getHtml("https://github.com/"+auther+"/"+pluginname+"/blob/"+branch+"/src/plugin.yml");
+		return TString.sub(html,"<td id=\"LC3\" class=\"blob-code blob-code-inner js-file-line\"><span class=\"pl-c1\"><span class=\"pl-ent\">version:</span> ","</span></td>");
 	}
 }
