@@ -274,6 +274,7 @@ public class EquipCommand
 			lore.remove(line);
 			im.setLore(lore);
 			is.setItemMeta(im);
+			player.setItemInHand(new Equipment(is));
 			sender.sendMessage((TString.Prefix("PigRPG",4)+"lore已删除"));
 			return true;
 		}

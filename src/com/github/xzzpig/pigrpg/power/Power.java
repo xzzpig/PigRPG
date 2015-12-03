@@ -16,7 +16,11 @@ public abstract class Power
 	public static final Power Arrow = new Power_Arrow();
 	public static final Power Fireball = new Power_Fireball();
 	public static final Power Flame = new Power_Flame();
-
+	public static final Power Knockup = new Power_Knockup();
+	public static final Power Lightning = new Power_Lightning();
+	public static final Power Potion = new Power_Potion();
+	public static final Power Rumble = new Power_Rumble();
+	
 	public static Power valueOf(String powername){
 		for(Power p:powers)
 			if(p.getPowerName().equalsIgnoreCase(powername))

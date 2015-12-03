@@ -9,6 +9,7 @@ import com.github.xzzpig.pigrpg.power.*;
 
 import org.bukkit.metadata.*;
 import org.bukkit.*;
+import org.bukkit.potion.*;
 
 public class State
 {
@@ -18,6 +19,7 @@ public class State
 	private LivingEntity entity;
 	private int hp=20,mp,pda,mda,pde,mde;
 	private List<Power> powers = new ArrayList<Power>();
+	public List<PotionEffectType> potions = new ArrayList<PotionEffectType>();
 	
 	private State(){}
 	
