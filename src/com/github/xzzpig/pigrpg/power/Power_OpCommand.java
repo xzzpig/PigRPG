@@ -25,6 +25,13 @@ public class Power_OpCommand extends Power implements PT_RightClick,PT_Lore
 	}
 
 	@Override
+	public String getLore(Equipment equip){
+		String commands = equip.getLoreData("Command");
+		return "执行Op命令:"+commands;
+	}
+
+
+	@Override
 	public String getPowerName(){
 		return "OpCommand";
 	}

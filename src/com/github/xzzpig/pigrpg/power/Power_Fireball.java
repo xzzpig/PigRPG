@@ -5,6 +5,7 @@ import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import com.github.xzzpig.pigrpg.equip.*;
 
 public class Power_Fireball extends Power implements PT_RightClick,PT_Lore
 {
@@ -23,6 +24,12 @@ public class Power_Fireball extends Power implements PT_RightClick,PT_Lore
 	public String getUsage(){
 		return "-Fireball:";
 	}
+
+	@Override
+	public String getLore(Equipment equip){
+		return "发射火焰弹";
+	}
+
 
 	@Override
 	public String getPowerName(){

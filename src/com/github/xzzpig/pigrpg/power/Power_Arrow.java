@@ -25,6 +25,12 @@ public class Power_Arrow extends Power implements PT_RightClick,PT_Lore
 	}
 
 	@Override
+	public String getLore(Equipment equip){
+		return "发射箭矢";
+	}
+
+
+	@Override
 	public String getPowerName(){
 		return "Arrow";
 	}

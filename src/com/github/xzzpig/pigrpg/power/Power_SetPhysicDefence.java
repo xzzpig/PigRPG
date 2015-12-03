@@ -19,9 +19,17 @@ public class Power_SetPhysicDefence extends Power implements PT_Equip,PT_Lore
 
 	@Override
 	public String getUsage(){
-		return "-pdefence:[整数.物防]1";
+		return "-pdefence:[整数.物防]";
 	}
 
+	@Override
+	public String getLore(Equipment equip){
+		int defence = 0;
+			try{
+				defence = defence+Integer.valueOf(0+(equip.getLoreData("pdefence")));
+			}catch(Exception e){}
+		return null;
+	}
 
 	@Override
 	public String getPowerName(){

@@ -22,6 +22,17 @@ public class Power_SetPhysicDamage extends Power implements PT_Equip,PT_Lore
 		return "-pdamage:[整数.物攻]";
 	}
 
+	@Override
+	public String getLore(Equipment equip){
+		int damage = 0;
+			try{
+				damage = damage+Integer.valueOf(0+(equip.getLoreData("pdamage")));
+			}
+			catch(Exception e){}
+		return "物理攻击力+"+damage;
+	}
+
+
 	
 	@Override
 	public String getPowerName(){

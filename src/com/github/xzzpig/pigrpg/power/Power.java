@@ -2,7 +2,8 @@ package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.BukkitTools.*;
 import java.util.*;
 
-public abstract class Power{
+public abstract class Power
+{
 	protected static List<Power> powers = new ArrayList<Power>();
 
 	public static final Power SetHealth = new Power_SetHealth();
@@ -15,14 +16,14 @@ public abstract class Power{
 	public static final Power Arrow = new Power_Arrow();
 	public static final Power Fireball = new Power_Fireball();
 	public static final Power Flame = new Power_Flame();
-	
+
 	public static Power valueOf(String powername){
 		for(Power p:powers)
 			if(p.getPowerName().equalsIgnoreCase(powername))
 				return p;
 			else for(String an:p.getAnotherName())
-				if(an.equalsIgnoreCase(powername))
-					return p;
+					if(an.equalsIgnoreCase(powername))
+						return p;
 		return null;
 	}
 	public static Power[] values(){
@@ -32,9 +33,9 @@ public abstract class Power{
 	protected Power(){};
 
 	public abstract String getPowerName();
-	
+
 	public String[] getAnotherName(){return new String[]{};};
-	
+
 	public abstract boolean isCloned();
 
 	public abstract Power clone(TData data);

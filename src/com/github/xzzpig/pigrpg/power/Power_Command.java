@@ -22,6 +22,13 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 	public String getUsage(){
 		return "-Command:[文本.命令]…";
 	}
+
+	@Override
+	public String getLore(Equipment equip){
+		String commands = equip.getLoreData("Command");
+		return "执行命令:"+commands;
+	}
+
 	
 	@Override
 	public String getPowerName(){

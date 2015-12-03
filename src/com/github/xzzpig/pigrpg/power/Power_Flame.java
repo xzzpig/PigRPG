@@ -29,6 +29,19 @@ public class Power_Flame extends Power implements PT_Damge,PT_Lore
 	}
 
 	@Override
+	public String getLore(Equipment equip){
+		String[] args = equip.getLoreData("Flame").split("|");
+		int time = 0,chance = 0;
+		try{
+			time = Integer.valueOf(args[0]);
+			chance = Integer.valueOf(args[1]);
+		}
+		catch(Exception e){}
+		return chance+"%几率在攻击时点燃对方"+time+"毫秒";
+	}
+
+
+	@Override
 	public String getPowerName(){
 		return "Flame";
 	}

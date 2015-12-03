@@ -24,6 +24,17 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 	}
 
 	@Override
+	public String getLore(Equipment equip){
+		String scooldown = equip.getLoreData("Cooldown");
+		long cooldown = 0;
+		try{
+			cooldown = Long.valueOf("0"+scooldown);
+		}catch(NumberFormatException e){}
+		return "使用冷却时间:"+cooldown+"毫秒";
+	}
+
+
+	@Override
 	public boolean isCloned(){
 		return clone;
 	}

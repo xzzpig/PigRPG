@@ -22,6 +22,16 @@ public class Power_SetHealth extends Power implements PT_Equip,PT_Lore
 		return "-health:[整数.血量]";
 	}
 
+	@Override
+	public String getLore(Equipment equip){
+		int health = 0;
+			try{
+				health = health+Integer.valueOf(0+(equip.getLoreData("health")));
+			}catch(Exception e){}
+		return "血量+"+health;
+	}
+
+
 	
 	@Override
 	public String getPowerName(){

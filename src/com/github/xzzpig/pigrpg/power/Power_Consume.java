@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.equip.*;
 
 public class Power_Consume extends Power implements PT_RightClick,PT_Lore
 {
@@ -23,6 +24,12 @@ public class Power_Consume extends Power implements PT_RightClick,PT_Lore
 	public String getUsage(){
 		return "-Consume:";
 	}
+
+	@Override
+	public String getLore(Equipment equip){
+		return "右键消耗";
+	}
+
 
 	@Override
 	public String getPowerName(){
