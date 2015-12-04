@@ -4,7 +4,9 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import java.util.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 
@@ -13,6 +15,7 @@ public class Power_Knockup extends Power implements PT_Damge,PT_Lore
 	private static Random rand = new Random();
 
 	private boolean clone = false;
+	@SuppressWarnings("unused")
 	private TData data;
 
 	protected Power_Knockup(){

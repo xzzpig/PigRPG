@@ -4,14 +4,13 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import java.util.*;
+
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.entity.*;
-import org.bukkit.plugin.*;
 import org.bukkit.scheduler.*;
-import org.bukkit.util.*;
-
 import org.bukkit.util.Vector;
 
 public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
@@ -81,6 +80,7 @@ public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
 
 			private int count = 0;
 
+			@SuppressWarnings("deprecation")
 			public void run(){
 				Location above = location.clone().add(0,1,0);
 				if(above.getBlock().getType().isSolid()||!location.getBlock().getType().isSolid()){

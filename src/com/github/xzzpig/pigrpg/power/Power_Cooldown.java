@@ -3,6 +3,7 @@ import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
+
 import org.bukkit.*;
 
 public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_Lore
@@ -63,11 +64,11 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 			return;
 		}
 		run(cooldown);
-		for(Power p: equip.powers){
+		for(Power p: Equipment.powers){
 			if(p instanceof Power_Cooldown)
-				equip.powers.remove(this);
+				Equipment.powers.remove(this);
 		}
-		equip.powers.add(this);
+		Equipment.powers.add(this);
 	}
 	
 	//time:时间 单位:毫秒

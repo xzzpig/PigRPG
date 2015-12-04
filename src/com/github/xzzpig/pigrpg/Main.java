@@ -26,8 +26,12 @@ public class Main extends JavaPlugin{
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
 		loadNms();
-		if(TUpdate.hasUpdate(this,"Aide"))
-			getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.getNewestMessgae(this,"Aide").split("||")[1]);
+		try{
+			if(TUpdate.hasUpdate(this,"Aide"))
+				getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.getNewestMessgae(this,"Aide").split("||")[1]);
+		}catch (Exception e){
+			getLogger().info("更新检测失败");
+		}
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {
@@ -48,7 +52,7 @@ public class Main extends JavaPlugin{
 	//插件停用函数
 	@Override
 	public void onDisable() {
-	getLogger().info(getName()+"插件已被停用 ");
+		getLogger().info(getName()+"插件已被停用 ");
 	}
 	
 	@Override
@@ -56,19 +60,19 @@ public class Main extends JavaPlugin{
 		return Commands.command(sender, cmd, label, args);
 	}
 	private boolean setupEss()
-    {
+	{
 		if(Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials")){
 			Vars.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		}
-        return (Vars.ess != null);
-    }
+		return (Vars.ess != null);
+	}
 	public void loadNms(){
 		String version = VersionUtils.getBukkitVersion();
-
+		
 		if (version == null) {
 			// Caused by MCPC+ / Cauldron renaming packages, extract the version from Bukkit.getVersion().
 			version = VersionUtils.getMinecraftVersion();
-
+			
 			if ("1.6.4".equals(version)) {
 				version = "v1_6_R3";
 			} else if ("1.7.2".equals(version)) {
@@ -108,27 +112,27 @@ public class Main extends JavaPlugin{
 			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_8_R3.NmsManagerImpl();
 		} else {
 			System.out.println(
-				"******************************************************\n"+
-				"     This version of PIGRPG can\n"+
-				"     only work on these server versions:\n"+
-				"     from 1.6.4 to 1.8.8.\n"+
-				"     The plugin will be disabled.\n"+
-				"******************************************************"
-			);
+					"******************************************************\n"+
+							"     This version of PIGRPG can\n"+
+							"     only work on these server versions:\n"+
+							"     from 1.6.4 to 1.8.8.\n"+
+							"     The plugin will be disabled.\n"+
+							"******************************************************"
+					);
 			return;
 		}
-
+		
 		try {
 			if (VersionUtils.isMCPCOrCauldron()) {
 				getLogger().info("Trying to enable Cauldron/MCPC+ support...");
 			}
-
+			
 			nmsManager.setup();
-
+			
 			if (VersionUtils.isMCPCOrCauldron()) {
 				getLogger().info("Successfully added support for Cauldron/MCPC+!");
 			}
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;

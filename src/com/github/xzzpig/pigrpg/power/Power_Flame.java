@@ -4,7 +4,9 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import java.util.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 
@@ -13,6 +15,7 @@ public class Power_Flame extends Power implements PT_Damge,PT_Lore
 	private static Random rand = new Random();
 	
 	private boolean clone = false;
+	@SuppressWarnings("unused")
 	private TData data;
 
 	protected Power_Flame(){
@@ -30,7 +33,7 @@ public class Power_Flame extends Power implements PT_Damge,PT_Lore
 
 	@Override
 	public String getLore(Equipment equip){
-		String[] args = equip.getLoreData("Flame").split("|");
+		String[] args = equip.getLoreData("Flame").replaceAll("|","~").split("~");
 		int time = 0,chance = 0;
 		try{
 			time = Integer.valueOf(args[0]);

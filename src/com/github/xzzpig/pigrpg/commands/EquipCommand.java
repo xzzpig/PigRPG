@@ -32,7 +32,7 @@ public class EquipCommand
 				if(!(p instanceof PT_Lore))
 					continue;
 				PT_Lore pl = (PT_Lore)p;
-				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p).
+				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.getPowerName()).
 				tooltip(ChatColor.YELLOW+"用法:"+pl.getUsage()+"\n点击匹配").
 				suggest("/pr equip addlore "+pl.getUsage()).
 				send(player);

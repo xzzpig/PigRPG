@@ -43,7 +43,7 @@ public class PowerListener implements Listener
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event)
 	{
-		if(event.getAction() != Action.RIGHT_CLICK_AIR || event.getAction() != Action.RIGHT_CLICK_BLOCK)
+		if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 		User user = User.getUser(event.getPlayer());
 		Equipment equip = user.getHandEquip();

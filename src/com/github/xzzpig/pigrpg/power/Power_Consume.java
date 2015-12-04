@@ -1,5 +1,4 @@
 package com.github.xzzpig.pigrpg.power;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.pigrpg.power.type.*;

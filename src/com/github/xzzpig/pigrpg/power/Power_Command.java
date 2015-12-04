@@ -1,9 +1,12 @@
 package com.github.xzzpig.pigrpg.power;
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import com.github.xzzpig.pigrpg.equip.*;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
+
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigrpg.StringMatcher;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.equip.Equipment;
+import com.github.xzzpig.pigrpg.power.type.PT_Lore;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Command extends Power implements PT_RightClick,PT_Lore
 {
@@ -55,7 +58,7 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
 		String commands = equip.getLoreData("Command");
-		for(String command:commands.split("|"))
+		for(String command:commands.replaceAll("|","~").split("~"))
 			run(user.getPlayer(),command);
 		
 	}

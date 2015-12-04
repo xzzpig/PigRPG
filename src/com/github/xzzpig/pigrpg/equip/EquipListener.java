@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.BukkitTools.TData;
-import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
