@@ -154,7 +154,7 @@ public class Equipment extends ItemStack
 			if(!(p instanceof PT_Lore))
 				continue;
 			if(map.get(p.getPowerName())!=null)
-				powers.add(p);
+				powers.add(p.clone(null));
 		}
 		return this;
 	}
