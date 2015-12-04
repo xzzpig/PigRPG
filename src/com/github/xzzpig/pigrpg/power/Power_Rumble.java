@@ -61,7 +61,7 @@ public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
 			return;
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
-		String[] args = equip.getLoreData("Rumble").split("|");
+		String[] args = equip.getLoreData("Rumble").replaceAll("|","~").split("~");
 		int power = 0,distance = 0;
 		try{
 			power = Integer.valueOf(args[0]);

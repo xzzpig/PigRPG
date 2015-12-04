@@ -70,7 +70,7 @@ public class Power_Flame extends Power implements PT_Damge,PT_Lore
 		Player player = (Player)event.getDamager();
 		User user = User.getUser(player);
 		Equipment equip = user.getHandEquip();
-		String[] args = equip.getLoreData("Flame").split("|");
+		String[] args = equip.getLoreData("Flame").replaceAll("|","~").split("~");
 		int time = 0,chance = 0;
 		try{
 			time = Integer.valueOf(args[0]);

@@ -33,7 +33,7 @@ public class Power_Knockup extends Power implements PT_Damge,PT_Lore
 
 	@Override
 	public String getLore(Equipment equip){
-		String[] args = equip.getLoreData("Knockup").split("|");
+		String[] args = equip.getLoreData("Knockup").replaceAll("|","~").split("~");
 		int power = 0,chance = 0;
 		try{
 			power = Integer.valueOf(args[0]);
@@ -70,7 +70,7 @@ public class Power_Knockup extends Power implements PT_Damge,PT_Lore
 		Player player = (Player)event.getDamager();
 		User user = User.getUser(player);
 		Equipment equip = user.getHandEquip();
-		String[] args = equip.getLoreData("Knockup").split("|");
+		String[] args = equip.getLoreData("Knockup").replaceAll("|","~").split("~");
 		int power = 0,chance = 0;
 		try{
 			power = Integer.valueOf(args[0]);

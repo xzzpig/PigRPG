@@ -49,7 +49,7 @@ public class Power_Potion extends Power implements PT_Lore,PT_Equip,PT_Damge,PT_
 		Player player = (Player)event.getDamager();
 		User user = User.getUser(player);
 		Equipment equip = user.getHandEquip();
-		String[] args = equip.getLoreData("Potion").split("|");
+		String[] args = equip.getLoreData("Potion").replaceAll("|","~").split("~");
 		try{
 			if(!args[2].equalsIgnoreCase("Target"))
 				return;
@@ -78,7 +78,7 @@ public class Power_Potion extends Power implements PT_Lore,PT_Equip,PT_Damge,PT_
 			return;
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
-		String[] args = equip.getLoreData("Potion").split("|");
+		String[] args = equip.getLoreData("Potion").replaceAll("|","~").split("~");
 		try{
 			if(!args[2].equalsIgnoreCase("Self"))
 				return;
@@ -103,7 +103,7 @@ public class Power_Potion extends Power implements PT_Lore,PT_Equip,PT_Damge,PT_
 
 	@Override
 	public String getLore(Equipment equip){
-		String[] args = equip.getLoreData("Potion").split("|");
+		String[] args = equip.getLoreData("Potion").replaceAll("|","~").split("~");
 		try{
 			if(args[2].equalsIgnoreCase("Self")){
 				String 
@@ -154,7 +154,7 @@ public class Power_Potion extends Power implements PT_Lore,PT_Equip,PT_Damge,PT_
 	private void add(User user,Equipment equip){
 		if(equip.getLoreData("Potion") == null)
 			return;
-		String[] args = equip.getLoreData("Potion").split("|");
+		String[] args = equip.getLoreData("Potion").replaceAll("|","~").split("~");
 		try{
 			if(!args[2].equalsIgnoreCase("Equip"))
 				return;
