@@ -20,6 +20,9 @@ public abstract class Power
 	public static final Power Lightning = new Power_Lightning();
 	public static final Power Potion = new Power_Potion();
 	public static final Power Rumble = new Power_Rumble();
+	public static final Power Teleport = new Power_Teleport();
+	public static final Power Effect_ = new Power_Effect();
+	public static final Power Sound_ = new Power_Sound();
 	
 	public static Power valueOf(String powername){
 		for(Power p:powers)

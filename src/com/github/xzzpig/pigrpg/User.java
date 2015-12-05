@@ -109,7 +109,11 @@ public class User
 	public Equipment getHandEquip(){
 		if(player.getItemInHand() instanceof Equipment)
 			return (Equipment)player.getItemInHand();
-		return new Equipment(player.getItemInHand());
+		Equipment equip = new Equipment(player.getItemInHand());
+		if(equip.getEquiptype() != EquipType.Default)
+			player.setItemInHand(equip);
+		player.updateInventory();
+		return equip;
 	}
 	
 	public boolean hasFriend(String friend){

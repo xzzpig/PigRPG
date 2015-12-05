@@ -12,6 +12,7 @@ public class Help
 		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr tel help 查看帮助","");
 		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr sale help 查看帮助","");
 		CommandHelp pr_equip = PIGRPG.addSubCommandHelp( "equip"," 获取 装备系统 的帮助","输入/pr equip help 查看帮助","");
+		CommandHelp pr_list = PIGRPG.addSubCommandHelp( "list"," 获取 所有列表","输入/pr list help 查看帮助","");
 		PIGRPG.addSubCommandHelp("showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
 		
 		pr_friend.addSubCommandHelp("list","  打开好友列表","","");
@@ -51,5 +52,11 @@ public class Help
 		pr_equip.addSubCommandHelp("addlore","给手中物品添加lore","","[lore] <行数>");
 		pr_equip.addSubCommandHelp("dellore","给手中物品删除lore","","[行数]");
 		
+		pr_list.addSubCommandHelp("lore","列出所有特殊lore","","");
+		pr_list.addSubCommandHelp("quality","列出所有装备品质","","");
+		pr_list.addSubCommandHelp("type","列出所有装备类型","","");
+		pr_list.addSubCommandHelp("type","列出所有装备类型","","");
+		pr_list.addSubCommandHelp("effect","列出所有粒子效果","","");
+		pr_list.addSubCommandHelp("sound","列出所有音效","","");
 	}
 }

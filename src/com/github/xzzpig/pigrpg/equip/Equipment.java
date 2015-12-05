@@ -185,6 +185,8 @@ public class Equipment extends ItemStack
 		lore.add(TString.Color(2)+p);
 		for(String ps : plore)
 			lore.add(ps);
+		this.getItemMeta().setLore(lore);
+		this.saveItemMeta();
 		return this;
 	}
 }
