@@ -48,7 +48,7 @@ public class Help
 		pr_equip.addSubCommandHelp("qualitylist","列出所有装备品质","","");
 		pr_equip.addSubCommandHelp("setquality","设置手中装备的装备品质","可输入/pr equip qualitylist 查看所有装备品质\n(默认品质 普通)","<装备品质>");
 		pr_equip.addSubCommandHelp("typelist","列出所有装备类型","","");
-		pr_equip.addSubCommandHelp("setquality","设置手中装备的装备类型","可输入/pr equip typelist 查看所有装备类型\n(默认类型 无)","<装备类型>");
+		pr_equip.addSubCommandHelp("settype","设置手中装备的装备类型","可输入/pr equip typelist 查看所有装备类型\n(默认类型 无)","<装备类型>");
 		pr_equip.addSubCommandHelp("addlore","给手中物品添加lore","","[lore] <行数>");
 		pr_equip.addSubCommandHelp("dellore","给手中物品删除lore","","[行数]");
 		
