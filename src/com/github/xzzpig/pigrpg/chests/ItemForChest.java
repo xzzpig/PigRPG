@@ -96,7 +96,7 @@ public class ItemForChest
 	protected static ItemStack tradeQue()
 	{
 		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(175);
+		ItemStack is = new ItemStack(399);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+"申请交易");
 		List<String> lore = new ArrayList<String>();
