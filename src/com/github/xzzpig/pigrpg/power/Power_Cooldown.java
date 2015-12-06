@@ -64,11 +64,11 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 			return;
 		}
 		run(cooldown);
-		for(Power p: Equipment.powers){
+		for(Power p: equip.powers){
 			if(p instanceof Power_Cooldown)
-				Equipment.powers.remove(this);
+				equip.powers.remove(this);
 		}
-		Equipment.powers.add(this);
+		equip.powers.add(this);
 	}
 	
 	//time:时间 单位:毫秒

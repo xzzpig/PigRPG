@@ -4,6 +4,7 @@ import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.*;
@@ -49,6 +50,7 @@ public class Power_Effect extends Power implements PT_Damge,PT_Lore
 		return new Power_Effect(data);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void runDamage(EntityDamageByEntityEvent event){
 		if(!this.isCloned())
