@@ -4,6 +4,8 @@ import org.bukkit.entity.*;
 
 public class Debuger
 {
+	public static long time;
+	
 	public static boolean isdebug = true;
 	@SuppressWarnings("deprecation")
 	public static void print(String s)
@@ -15,5 +17,12 @@ public class Debuger
 			if(p.isOp())
 				p.sendMessage(s);
 		}
+	}
+	
+	public static void timeStart(){
+		time = System.nanoTime();
+	}
+	public static void timeStop(String s){
+		Debuger.print(s+(System.nanoTime()-time));
 	}
 }

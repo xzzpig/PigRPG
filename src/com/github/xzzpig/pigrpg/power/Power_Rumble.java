@@ -33,7 +33,13 @@ public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
 
 	@Override
 	public String getLore(Equipment equip){
-		return "发射火焰弹";
+		String[] args = equip.getLoreData("Rumble").replaceAll("|","~").split("~");
+		int power = 0,distance = 0;
+		try{
+			power = Integer.valueOf(args[0]);
+			distance = Integer.valueOf(args[1]);
+		}catch(Exception ex){}
+		return "冲击"+distance+"格内的生物(Lv"+power+")";
 	}
 
 
