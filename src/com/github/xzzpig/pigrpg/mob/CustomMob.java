@@ -1,6 +1,5 @@
 package com.github.xzzpig.pigrpg.mob;
 import org.bukkit.entity.*;
-import org.bukkit.*;
 import com.github.xzzpig.pigrpg.*;
 import java.util.*;
 import com.github.xzzpig.BukkitTools.*;

@@ -106,6 +106,7 @@ public class User
 			return equiplist.get(type);
 		return new Equipment(1).setEquiptype(type);
 	}
+	@SuppressWarnings("deprecation")
 	public Equipment getHandEquip(){
 		if(player.getItemInHand() instanceof Equipment)
 			return (Equipment)player.getItemInHand();

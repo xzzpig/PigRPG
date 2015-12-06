@@ -14,7 +14,7 @@ public class Equipment extends ItemStack
 	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
-	public static List<Power> powers = new ArrayList<Power>();
+	public List<Power> powers = new ArrayList<Power>();
 
 
 	@SuppressWarnings("deprecation")

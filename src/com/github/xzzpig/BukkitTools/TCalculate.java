@@ -8,8 +8,8 @@ public class TCalculate
 	public static double getResult(String expression) {
 		//String expression = "1+5*(2+1)";
 		Pattern entryOfExpression = Pattern.compile("[0-9]+(\\.[0-9]+)?|\\(|\\)|\\+|-|\\*|/");
-		Deque stack = new LinkedList();  //运算过程中要使用的栈
-		List list = new LinkedList();  //运算过程中要使用的列表
+		Deque<Object> stack = new LinkedList<Object>();  //运算过程中要使用的栈
+		List<Object> list = new LinkedList<Object>();  //运算过程中要使用的列表
 		//用正则式分析表达式
 		Matcher m = entryOfExpression.matcher(expression);
 		//对分析出的每个语素处理
@@ -68,7 +68,7 @@ public class TCalculate
 				}
 			}
 		}
-		return stack.pop();
+		return (double) stack.pop();
 	}
 }
 class OPNode {

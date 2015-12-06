@@ -21,8 +21,6 @@ public class State
 	public List<PotionEffectType> potions = new ArrayList<PotionEffectType>();
 	public TData data = new TData();
 
-	private State(){}
-
 	public State(LivingEntity entity){
 		FixedMetadataValue fd = new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("PigRPG"),this);
 		entity.setMetadata("state",fd);
