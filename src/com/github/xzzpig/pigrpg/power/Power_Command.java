@@ -32,7 +32,7 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		return "执行命令:"+commands;
 	}
 
-	
+
 	@Override
 	public String getPowerName(){
 		return "Command";
@@ -60,9 +60,29 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		String commands = equip.getLoreData("Command");
 		for(String command:commands.replaceAll("|","~").split("~"))
 			run(user.getPlayer(),command);
-		
+
 	}
-	public void run(Player player, String command){
-		player.chat("/"+ StringMatcher.solve(command,User.getUser(player)));
+	public void run(Player player,String command){
+		player.chat("/"+StringMatcher.solve(command,User.getUser(player)));
 	}
+	
+	//*user:User commands:String command:String
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		if(!(data.getObject("user") instanceof User))
+			return;
+		User user = (User)data.getObject("user");
+		String commands = data.getString("commands");
+		if(commands!=null)
+			for(String command:commands.replaceAll("|","~").split("~"))
+				run(user.getPlayer(),command);
+		String command = data.getString("command");
+		if(command!=null)
+			run(user.getPlayer(),command);
+	}
+
+
+
 }

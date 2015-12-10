@@ -46,4 +46,6 @@ public abstract class Power
 	public abstract boolean isCloned();
 
 	public abstract Power clone(TData data);
+	
+	public abstract void run();
 }

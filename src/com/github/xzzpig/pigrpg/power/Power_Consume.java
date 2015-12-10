@@ -62,5 +62,25 @@ public class Power_Consume extends Power implements PT_RightClick,PT_Lore
             item.setAmount(count);
         }
 	}
+
+	//*item:Itemstack
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		if(!(data.getObject("item") instanceof ItemStack))
+			return;
+		ItemStack item = (ItemStack)data.getObject("item");
+		int count = item.getAmount() - 1;
+        if (count == 0) {
+            item.setAmount(0);
+			if(item instanceof Equipment)
+				((Equipment)item).powers.clear();
+        } else {
+            item.setAmount(count);
+        }
+	}
+
+	
 	
 }

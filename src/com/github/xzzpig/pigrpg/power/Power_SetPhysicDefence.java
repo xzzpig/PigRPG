@@ -74,4 +74,12 @@ public class Power_SetPhysicDefence extends Power implements PT_Equip,PT_Lore
 		user.sendPluginMessage("&2你的物理防御力已更改为"+defence);
 		user.getState().setPhysicDefence(defence);
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

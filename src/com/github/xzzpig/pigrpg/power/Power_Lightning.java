@@ -87,4 +87,12 @@ public class Power_Lightning extends Power implements PT_Damge,PT_Lore
 		if(rand.nextInt(100)<=chance)
            e.getWorld().strikeLightning(e.getLocation());
     }
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

@@ -76,4 +76,12 @@ public class Power_SetHealth extends Power implements PT_Equip,PT_Lore
 			user.sendPluginMessage("&2你的血量已更改为"+health);
 		user.getState().setHp(health);
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

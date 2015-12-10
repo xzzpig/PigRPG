@@ -89,4 +89,12 @@ public class Power_Knockup extends Power implements PT_Damge,PT_Lore
 		if(rand.nextInt(100)<=chance)
             e.setVelocity(player.getLocation().getDirection().setY(power));
     }
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

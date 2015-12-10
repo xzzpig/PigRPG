@@ -91,6 +91,13 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 	public String cantMessage(){
 		return (ChatColor.RED + "未冷却,剩余时间:"+(this.finaltime - System.currentTimeMillis())+"毫秒");
 	}
+	//*time:int
+	@Override
+	public void run(){
+		int time = data.getInt("time");
+		this.finaltime = System.currentTimeMillis() + time;
+	}
+
 
 	
 	

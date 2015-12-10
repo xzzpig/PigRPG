@@ -49,7 +49,11 @@ public class Power_Effect extends Power implements PT_Damge,PT_Lore
 	public Power clone(TData data){
 		return new Power_Effect(data);
 	}
-
+	
+	public static void playEffect(Location loc,Effect effect,int i){
+		loc.getWorld().playEffect(loc,effect,i);
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void runDamage(EntityDamageByEntityEvent event){
@@ -68,6 +72,34 @@ public class Power_Effect extends Power implements PT_Damge,PT_Lore
 			user.sendPluginMessage("不存在该粒子效果");
 			return;
 		}
-		player.playEffect(player.getLocation(),effect,0);
+		Power_Effect.playEffect(player.getLocation(),effect,0);
 	}
+
+	//*effect:String *location:Location/String type:int/String
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		String seffect = data.getString("effect");
+		if(seffect ==null)
+			return;
+		Effect effect = org.bukkit.Effect.valueOf(seffect);
+		if(effect == null)
+			return;
+		Location loc;
+		if((data.getObject("location") instanceof Location))
+			loc = (Location)data.getObject("location");
+		else
+			loc = Voids.toLocation(data.getString("location"));
+		if(loc == null)
+			return;
+		int type = data.getInt("type");
+		try{type = Integer.valueOf(data.getString("type"));}
+		catch(Exception e){}
+		Power_Effect.playEffect(loc,effect,type);
+		
+	}
+
+	
+	
 }

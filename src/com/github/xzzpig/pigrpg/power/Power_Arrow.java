@@ -56,4 +56,19 @@ public class Power_Arrow extends Power implements PT_RightClick,PT_Lore
 		user.getPlayer().launchProjectile(Arrow.class);
 		user.getPlayer().playSound(user.getPlayer().getLocation(), Sound.SHOOT_ARROW, 1.0f, 1.0f);
 	}
+
+	//*user:User
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		if(!(data.getObject("user") instanceof User))
+			return;
+		User user = (User)data.getObject("user");
+		user.getPlayer().launchProjectile(Arrow.class);
+		user.getPlayer().playSound(user.getPlayer().getLocation(), Sound.SHOOT_ARROW, 1.0f, 1.0f);
+	}
+
+	
+	
 }

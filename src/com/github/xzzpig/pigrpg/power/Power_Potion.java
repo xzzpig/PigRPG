@@ -167,6 +167,13 @@ public class Power_Potion extends Power implements PT_Lore,PT_Equip,PT_Damge,PT_
 			user.getState().potions.add(poitiont);
 			user.sendPluginMessage("&2药水效果"+spotion+"已生效");
 		}catch(Exception ex){user.sendPluginMessage("&4药水效果生效失败");return;}
-		
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

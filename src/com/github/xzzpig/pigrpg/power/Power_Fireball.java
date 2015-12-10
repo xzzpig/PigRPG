@@ -55,7 +55,19 @@ public class Power_Fireball extends Power implements PT_RightClick,PT_Lore
 			return;
 		User user = (User)data.getObject("user");
 		Player player = user.getPlayer();
-		player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1.0f, 1.0f);
+		player.playSound(player.getLocation(),Sound.GHAST_FIREBALL,1.0f,1.0f);
 		player.launchProjectile(SmallFireball.class);
-		}
+	}
+	
+	//entity:Livingentity
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		if(!(data.getObject("entity") instanceof LivingEntity))
+			return;
+		LivingEntity entity = (LivingEntity)data.getObject("entity");
+		entity.getWorld().playSound(entity.getLocation(),Sound.GHAST_FIREBALL,1.0f,1.0f);
+		entity.launchProjectile(SmallFireball.class);
+	}
 }

@@ -90,4 +90,24 @@ public class Power_Flame extends Power implements PT_Damge,PT_Lore
 		if(rand.nextInt(100)<=chance)
 			entity.setFireTicks(time);
 	}
+
+	//*entity:LivingEntity time:int/String chance:int/String
+	@Override
+	public void run(){
+		if(!this.isCloned())
+			return;
+		if(!(data.getObject("entity") instanceof LivingEntity))
+			return;
+		LivingEntity entity = (LivingEntity)data.getObject("entity");
+		int time = data.getInt("time"),chance = data.getInt("chance");
+		try{
+			time = Integer.valueOf(data.getString("time"));
+			chance = Integer.valueOf(data.getString("chance"));
+		}
+		catch(Exception e){}
+		run(entity,time,chance);
+	}
+
+	
+	
 }

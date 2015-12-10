@@ -68,4 +68,12 @@ public class Power_Sound extends Power implements PT_Damge,PT_Lore
 		}
 		player.playSound(player.getLocation(),sound,10,10);
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

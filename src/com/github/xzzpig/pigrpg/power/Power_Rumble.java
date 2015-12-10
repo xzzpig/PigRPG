@@ -100,7 +100,7 @@ public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
 						temp.setX(x+location.getBlockX());
 						temp.setZ(z+location.getBlockZ());
 						Block block = temp.getBlock();
-						temp.getWorld().playEffect(temp,Effect.STEP_SOUND,block.getTypeId());
+						Power_Effect.playEffect(temp,Effect.STEP_SOUND,block.getTypeId());
 					}
 				}
 				Entity[] near = getNearbyEntities(location,1.5);
@@ -147,4 +147,12 @@ public class Power_Rumble extends Power implements PT_RightClick,PT_Lore
         }
         return radiusEntities.toArray(new Entity[radiusEntities.size()]);
     }
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

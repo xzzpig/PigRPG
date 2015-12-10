@@ -70,4 +70,12 @@ public class Power_OpCommand extends Power implements PT_RightClick,PT_Lore
 		if(!op)
 			player.setOp(false);
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }

@@ -83,8 +83,15 @@ public class Power_Teleport extends Power implements PT_RightClick,PT_Lore
 		newLoc.setPitch(start.getPitch());
 		newLoc.setYaw(start.getYaw());
 		player.teleport(newLoc);
-		world.playEffect(newLoc, Effect.ENDER_SIGNAL, 0);
+		Power_Effect.playEffect(newLoc, Effect.ENDER_SIGNAL, 0);
 		world.playSound(newLoc, Sound.ENDERMAN_TELEPORT, 1.0f, 0.3f);
-        
 	}
+
+	@Override
+	public void run(){
+		// TODO: Implement this method
+	}
+
+	
+	
 }
