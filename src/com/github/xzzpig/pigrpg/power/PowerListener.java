@@ -56,8 +56,7 @@ public class PowerListener implements Listener
 					continue;
 				((PT_Damge)p.clone(null)).runDamage(event);
 			}}
-		Debuger.print(""+(System.nanoTime()-time));
-	}
+		}
 
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event){

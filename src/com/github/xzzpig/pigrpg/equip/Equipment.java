@@ -116,11 +116,11 @@ public class Equipment extends ItemStack
 			return true;
 		return false;
 	}
-	
+
 	public Power[] getPowers(){
 		return powers.toArray(new Power[0]);
 	}
-	
+
 	public Equipment loadEnums(){
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();
@@ -159,30 +159,27 @@ public class Equipment extends ItemStack
 		}
 		return this;
 	}
-	
+
 	public Equipment reBuildLore(){
 		List<String> lore = this.getItemMeta().getLore();
 		List<String> plore = new ArrayList<String>();
 		List<String> clore = new ArrayList<String>();
 		lore.remove(0);
 		for(String l:lore){
-			if(l.startsWith("§2-"))
+			if(l.startsWith("-"))
 				plore.add(l);
-			else if(l.startsWith("§2="))
+			else if(l.startsWith("§5=")||l.startsWith("§2="))
 				continue;
 			else
 				clore.add(l);
 		}
 		lore.clear();
 		lore.add("        "+etype.toString());
-		for(String s:clore){
-			if(!s.startsWith("§2=")){
-				lore.add(s);
-				Debuger.print(s+"|"+s.substring(0,1)+"|"+s.startsWith("§2="));}
-			}
+		for(String s:clore)
+			lore.add(s);
 		String p = "";
 		for(int i = 0;i<lore.get(0).length();i++)
-			p = p + "=";
+			p = p+"=";
 		lore.add(TString.Color(2)+p);
 		for(Power po : powers)
 			if(po instanceof PT_Lore)

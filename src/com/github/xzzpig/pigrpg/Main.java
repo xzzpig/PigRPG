@@ -27,7 +27,7 @@ public class Main extends JavaPlugin{
 		Voids.loadBanWords();
 		loadNms();
 		try{
-			if(TUpdate.hasUpdate(this,"Updating"))
+			if(TUpdate.hasUpdate(this,"Aide"))
 				getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.getNewestMessgae(this,"Aide").split("||")[1]);
 		}catch (Exception e){
 			getLogger().info("更新检测失败");
