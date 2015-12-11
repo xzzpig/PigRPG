@@ -11,6 +11,7 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+
 import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.pigrpg.power.type.*;
 
@@ -21,12 +22,19 @@ public class EquipCommand
 	{
 		Player player = (Player)sender;
 		User user = User.getUser(player);
+		if(getarg(args, 1).equalsIgnoreCase("is")){
+			if(player.getItemInHand() instanceof Equipment)
+				user.sendPluginMessage("true");
+			else
+				user.sendPluginMessage("false");
+			return true;
+		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg equip").getSubCommandHelps())
 				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
-		if(getarg(args, 1).equalsIgnoreCase("list")){
+		else if(getarg(args, 1).equalsIgnoreCase("list")){
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for(Power p:Power.values()){
 				if(!(p instanceof PT_Lore))

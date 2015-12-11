@@ -1,9 +1,14 @@
 package com.github.xzzpig.pigrpg.mob;
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.mob.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.configuration.file.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.BukkitTools.TPremission;
+import com.github.xzzpig.BukkitTools.TString;
 
 public class MobQuality
 {

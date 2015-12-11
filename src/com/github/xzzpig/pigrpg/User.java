@@ -111,6 +111,7 @@ public class User
 		if(player.getItemInHand() instanceof Equipment)
 			return (Equipment)player.getItemInHand();
 		Equipment equip = new Equipment(player.getItemInHand());
+		Debuger.print("build");
 		if(equip.getEquiptype() != EquipType.Default)
 			player.setItemInHand(equip);
 		player.updateInventory();

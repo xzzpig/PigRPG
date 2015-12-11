@@ -6,6 +6,7 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
 
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.type.*;
 
@@ -165,16 +166,20 @@ public class Equipment extends ItemStack
 		List<String> clore = new ArrayList<String>();
 		lore.remove(0);
 		for(String l:lore){
-			if(l.startsWith("-"))
+			if(l.startsWith("§2-"))
 				plore.add(l);
-			else if(l.startsWith("="))continue;
+			else if(l.startsWith("§2="))
+				continue;
 			else
 				clore.add(l);
 		}
 		lore.clear();
 		lore.add("        "+etype.toString());
-		for(String s:clore)
-			lore.add(s);
+		for(String s:clore){
+			if(!s.startsWith("§2=")){
+				lore.add(s);
+				Debuger.print(s+"|"+s.substring(0,1)+"|"+s.startsWith("§2="));}
+			}
 		String p = "";
 		for(int i = 0;i<lore.get(0).length();i++)
 			p = p + "=";

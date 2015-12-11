@@ -1,6 +1,6 @@
 name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
-version: V0.1[bate-PowerUpdating]
+version: V0.1[bate-CustomMob]
 author: xzzpig
 depend: [Essentials, BarAPI, HolographicDisplays] 
 commands:

@@ -12,7 +12,6 @@ import org.bukkit.*;
 public class Power_Effect extends Power implements PT_Damge,PT_Lore
 {
 	private boolean clone = false;
-	@SuppressWarnings("unused")
 	private TData data;
 
 	protected Power_Effect(){
@@ -54,7 +53,6 @@ public class Power_Effect extends Power implements PT_Damge,PT_Lore
 		loc.getWorld().playEffect(loc,effect,i);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void runDamage(EntityDamageByEntityEvent event){
 		if(!this.isCloned())

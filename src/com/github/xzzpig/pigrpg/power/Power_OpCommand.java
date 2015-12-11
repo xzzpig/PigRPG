@@ -56,7 +56,7 @@ public class Power_OpCommand extends Power implements PT_RightClick,PT_Lore
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
 		String commands = equip.getLoreData("Command");
-		for(String command:commands.replaceAll("|","~").split("~"))
+		for(String command:commands.replace('|','~').split("~"))
 			run(user.getPlayer(),command);
 		
 	}

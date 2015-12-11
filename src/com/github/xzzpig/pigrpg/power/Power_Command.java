@@ -58,7 +58,7 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
 		String commands = equip.getLoreData("Command");
-		for(String command:commands.replaceAll("|","~").split("~"))
+		for(String command:commands.replace('|','~').split("~"))
 			run(user.getPlayer(),command);
 
 	}
@@ -76,7 +76,7 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		User user = (User)data.getObject("user");
 		String commands = data.getString("commands");
 		if(commands!=null)
-			for(String command:commands.replaceAll("|","~").split("~"))
+			for(String command:commands.replace('|','~').split("~"))
 				run(user.getPlayer(),command);
 		String command = data.getString("command");
 		if(command!=null)
