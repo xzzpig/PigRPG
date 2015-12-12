@@ -82,7 +82,4 @@ public class Power_Command extends Power implements PT_RightClick,PT_Lore
 		if(command!=null)
 			run(user.getPlayer(),command);
 	}
-
-
-
 }

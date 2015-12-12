@@ -22,19 +22,16 @@ public class EquipCommand
 	{
 		Player player = (Player)sender;
 		User user = User.getUser(player);
-		if(getarg(args, 1).equalsIgnoreCase("is")){
-			if(player.getItemInHand() instanceof Equipment)
-				user.sendPluginMessage("true");
-			else
-				user.sendPluginMessage("false");
-			return true;
-		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg equip").getSubCommandHelps())
 				ch.getHelpMessage().send((Player)sender);
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("list")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_list)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for(Power p:Power.values()){
 				if(!(p instanceof PT_Lore))
@@ -48,14 +45,26 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("open")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_open)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			player.openInventory(EquipChest.getInventory(User.getUser(player)));
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("change")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_change)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			player.setItemInHand(new Equipment(player.getItemInHand()));
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setdisplayname")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_setdisplayname)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			Equipment equip;
 			if(player.getItemInHand() == null||player.getItemInHand().getType() == Material.AIR){
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:手中物品不可为空");
@@ -76,6 +85,10 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setid")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_setid)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			Equipment equip;
 			if(player.getItemInHand() == null||player.getItemInHand().getType() == Material.AIR){
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:手中物品不可为空");
@@ -105,6 +118,10 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("qualitylist")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_qualitylist)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"装备品质列表:");
 			for(EquipQuality quality:EquipQuality.values()){
 				Vars.nms.newFancyMessage(quality+quality.getName())
@@ -115,6 +132,10 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setquality")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_setquality)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			Equipment equip;
 			if(player.getItemInHand() == null||player.getItemInHand().getType() == Material.AIR){
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:手中物品不可为空");
@@ -146,6 +167,10 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("typelist")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_typelist)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			sender.sendMessage(TString.Prefix("PigRPG",3)+"装备类型列表:");
 			for(EquipType type:EquipType.values()){
 				Vars.nms.newFancyMessage(ChatColor.BLUE + type.toString())
@@ -156,6 +181,10 @@ public class EquipCommand
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("settype")){
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_settype)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			Equipment equip;
 			if(player.getItemInHand() == null||player.getItemInHand().getType() == Material.AIR){
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:手中物品不可为空");
@@ -184,6 +213,10 @@ public class EquipCommand
 		}
 		else if(getarg(args,1).equalsIgnoreCase("addlore"))
 		{
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_addlore)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			if(getarg(args,2).equalsIgnoreCase(""))
 			{
 				Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"用法错误,输入/pr equip help")
@@ -237,6 +270,10 @@ public class EquipCommand
 		}
 		else if(getarg(args,1).equalsIgnoreCase("dellore"))
 		{
+			if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_equip_dellore)){
+				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
+				return true;
+			}
 			if(getarg(args,2).equalsIgnoreCase(""))
 			{
 				Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"用法错误,输入/pr equip help")

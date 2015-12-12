@@ -20,6 +20,7 @@ premission:
     children:
       pigrpg.default.*: true
       pigrpg.command.admin: true
+      pigrpg.equip.*: true
   pigrpg.default.*:
     description: PigRPG的玩家基础权限
     default: op
@@ -27,6 +28,7 @@ premission:
       pigrpg.command.default: true
       pigrpg.trade.default: true
       pigrpg.teleport.default: true
+      pigrpg.equip.default: true
   pigrpg.command.*:
     description: PigRPG的所有命令权限
     default: op
@@ -37,6 +39,8 @@ premission:
     default: op
     children:
       pigrpg.command.default: true
+      pigrpg.command.equip.admin: true
+      pigrpg.command.list: true
   pigrpg.command.default:
     description: PigRPG的基础命令权限
     default: op
@@ -49,6 +53,67 @@ premission:
   pigrpg.command.chat.default:
     description: chat命令的基础权限(setaccept,change,self)
     default: op
+  pigrpg.command.equip.*:
+    description: equip命令的所有权限
+    default: op
+    children:
+      pigrpg.command.equip.default: true
+      pigrpg.command.equip.admin: true
+  pigrpg.command.equip.default:
+    description: equip命令的基础权限
+    default: op
+    children:
+      pigrpg.command.equip.open: true
+      pigrpg.command.equip.change: true
+  pigrpg.command.equip.admin:
+    description: chat命令的基础权限(setaccept,change,self)
+    default: op
+    children:
+      pigrpg.command.equip.list: true
+      pigrpg.command.equip.setdisplayname: true
+      pigrpg.command.equip.setid: true
+      pigrpg.command.equip.qualitylist: true
+      pigrpg.command.equip.setqualist: true
+      pigrpg.command.equip.typelist: true
+      pigrpg.command.equip.settype: true
+      pigrpg.command.equip.addlore: true
+      pigrpg.command.equip.dellore: true
+  pigrpg.command.equip.list:
+    description: /pr equip list 命令权限
+    default: op
+  pigrpg.command.equip.open:
+    description: /pr equip open 命令权限
+    default: op
+  pigrpg.command.equip.change:
+    description: /pr equip change 命令权限
+    default: op
+  pigrpg.command.equip.setdisplayname:
+    description: /pr equip setdisplayname 命令权限
+    default: op
+  pigrpg.command.equip.setid:
+    description: /pr equip setid 命令权限
+    default: op
+  pigrpg.command.equip.qualitylist:
+    description: /pr equip qualitylist 命令权限
+    default: op
+  pigrpg.command.equip.setquality:
+    description: /pr equip setquality 命令权限
+    default: op
+  pigrpg.command.equip.typelist:
+    description: /pr equip typelist 命令权限
+    default: op
+  pigrpg.command.equip.settype:
+    description: /pr equip settype 命令权限
+    default: op
+  pigrpg.command.equip.addlore:
+    description: /pr equip addlore 命令权限
+    default: op
+  pigrpg.command.equip.dellore:
+    description: /pr equip dellore 命令权限
+    default: op
+  pigrpg.command.list:
+    description: /pr list 命令权限
+    default: op
   pigrpg.trade.default:
     description: 交易的基础权限
     default: op
@@ -59,4 +124,24 @@ premission:
       pigrpg.teleport.warp.*: true
   pigrpg.teleport.warp.*:
     description: 传送所有Warp的权限(子权限pigrpg.teleport.warp.[warp名称])
-    default: false
+    default: op
+  pigrpg.equip.*:
+    description: 装备系统所有权限(包括命令)
+    default: op
+    children:
+      pigrpg.equip.admin: true
+      pigrpg.equip.default: true
+pigrpg.equip.default:
+    description: 装备系统基础权限
+    default: op
+    children:
+      pigrpg.command.equip.default: true
+      pigrpg.equip.use.*: true
+pigrpg.equip.use.*:
+    description: 使用所有装备类型
+    default: op
+pigrpg.equip.admin:
+    description: 装备系统管理员权限
+    default: op
+    chilren:
+      pigrpg.command.equip.*: true

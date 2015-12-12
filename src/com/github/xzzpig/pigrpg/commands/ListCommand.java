@@ -13,11 +13,10 @@ public class ListCommand
 {
 	public static boolean command(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		/*
-		if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_trade_default)){
+		if(!User.getUser((Player)sender).hasPremission(Premissions.pigrpg_command_list)){
 			sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
 			return true;
-		}*/
+		}
 		Player player = (Player) sender;
 		User user = User.getUser(player);
 		if(getarg(args, 1).equalsIgnoreCase("help")){

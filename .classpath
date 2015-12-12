@@ -8,6 +8,6 @@
 <classpathentry kind="output" path="bin"/>
 <classpathentry kind="lib" path="/storage/sdcard0/AppProjects/BarAPI.jar"/>
 <classpathentry kind="lib" path="/storage/sdcard0/AppProjects/craftbukkit-1.6.4-R2.0.jar"/>
-<classpathentry kind="lib" path="/storage/sdcard0/AppProjects/Essentials.jar"/>
 <classpathentry kind="lib" path="/storage/sdcard0/AppProjects/HolographicDisplays.jar"/>
+<classpathentry kind="lib" path="/storage/sdcard0/AppProjects/Essentials.jar"/>
 </classpath>
