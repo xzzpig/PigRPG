@@ -30,7 +30,7 @@ public class Power_Sound extends Power implements PT_Damge,PT_Lore
 	@Override
 	public String getLore(Equipment equip){
 		String ssound = equip.getLoreData("Sound");
-		return "攻击时播放音效"+ssound;
+		return "攻击时播放音效"+ssound.replace(' ','_');
 	}
 
 
@@ -61,7 +61,7 @@ public class Power_Sound extends Power implements PT_Damge,PT_Lore
 		User user = User.getUser(player);
 		Equipment equip = user.getHandEquip();
 		String ssound = equip.getLoreData("Sound");
-		Sound sound  = Sound.valueOf(ssound);
+		Sound sound  = Sound.valueOf(ssound.replace(' ','_'));
 		if(sound == null){
 			user.sendPluginMessage("不存在该音效");
 			return;

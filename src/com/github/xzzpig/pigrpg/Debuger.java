@@ -8,14 +8,14 @@ public class Debuger
 	
 	public static boolean isdebug = true;
 	@SuppressWarnings("deprecation")
-	public static void print(String s)
+	public static void print(Object s)
 	{
 		if(isdebug == false)return;
 		System.out.println("\n****************\n"+s+"\n****************");
 		for(Player p: Bukkit.getServer().getOnlinePlayers())
 		{
 			if(p.isOp())
-				p.sendMessage(s);
+				p.sendMessage(s.toString());
 		}
 	}
 	

@@ -32,6 +32,8 @@ public class User
 	private TData data = new TData();
 	private Eco eco;
 	private State state;
+	private ItemStack handitem;
+	private Equipment handequip;
 
 	public User(Player player){
 		this.player = player;
@@ -108,17 +110,13 @@ public class User
 	}
 	@SuppressWarnings("deprecation")
 	public Equipment getHandEquip(){
-		if(data.getObject("HandItem") != null){
-			ItemStack hitem = (ItemStack)data.getObject("HandItem");
-			if(hitem == this.getPlayer().getItemInHand())
-				return (Equipment)data.getObject("HandEquip");
-		}
+		if(this.handitem != null&&handitem.toString().equalsIgnoreCase(player.getItemInHand().toString()))
+			return this.handequip;
 		Equipment equip = new Equipment(player.getItemInHand());
 		if(equip.getEquiptype() != EquipType.Default)
 			player.setItemInHand(equip);
 		player.updateInventory();
-		data.setObject("HandItem",this.getPlayer().getItemInHand());
-		data.setObject("HandEquip",equip);
+		this.handitem = player.getItemInHand();		this.handequip = equip;
 		return equip;
 	}
 	

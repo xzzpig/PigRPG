@@ -55,7 +55,7 @@ public class Help
 		pr_list.addSubCommandHelp("lore","列出所有特殊lore","","");
 		pr_list.addSubCommandHelp("quality","列出所有装备品质","","");
 		pr_list.addSubCommandHelp("type","列出所有装备类型","","");
-		pr_list.addSubCommandHelp("type","列出所有装备类型","","");
+		pr_list.addSubCommandHelp("potion","列出所有药水效果","","");
 		pr_list.addSubCommandHelp("effect","列出所有粒子效果","","");
 		pr_list.addSubCommandHelp("sound","列出所有音效","","");
 	}

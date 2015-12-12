@@ -1,14 +1,17 @@
 package com.github.xzzpig.pigrpg.equip;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.bukkit.*;
-import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.Debuger;
+import com.github.xzzpig.BukkitTools.TArgsSolver;
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.BukkitTools.TPremission;
+import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.power.Power;
-import com.github.xzzpig.pigrpg.power.type.*;
+import com.github.xzzpig.pigrpg.power.type.PT_Lore;
 
 public class Equipment extends ItemStack
 {
@@ -155,7 +158,7 @@ public class Equipment extends ItemStack
 			if(!(p instanceof PT_Lore))
 				continue;
 			if(map.get(p.getPowerName())!=null)
-				powers.add(p.clone(null));
+				powers.add(p.clone(new TData().setString("item",this.toString())));
 		}
 		return this;
 	}
@@ -183,7 +186,7 @@ public class Equipment extends ItemStack
 		lore.add(TString.Color(2)+p);
 		for(Power po : powers)
 			if(po instanceof PT_Lore)
-				lore.add(TString.Color(5)+((PT_Lore)po).getLore(this));
+				lore.add(TString.Color(5)+'='+((PT_Lore)po).getLore(this));
 		lore.add(TString.Color(2)+p);
 		for(String ps : plore)
 			lore.add(ps);

@@ -57,7 +57,7 @@ public class Power_Teleport extends Power implements PT_RightClick,PT_Lore
 			return;
 		User user = (User)data.getObject("user");
 		Equipment equip = user.getHandEquip();
-		String sdistance = equip.getLoreData("Tlelport");
+		String sdistance = equip.getLoreData("Teleport");
 		int distance;
 		try{
 			distance = Integer.valueOf(0+sdistance);

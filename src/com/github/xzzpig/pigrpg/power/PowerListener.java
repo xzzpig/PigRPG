@@ -18,7 +18,6 @@ public class PowerListener implements Listener
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event){
-		long time = System.nanoTime();
 		if(!(event.getDamager() instanceof LivingEntity))
 			return;
 		if(!(event.getEntity() instanceof LivingEntity))
@@ -64,6 +63,8 @@ public class PowerListener implements Listener
 			return;
 		User user = User.getUser(event.getPlayer());
 		Equipment equip = user.getHandEquip();
+		if(event.getMaterial().isBlock()&&equip.getEquiptype() != EquipType.Default)
+			event.setCancelled(true);
 		if(equip.getEquiptype()==EquipType.Core)
 			equip = user.getEquip(EquipType.Core);
 		else if(EquipType.Weapon.getInherit().hasChild(TPremission.valueOf(equip.getEquiptype().toString()))){

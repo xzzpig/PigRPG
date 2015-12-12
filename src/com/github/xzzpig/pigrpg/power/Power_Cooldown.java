@@ -1,4 +1,6 @@
 package com.github.xzzpig.pigrpg.power;
+import java.util.HashMap;
+
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
@@ -8,6 +10,8 @@ import org.bukkit.*;
 
 public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_Lore
 {
+	private static HashMap<String, Long> time = new HashMap<String, Long>();
+	
 	private boolean clone = false;
 	private TData data;
 	private long finaltime = System.currentTimeMillis();
@@ -64,11 +68,7 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 			return;
 		}
 		run(cooldown);
-		for(Power p: equip.powers){
-			if(p instanceof Power_Cooldown)
-				equip.powers.remove(this);
-		}
-		equip.powers.add(this);
+		time.put(equip.toString(), this.finaltime);
 	}
 	
 	//time:时间 单位:毫秒
@@ -78,6 +78,7 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 	
 	@Override
 	public boolean can(){
+		this.finaltime = getTime(data.getString("item"));
 		boolean can = System.currentTimeMillis() >= this.finaltime;
 		return can;
 	}
@@ -97,8 +98,9 @@ public class Power_Cooldown extends Power implements PT_RightClick,PT_Limit,PT_L
 		int time = data.getInt("time");
 		this.finaltime = System.currentTimeMillis() + time;
 	}
-
-
-	
-	
+	public static long getTime(String item) {
+		if(!time.containsKey(item))
+			return System.currentTimeMillis();
+		return time.get(item);
+	}
 }

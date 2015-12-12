@@ -9,9 +9,12 @@ import com.github.xzzpig.pigrpg.sale.*;
 import com.github.xzzpig.pigrpg.teleport.*;
 import com.github.xzzpig.pigrpg.trade.*;
 import com.gmail.filoghost.holographicdisplays.util.*;
+
 import org.bukkit.*;
 import org.bukkit.command.*;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.*;
+
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.*;
@@ -26,18 +29,25 @@ public class Main extends JavaPlugin{
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
 		loadNms();
-		try{
-			if(TUpdate.hasUpdate(this,"Aide"))
-				getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.getNewestMessgae(this,"Aide").split("||")[1]);
-		}catch (Exception e){
-			getLogger().info("更新检测失败");
-		}
+		Plugin plugin = this;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try{
+					if(TUpdate.hasUpdate(plugin,"Aide"))
+						getLogger().info("已检测到该插件有所更新,更新内容:"+TUpdate.getNewestMessgae(plugin,"Aide").split("||")[1]);
+				}catch (Exception e){
+					getLogger().info("更新检测失败");
+				}
+			}
+		}).start();
 		try {
 			Warp.loadAll();
 		} catch (Exception e) {
 			getLogger().info(" Warp读取失败,原因可能是暂无 Warp");
 		}
 		EquipType.load();
+		Power.Arrow.run();;
 		Sale.loadItems();
 		getServer().getPluginManager().registerEvents(new RCChestListener(), this);
 		getServer().getPluginManager().registerEvents(new FriendEvent(), this);

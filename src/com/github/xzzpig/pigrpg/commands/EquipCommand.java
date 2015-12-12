@@ -22,6 +22,11 @@ public class EquipCommand
 	{
 		Player player = (Player)sender;
 		User user = User.getUser(player);
+		if(getarg(args, 1).equalsIgnoreCase("debug")){
+			for(Power p:user.getHandEquip().powers)
+			user.sendPluginMessage(p.getPowerName());
+			return true;
+		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
 			for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg equip").getSubCommandHelps())
 				ch.getHelpMessage().send((Player)sender);

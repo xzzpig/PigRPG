@@ -5,9 +5,11 @@ import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
+import org.bukkit.potion.PotionEffectType;
 
 public class ListCommand
 {
@@ -77,7 +79,15 @@ public class ListCommand
 			}
 			return true;
 		}
-		
+		else if(getarg(args, 1).equalsIgnoreCase("potion")){
+			sender.sendMessage(TString.Prefix("PigRPG",3)+"药水效果列表:");
+			for(PotionEffectType potion:PotionEffectType.values()){
+				Vars.nms.newFancyMessage(ChatColor.BLUE + potion.toString())
+					.tooltip(ChatColor.RED + "该lore过于复杂,无法匹配")
+					.send((Player)sender);
+			}
+			return true;
+		}
 		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",4)+"输入/pr list help")
 			.tooltip(CommandHelp.valueOf(Help.PIGRPG,"pigrpg list").getDescribe())
 			.then(ChatColor.BLUE+""+ChatColor.UNDERLINE+"获取帮助")
