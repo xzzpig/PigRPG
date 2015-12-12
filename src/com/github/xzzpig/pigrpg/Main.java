@@ -19,6 +19,7 @@ import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.rpgworld.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -29,7 +30,7 @@ public class Main extends JavaPlugin{
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
 		loadNms();
-		Plugin plugin = this;
+		final Plugin plugin = this;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -57,6 +58,8 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new SaleListener(), this);
 		getServer().getPluginManager().registerEvents(new EquipListener(), this);
 		getServer().getPluginManager().registerEvents(new PowerListener(), this);
+		getServer().getPluginManager().registerEvents(new RpgWorldListener(), this);
+		
 	}
 	
 	//插件停用函数
