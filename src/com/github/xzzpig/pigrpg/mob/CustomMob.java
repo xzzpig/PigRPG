@@ -17,9 +17,11 @@ public class CustomMob
 		State state = new State(entity);
 		CustomMob mob = new CustomMob(entity);
 		mob.setMobQuality(MobQuality.valueOf(random.nextInt(MobQuality.values().length)));
+		entity.setCustomName(entity.getCustomName()+"\n\t§7Lv"+level);
 		state.setHp((int)TCalculate.getResult(Equation.Hp.replaceAll("$level",level+"")));
 		state.setPhysicDamage((int)TCalculate.getResult(Equation.Damage.replaceAll("$level",level+"")));
 		state.setPhysicDefence((int)TCalculate.getResult(Equation.Defence.replaceAll("$level",level+"")));
+		/*
 		Power power = null;
 		Power[] powers = Power.values();
 		for(int i = 0;i < mob.getMobQuality().getPowerNumber();i++){
@@ -28,6 +30,7 @@ public class CustomMob
 			}
 			state.addPowers(power.clone(null));
 		}
+		*/
 		return entity;
 	}
 	

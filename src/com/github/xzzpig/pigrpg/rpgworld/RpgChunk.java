@@ -29,7 +29,7 @@ public class RpgChunk
 	public RpgChunk change(){
 		if(!isChanged())
 			this.chunk.getBlock(1,1,1).setType(Material.CHEST);
-		String name = TString.getRandomCH(random.nextInt(5));
+		String name = TString.getRandomCH(Math.abs(random.nextInt(4))+1);
 		for(Chunk ch:getNextChunks()){
 			RpgChunk rctest = new RpgChunk(ch);
 			if(ch.getBlock(1,1,1).getBiome() == this.chunk.getBlock(1,1,1).getBiome()
@@ -98,6 +98,15 @@ public class RpgChunk
 		getDatas().addItem(item);
 		return this;
 	}
+	
+	public int getBasicLevel(){
+		Block block = this.chunk.getBlock(1,1,1);
+		Location spawn = block.getWorld().getSpawnLocation();
+		double distance = spawn.distance(block.getLocation());
+		int level = (int) distance / RpgWorld.part;
+		return level;
+	}
+	
 	public Chunk[] getNextChunks(){
 		Chunk[] cs = new Chunk[4];
 		Location loc = chunk.getBlock(5,5,5).getLocation();
