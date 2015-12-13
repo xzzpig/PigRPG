@@ -3,7 +3,9 @@ import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
+
 import java.util.*;
+
 import com.github.xzzpig.BukkitTools.*;
 
 public class RpgChunk
@@ -22,9 +24,9 @@ public class RpgChunk
 		for(Chunk ch:getNextChunks()){
 			RpgChunk rctest = new RpgChunk(ch);
 			if(ch.getBlock(1,1,1).getBiome() == this.chunk.getBlock(1,1,1).getBiome()
-				&&rctest.getData("name") != null){
-				 name = rctest.getData("name");
-				 break;
+					&&rctest.getData("name") != null){
+				name = rctest.getData("name");
+				break;
 			}
 		}
 		setData("name",name);
@@ -44,25 +46,39 @@ public class RpgChunk
 	
 	public Inventory getDatas(){
 		Block block = this.chunk.getBlock(1,1,1);
-		if(block.getType() ==  Material.CHEST)
-			return ((Chest)block).getBlockInventory();
+		if(block.getState() instanceof Chest)
+			return ((Chest)block.getState()).getBlockInventory();
 		return null;
 	}
 	public String getData(String key){
 		ItemStack item = null;
-		for(ItemStack is:getDatas().getContents())
+		if(getDatas() == null)
+			return null;
+		for(ItemStack is:getDatas().getContents()){
+			if(is == null)
+				continue;
+			String displayname = is.getItemMeta().getDisplayName();
+			if(displayname == null)
+				continue;
 			if(is.getItemMeta().getDisplayName().equalsIgnoreCase(key)){
 				item = is;
 				break;
 			}
+		}
 		if(item == null||item.getItemMeta().getLore() == null||item.getItemMeta().getLore().size() == 0)
 			return null;
 		return item.getItemMeta().getLore().get(0);
 	}
 	public RpgChunk setData(String key,String value){
-		for(ItemStack is:getDatas().getContents())
+		for(ItemStack is:getDatas().getContents()){
+			if(is == null)
+				continue;
+			String displayname = is.getItemMeta().getDisplayName();
+			if(displayname == null)
+				continue;
 			if(is.getItemMeta().getDisplayName().equalsIgnoreCase(key))
 				is.setType(Material.AIR);
+		}
 		ItemStack item = new ItemStack(Material.SIGN);
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName(key);

@@ -17,6 +17,10 @@ public class Commands {
 	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
+			if(getarg(args, 0).equalsIgnoreCase("debug")){
+				((Player)sender).teleport(((Player)sender).getLocation().getChunk().getBlock(1,1,1).getLocation());
+				return true;
+			}
 			if(getarg(args, 0).equalsIgnoreCase("help")){
 				if(sender instanceof Player){
 					for(CommandHelp ch:CommandHelp.valueOf(Help.PIGRPG,"pigrpg").getSubCommandHelps())
