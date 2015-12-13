@@ -7,10 +7,19 @@ import org.bukkit.inventory.meta.*;
 import java.util.*;
 
 import com.github.xzzpig.BukkitTools.*;
+import org.bukkit.configuration.file.*;
 
 public class RpgChunk
 {
 	private static final Random random = new Random();
+	public static HashMap<Biome,String> chbiome = new HashMap<Biome,String>();
+	static{
+		FileConfiguration config = TConfig.getConfigFile("PigRPG","rpgworld.yml");
+		for(Biome biome:Biome.values()){
+			chbiome.put(biome,config.getString("rpgworld.biomename."+biome,biome.name()));
+			TConfig.saveConfig("PigRPG","rpgworld.yml","rpgworld.biomename."+biome,chbiome.get(biome));
+		}
+	}
 	
 	private Chunk chunk;
 	public RpgChunk(Chunk chunk){
@@ -20,7 +29,7 @@ public class RpgChunk
 	public RpgChunk change(){
 		if(!isChanged())
 			this.chunk.getBlock(1,1,1).setType(Material.CHEST);
-		String name = TString.getRandomCH(random.nextInt(5)) + getBiome();
+		String name = TString.getRandomCH(random.nextInt(5));
 		for(Chunk ch:getNextChunks()){
 			RpgChunk rctest = new RpgChunk(ch);
 			if(ch.getBlock(1,1,1).getBiome() == this.chunk.getBlock(1,1,1).getBiome()
