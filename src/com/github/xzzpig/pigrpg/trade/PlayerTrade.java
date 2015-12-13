@@ -1,15 +1,13 @@
 package com.github.xzzpig.pigrpg.trade;
 
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.chests.PlayerTradeChest;
+import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.chests.*;
+import java.util.*;
+import org.bukkit.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.*;
 
 public class PlayerTrade
 {
@@ -45,8 +43,15 @@ public class PlayerTrade
 	
 	private void startTradeQue(Player p1,Player p2){
 		p2.sendMessage(TString.Prefix("PigRPG",5)+p1.getName()+TString.Color(3)+"请求与你交易");
-		p2.sendMessage(TString.Color(3)+"输入/pr trade accept同意");
-		p2.sendMessage(TString.Color(3)+"输入/pr trade deny拒绝");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",3)+"输入/pr trade ")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"accept")
+			.tooltip("同意\n/pr trade accept")
+			.suggest("/pr trade accept")
+			.then(ChatColor.RED+"|")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"deny")
+			.tooltip("拒绝\n/pr trade deny")
+			.suggest("/pr trade deny")
+			.send(p2);
 		p2.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");
 		p1.sendMessage(TString.Prefix("PigRPG",3)+"你的交易请求已发送");
 		p1.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");

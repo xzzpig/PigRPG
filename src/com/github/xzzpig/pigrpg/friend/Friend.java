@@ -1,16 +1,9 @@
 package com.github.xzzpig.pigrpg.friend;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.*;
+import java.util.*;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 
 public class Friend
 {
@@ -51,8 +44,15 @@ public class Friend
 	public static void addFriendQue(Player player,final Player friend)
 	{
 		friend.sendMessage(TString.Prefix("PigRPG",5)+player.getName()+TString.Color(3)+"请求加你好友");
-		friend.sendMessage(TString.Color(3)+"输入/pr friend accept同意");
-		friend.sendMessage(TString.Color(3)+"输入/pr friend deny拒绝");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",3)+"输入/pr friend ")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"accept")
+			.tooltip("同意\n/pr friend accept")
+			.suggest("/pr friend accept")
+			.then(ChatColor.RED+"|")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"deny")
+			.tooltip("拒绝\n/pr friend deny")
+			.suggest("/pr friend deny")
+			.send(friend);
 		friend.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");
 		player.sendMessage(TString.Prefix("PigRPG",3)+"你的好友请求已发送");
 		player.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");
@@ -78,8 +78,15 @@ public class Friend
 		}
 		final Player pfriend = TEntity.toPlayer(friend);
 		pfriend.sendMessage(TString.Prefix("PigRPG",5)+player.getName()+TString.Color(3)+"请求与你断绝好友关系");
-		pfriend.sendMessage(TString.Color(3)+"输入/pr friend del accept同意");
-		pfriend.sendMessage(TString.Color(3)+"输入/pr friend del deny  拒绝");
+		Vars.nms.newFancyMessage(TString.Prefix("PigRPG",3)+"输入/pr friend del ")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"accept")
+			.tooltip("同意\n/pr friend del accept")
+			.suggest("/pr friend del accept")
+			.then(ChatColor.RED+"|")
+			.then(ChatColor.GREEN.toString()+ChatColor.UNDERLINE+"deny")
+			.tooltip("拒绝\n/pr friend del deny")
+			.suggest("/pr friend del deny")
+			.send(pfriend);
 		pfriend.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");
 		player.sendMessage(TString.Prefix("PigRPG",3)+"你的删除好友请求已发送");
 		player.sendMessage(TString.Color(5)+"请求将在5秒后自动取消");
@@ -94,7 +101,7 @@ public class Friend
 				}
 				friendque.remove(pfriend.getName());
 			}
-		}).start();;		
+		}).start();
 	}
 	
 	public static boolean hasFriend(String player,String friend)

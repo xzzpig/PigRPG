@@ -3,6 +3,7 @@ import org.bukkit.configuration.file.*;
 
 import com.earth2me.essentials.Essentials;
 import java.util.*;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
 
 public class Vars
 {
@@ -15,4 +16,6 @@ public class Vars
 	public static Essentials ess;
 	
 	public static boolean hasEss;
+	
+	public static NMSManager nms;
 }
