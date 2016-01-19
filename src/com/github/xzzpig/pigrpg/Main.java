@@ -20,7 +20,6 @@ import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.rpgworld.*;
-import com.github.xzzpig.pigrpg.mob.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -49,7 +48,6 @@ public class Main extends JavaPlugin{
 			getLogger().info(" Warp读取失败,原因可能是暂无 Warp");
 		}
 		EquipType.load();
-		Power.Arrow.run();
 		Sale.loadItems();
 		getServer().getPluginManager().registerEvents(new RCChestListener(), this);
 		getServer().getPluginManager().registerEvents(new FriendEvent(), this);
@@ -60,7 +58,6 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new EquipListener(), this);
 		getServer().getPluginManager().registerEvents(new PowerListener(), this);
 		getServer().getPluginManager().registerEvents(new RpgWorldListener(), this);
-		getServer().getPluginManager().registerEvents(new MobListener(), this);
 		
 	}
 	

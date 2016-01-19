@@ -3,8 +3,6 @@ import org.bukkit.entity.*;
 import com.github.xzzpig.pigrpg.*;
 import java.util.*;
 import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.power.*;
-import com.github.xzzpig.pigrpg.power.type.*;
 
 public class CustomMob
 {
@@ -17,7 +15,6 @@ public class CustomMob
 		State state = new State(entity);
 		CustomMob mob = new CustomMob(entity);
 		mob.setMobQuality(MobQuality.valueOf(random.nextInt(MobQuality.values().length)));
-		entity.setCustomName(entity.getCustomName()+"\n\t§7Lv"+level);
 		state.setHp((int)TCalculate.getResult(Equation.Hp.replaceAll("$level",level+"")));
 		state.setPhysicDamage((int)TCalculate.getResult(Equation.Damage.replaceAll("$level",level+"")));
 		state.setPhysicDefence((int)TCalculate.getResult(Equation.Defence.replaceAll("$level",level+"")));
@@ -28,7 +25,7 @@ public class CustomMob
 			while(power instanceof PT_Entity){
 				power = powers[random.nextInt(powers.length)];
 			}
-			state.addPowers(power.clone(null));
+			//state.addPowers(power.clone(null));
 		}
 		*/
 		return entity;

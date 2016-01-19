@@ -43,20 +43,22 @@ public class PowerListener implements Listener
 					return;
 				}
 			}
-			if(user.getHandEquip()!=equip){
-				user.getHandEquip().powers .clear();
-				for(Power p:equip.powers)
-					user.getHandEquip().powers.add(p);
-				user.getHandEquip().reBuildLore();
-				user.getHandEquip().powers.clear();
+			pls:for(PowerLore pl : equip.powerlores){
+				if(pl.runtime != PowerRunTime.Damage)
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Damge)
+						if(!((PT_Limit) p).can())
+							break ps;
+					if(!(p instanceof PT_Damge))
+						continue;
+					((PT_Damge)p).rebulidDamage(event);
+					p.run();
+				}
 			}
-			for(Power p : equip.getPowers()){
-				if(!(p instanceof PT_Damge))
-					continue;
-				((PT_Damge)p.clone(null)).runDamage(event);
-			}}
 		}
-
+	}
+	
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event){
 		if(event.getAction()!=Action.RIGHT_CLICK_AIR&&event.getAction()!=Action.RIGHT_CLICK_BLOCK)
@@ -76,25 +78,18 @@ public class PowerListener implements Listener
 				return;
 			}
 		}
-		if(user.getHandEquip()!=equip){
-			user.getHandEquip().powers .clear();
-			for(Power p:equip.powers)
-				user.getHandEquip().powers.add(p);
-			user.getHandEquip().reBuildLore();
-			user.getHandEquip().powers.clear();
-		}
-		for(Power p : equip.getPowers()){
-			if(!(p instanceof PT_Limit))
-				continue;
-			if(!((PT_Limit)p).can()){
-				user.sendPluginMessage(((PT_Limit)p).cantMessage());
-				return;
+		pls:for(PowerLore pl : equip.powerlores){
+			if(pl.runtime != PowerRunTime.RightClick)
+				continue pls;
+			ps:for(Power p:pl.powers){
+				if(p instanceof PT_Limit)
+					if(!((PT_Limit) p).can())
+						break ps;
+				if(!(p instanceof PT_RightClick))
+					continue;
+				((PT_RightClick)p).rebuildRC(event);
+				p.run();
 			}
-		}
-		for(Power p : equip.getPowers()){
-			if(!(p instanceof PT_RightClick))
-				continue;
-			((PT_RightClick)p.clone(new TData().setObject("user",User.getUser(event.getPlayer())))).runRC();
 		}
 	}
 }

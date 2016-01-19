@@ -23,8 +23,6 @@ public class EquipCommand
 		Player player = (Player)sender;
 		User user = User.getUser(player);
 		if(getarg(args, 1).equalsIgnoreCase("debug")){
-			for(Power p:user.getHandEquip().powers)
-			user.sendPluginMessage(p.getPowerName());
 			return true;
 		}
 		if(getarg(args, 1).equalsIgnoreCase("help")){
@@ -39,8 +37,6 @@ public class EquipCommand
 			}
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for(Power p:Power.values()){
-				if(!(p instanceof PT_Lore))
-					continue;
 				PT_Lore pl = (PT_Lore)p;
 				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.getPowerName()).
 				tooltip(ChatColor.YELLOW+"用法:"+pl.getUsage()+"\n点击匹配").
@@ -211,7 +207,7 @@ public class EquipCommand
 					.send((Player)sender);
 				type = EquipType.Default;
 			}
-			equip.setEquiptype(type).reBuildLore();
+			//equip.setEquiptype(type).reBuildLore();
 			player.setItemInHand(equip);
 			sender.sendMessage(TString.Prefix("PigRPG",2)+"手中装备类型已设置为 "+type);
 			return true;

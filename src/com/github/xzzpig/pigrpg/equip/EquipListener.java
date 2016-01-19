@@ -8,10 +8,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.xzzpig.BukkitTools.TData;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.power.Power;
+import com.github.xzzpig.pigrpg.power.PowerRunTime;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
+import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
 public class EquipListener implements Listener
 {
@@ -29,10 +30,21 @@ public class EquipListener implements Listener
 			else
 				user.setEquip(new Equipment(is));
 		}
-		for(Power p:Power.values()){
-			if(!(p instanceof PT_Equip))
-				continue;
-			((PT_Equip)p.clone(new TData().setObject("user",user))).runEquip();
+		for(EquipType et:EquipType.values()){
+			Equipment equip = user.getEquip(et);
+			pls:for(PowerLore pl:equip.powerlores){
+				if(pl.runtime != PowerRunTime.CloseEC)
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Equip)
+						if(!((PT_Limit) p).can())
+							break ps;
+					if(!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip)p).rebuildEquip(event);
+					p.run();
+				}
+			}
 		}
 	}
 

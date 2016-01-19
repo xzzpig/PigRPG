@@ -7,19 +7,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.xzzpig.BukkitTools.TArgsSolver;
-import com.github.xzzpig.BukkitTools.TData;
-import com.github.xzzpig.BukkitTools.TPremission;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.power.Power;
-import com.github.xzzpig.pigrpg.power.type.PT_Lore;
 
 public class Equipment extends ItemStack
 {
 	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
-	public List<Power> powers = new ArrayList<Power>();
-
+	public List<PowerLore> powerlores = new ArrayList<PowerLore>();
 
 	@SuppressWarnings("deprecation")
 	public Equipment(int id){
@@ -86,10 +80,6 @@ public class Equipment extends ItemStack
 			im.setLore(lore);
 			this.setItemMeta(im);
 		}
-		if(EquipType.Consume.getInherit().hasChild(TPremission.valueOf(etype.toString()))){
-			powers.remove(Power.Consume);
-			powers.add(Power.Consume);
-		}
 		return this;
 	}
 	public EquipType getEquiptype(){
@@ -120,10 +110,6 @@ public class Equipment extends ItemStack
 		return false;
 	}
 
-	public Power[] getPowers(){
-		return powers.toArray(new Power[0]);
-	}
-
 	public Equipment loadEnums(){
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();
@@ -143,26 +129,22 @@ public class Equipment extends ItemStack
 				this.setEquipQuality(eq);
 			}
 		}
-		loadPowers();
-		reBuildLore();
+		loadPowerLores();
+		//reBuildLore();
 		return this;
 	}
-	public Equipment loadPowers(){
-		powers.clear();
-		if(EquipType.Consume.getInherit().hasChild(TPremission.valueOf(etype.toString()))){
-			powers.remove(Power.Consume);
-			powers.add(Power.Consume);
-		}
-		TArgsSolver map = new TArgsSolver(this.getItemMeta().getLore().toArray(new String[0]));
-		for(Power p:Power.values()){
-			if(!(p instanceof PT_Lore))
-				continue;
-			if(map.get(p.getPowerName())!=null)
-				powers.add(p.clone(new TData().setString("item",this.toString())));
+	public Equipment loadPowerLores(){
+		List<String> lores = this.getItemMeta().getLore();
+		for(String lore:lores){
+			for(PowerLore pl:PowerLore.powerlores){
+				if(lore.contains(pl.getKey()))
+					powerlores.add(pl.clone().loadVars(lore));
+			}
 		}
 		return this;
 	}
 
+	/*
 	public Equipment reBuildLore(){
 		List<String> lore = this.getItemMeta().getLore();
 		List<String> plore = new ArrayList<String>();
@@ -194,4 +176,5 @@ public class Equipment extends ItemStack
 		this.saveItemMeta();
 		return this;
 	}
+	*/
 }

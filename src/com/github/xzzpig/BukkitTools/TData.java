@@ -91,4 +91,33 @@ public class TData
 		}
 		return sb.toString();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public TData clone(){
+		TData cloned = new TData();
+		cloned.strs = (HashMap<String, String>) this.strs.clone();
+		cloned.ints = (HashMap<String, Integer>) this.ints.clone();
+		cloned.boos = (HashMap<String, Boolean>) this.boos.clone();
+		cloned.obs  = (HashMap<String, Object>) this.obs.clone();
+		return cloned;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof TData))
+			return false;
+		return equals((TData)obj);
+	}
+	public boolean equals(TData data) {
+		if(!data.strs.equals(this.strs))
+			return false;
+		if(!data.ints.equals(this.ints))
+			return false;
+		if(!data.boos.equals(this.boos))
+			return false;
+		if(!data.obs.equals(this.obs))
+			return false;
+		return true;
+	}
 }

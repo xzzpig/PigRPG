@@ -3,5 +3,5 @@ import org.bukkit.event.entity.*;
 
 public interface PT_Damge
 {
-	public void runDamage(EntityDamageByEntityEvent event);
+	public void rebulidDamage(EntityDamageByEntityEvent event);
 }
