@@ -1,15 +1,17 @@
 package com.github.xzzpig.pigrpg.equip;
 
-import org.bukkit.configuration.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.pigrpg.Debuger;
-import com.github.xzzpig.pigrpg.power.*;
-
-import java.util.*;
-import java.util.Map.Entry;
-
-import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigrpg.power.Power;
+import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
 public class PowerLore
 {
@@ -29,7 +31,7 @@ public class PowerLore
 	
 	public String name;
 	private String matchkey,form,show;
-	public PowerRunTime runtime;
+	private PowerRunTime[] runtime;
 	private List<EquipType> needequip = new ArrayList<EquipType>();
 	public List<Power> powers = new ArrayList<Power>();
 	public TData data = new TData();
@@ -41,9 +43,9 @@ public class PowerLore
 		matchkey = path.getString("matchkey");
 		form = path.getString("form");
 		show = path.getString("show");
-		runtime = PowerRunTime.form(path.getString("runtime"));
+		runtime = PowerRunTime.form(path.getStringList("runtime"));
 		if(runtime == null)
-			runtime = PowerRunTime.Never;
+			runtime = new PowerRunTime[]{PowerRunTime.Never};
 		for(String type:path.getStringList("needequip"))
 			needequip.add(EquipType.getFrom(type));
 	}
@@ -68,9 +70,7 @@ public class PowerLore
 	
 	public PowerLore loadPowers(){
 		Set<String> powernames = path.getConfigurationSection("power").getKeys(false);
-		Debuger.print(path.getName());
 		for(String powername:powernames){
-			Debuger.print(powername);
 			try {
 				powers.add(((Power)Class.forName("com.github.xzzpig.pigrpg.power.Power_"+powername).newInstance()).reBuild(path.getConfigurationSection("power."+powername),this));
 			} catch (InstantiationException e) {
@@ -79,9 +79,6 @@ public class PowerLore
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				System.out.println("[PigRPG]错误:加载Power错误(未知的Power名称)");
-			}
-			for(Power p:this.powers){
-				Debuger.print(p.getPowerName());
 			}
 		}
 		return this;
@@ -107,7 +104,6 @@ public class PowerLore
 				value = match.substring(start,match.indexOf(mid,start));
 			}
 			data.setString(key, value);
-			Debuger.print(key+":"+value);
 			form = form.substring(end+2);
 			match = match.substring(start+value.length());
 		}
@@ -124,10 +120,15 @@ public class PowerLore
 		
 	}
 	public String getLore() {
-		Debuger.print(show);
 		return this.getReplaced(show);
 	}
-
+	
+	public boolean isRunTime(PowerRunTime rt){
+		for(PowerRunTime prt:runtime)
+			if(rt == prt)
+				return true;
+		return false;
+	}
 }
 /*
 漏了

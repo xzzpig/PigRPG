@@ -53,6 +53,7 @@ public class Help
 		pr_equip.addSubCommandHelp("dellore","给手中物品删除lore","","[行数]");
 		
 		pr_list.addSubCommandHelp("lore","列出所有特殊lore","","");
+		pr_list.addSubCommandHelp("runtime","列出所有Lore触发时间参数","","");		
 		pr_list.addSubCommandHelp("quality","列出所有装备品质","","");
 		pr_list.addSubCommandHelp("type","列出所有装备类型","","");
 		pr_list.addSubCommandHelp("potion","列出所有药水效果","","");

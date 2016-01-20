@@ -30,13 +30,13 @@ public class ListCommand
 			for(PowerLore p:PowerLore.powerlores){
 				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.name).
 					tooltip(ChatColor.YELLOW+"用法:"+p.getUsage()+"\n点击匹配").
-					suggest("/pr equip addlore "+p.getUsage()).
+					suggest("/pr equip addlore "+p.getUsage().replace(' ', '_')).
 					send(player);
 			}
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("runtime")){
-			user.sendPluginMessage("&3Lore可用执行时间:");
+			user.sendPluginMessage("&3Lore触发时间参数:");
 			for(PowerRunTime p:PowerRunTime.values()){
 				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.toString()).
 					send(player);

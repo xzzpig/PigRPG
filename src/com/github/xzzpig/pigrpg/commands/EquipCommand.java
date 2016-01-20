@@ -203,7 +203,7 @@ public class EquipCommand
 					.send((Player)sender);
 				type = EquipType.Default;
 			}
-			//equip.setEquiptype(type).reBuildLore();
+			equip.setEquiptype(type).reBuildLore();
 			player.setItemInHand(equip);
 			sender.sendMessage(TString.Prefix("PigRPG",2)+"手中装备类型已设置为 "+type);
 			return true;

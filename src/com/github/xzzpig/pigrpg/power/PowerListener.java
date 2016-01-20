@@ -1,17 +1,22 @@
 package com.github.xzzpig.pigrpg.power;
 
-import org.bukkit.event.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.pigrpg.*;
-
-import org.bukkit.event.player.*;
-
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.BukkitTools.TPremission;
+import com.github.xzzpig.pigrpg.State;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.equip.EquipType;
+import com.github.xzzpig.pigrpg.equip.Equipment;
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Damge;
+import com.github.xzzpig.pigrpg.power.type.PT_Limit;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class PowerListener implements Listener
 {
@@ -44,7 +49,7 @@ public class PowerListener implements Listener
 				}
 			}
 			pls:for(PowerLore pl : equip.powerlores){
-				if(pl.runtime != PowerRunTime.Damage)
+				if(!pl.isRunTime(PowerRunTime.Damage))
 					continue pls;
 				ps:for(Power p:pl.powers){
 					if(p instanceof PT_Damge)
@@ -79,7 +84,7 @@ public class PowerListener implements Listener
 			}
 		}
 		pls:for(PowerLore pl : equip.powerlores){
-			if(pl.runtime != PowerRunTime.RightClick)
+			if(!pl.isRunTime(PowerRunTime.RightClick))
 				continue pls;
 			ps:for(Power p:pl.powers){
 				if(p instanceof PT_Limit)
