@@ -139,7 +139,7 @@ public class Equipment extends ItemStack
 		for(String lore:lores)
 			for(PowerLore pl:PowerLore.powerlores){
 				if(lore.contains(pl.getKey()))
-					powerlores.add(pl.clone().loadVars(lore).loadPowers());
+					powerlores.add(pl.clone().loadVars(lore).loadPowers().setEquip(this));
 			}
 		return this;
 	}

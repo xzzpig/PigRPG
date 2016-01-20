@@ -36,9 +36,11 @@ public class EquipListener implements Listener
 				if(!pl.isRunTime(PowerRunTime.CloseEC))
 					continue pls;
 				ps:for(Power p:pl.powers){
-					if(p instanceof PT_Equip)
-						if(!((PT_Limit) p).can())
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
 							break ps;
+						}
 					if(!(p instanceof PT_Equip))
 						continue;
 					((PT_Equip)p).rebuildEquip(event);

@@ -52,9 +52,11 @@ public class PowerListener implements Listener
 				if(!pl.isRunTime(PowerRunTime.Damage))
 					continue pls;
 				ps:for(Power p:pl.powers){
-					if(p instanceof PT_Damge)
-						if(!((PT_Limit) p).can())
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
 							break ps;
+						}
 					if(!(p instanceof PT_Damge))
 						continue;
 					((PT_Damge)p).rebulidDamage(event);
@@ -88,8 +90,10 @@ public class PowerListener implements Listener
 				continue pls;
 			ps:for(Power p:pl.powers){
 				if(p instanceof PT_Limit)
-					if(!((PT_Limit) p).can())
+					if(!((PT_Limit) p).can()){
+						user.sendPluginMessage(((PT_Limit) p).cantMessage());
 						break ps;
+					}
 				if(!(p instanceof PT_RightClick))
 					continue;
 				((PT_RightClick)p).rebuildRC(event);

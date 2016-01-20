@@ -16,6 +16,7 @@ import com.github.xzzpig.pigrpg.power.PowerRunTime;
 public class PowerLore
 {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
+
 	static{
 		FileConfiguration config = TConfig.getConfigFile("PigRPG", "customlore.yml");
 		try {
@@ -36,6 +37,7 @@ public class PowerLore
 	public List<Power> powers = new ArrayList<Power>();
 	public TData data = new TData();
 	private ConfigurationSection path;
+	private Equipment equip;
 	
 	private PowerLore() {}
 	public PowerLore(ConfigurationSection path){
@@ -61,6 +63,7 @@ public class PowerLore
 		pl.needequip.addAll(this.needequip);
 		pl.data = this.data.clone();
 		pl.path = this.path;
+		pl.equip = this.equip;
 		return pl;
 	}
 	
@@ -68,6 +71,13 @@ public class PowerLore
 		return matchkey;
 	}
 	
+	public PowerLore setEquip(Equipment equip){
+		this.equip = equip;
+		return this;
+	}
+	public Equipment getEquip(){
+		return equip;
+	}
 	public PowerLore loadPowers(){
 		Set<String> powernames = path.getConfigurationSection("power").getKeys(false);
 		for(String powername:powernames){
@@ -129,6 +139,7 @@ public class PowerLore
 				return true;
 		return false;
 	}
+	
 }
 /*
 漏了

@@ -1,5 +1,5 @@
 package com.github.xzzpig.pigrpg;
-import org.bukkit.*;
+import com.github.xzzpig.BukkitTools.*;
 import org.bukkit.entity.*;
 
 public class Debuger
@@ -12,7 +12,7 @@ public class Debuger
 	{
 		if(isdebug == false)return;
 		System.out.println("\n****************\n"+s+"\n****************");
-		for(Player p: Bukkit.getServer().getOnlinePlayers())
+		for(Player p: TPlayer.getAllPlayers())
 		{
 			if(p.isOp())
 				p.sendMessage(s+"");

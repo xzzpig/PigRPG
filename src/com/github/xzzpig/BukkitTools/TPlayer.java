@@ -1,4 +1,6 @@
 package com.github.xzzpig.BukkitTools;
+import org.bukkit.entity.*;
+import org.bukkit.*;
 
 public  class TPlayer{
 	public static int ExpToLevel(int exp){
@@ -29,5 +31,9 @@ public  class TPlayer{
 			}
 		}
 		return level;
+	}
+	
+	public static Player[] getAllPlayers(){
+		return Bukkit.getOnlinePlayers();
 	}
 }

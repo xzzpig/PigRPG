@@ -20,7 +20,7 @@ public class ChatListener implements Listener{
 			atsolve(event);
 		User user = User.getUser(event.getPlayer());
 		user.setJustSay(event.getMessage());
-		for(Player p:Bukkit.getOnlinePlayers()){
+		for(Player p:TPlayer.getAllPlayers()){
 			User.getUser(p).sendChatMessage(user);
 		}
 	}

@@ -1,18 +1,11 @@
 package com.github.xzzpig.pigrpg.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
-import com.github.xzzpig.pigrpg.FanMessage;
-import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
+import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.*;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
+import org.bukkit.*;
+import org.bukkit.command.*;
+import org.bukkit.entity.*;
 
 public class Commands {
 	@SuppressWarnings("deprecation")
@@ -115,7 +108,7 @@ public class Commands {
 					}
 					FancyMessage fm = FanMessage.getBy(player.getItemInHand()).then(ChatColor.BLUE+"由玩家"+player.getName()+"展示");
 					if(target.equalsIgnoreCase("")){
-						for(Player p:Bukkit.getOnlinePlayers()){
+						for(Player p:TPlayer.getAllPlayers()){
 							User.getUser(p).sendPluginMessage("玩家"+player.getName()+"展示物品:");
 							fm.send(p);
 						}

@@ -27,7 +27,7 @@ public class TEntity {
 	
 	public static void broadMessage(String message){
 		@SuppressWarnings("deprecation")
-		Player[] players = Bukkit.getServer().getOnlinePlayers();
+		Player[] players = TPlayer.getAllPlayers();
 		for(Player player:players){
 			player.sendMessage(message);
 		}
@@ -35,7 +35,7 @@ public class TEntity {
 	
 	public static void broadMessage(String message,Location loc,int distance){
 		@SuppressWarnings("deprecation")
-		Player[] players = Bukkit.getServer().getOnlinePlayers();
+			Player[] players = TPlayer.getAllPlayers();
 		for(Player player:players){
 			if(loc.distance(player.getLocation())<=distance){
 				player.sendMessage(message);
