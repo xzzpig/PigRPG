@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.xzzpig.BukkitTools.TArgsSolver;
+import com.github.xzzpig.BukkitTools.TString;
 
 public class Equipment extends ItemStack
 {
@@ -130,21 +131,19 @@ public class Equipment extends ItemStack
 			}
 		}
 		loadPowerLores();
-		//reBuildLore();
+		reBuildLore();
 		return this;
 	}
 	public Equipment loadPowerLores(){
 		List<String> lores = this.getItemMeta().getLore();
-		for(String lore:lores){
+		for(String lore:lores)
 			for(PowerLore pl:PowerLore.powerlores){
 				if(lore.contains(pl.getKey()))
-					powerlores.add(pl.clone().loadVars(lore));
+					powerlores.add(pl.clone().loadVars(lore).loadPowers());
 			}
-		}
 		return this;
 	}
 
-	/*
 	public Equipment reBuildLore(){
 		List<String> lore = this.getItemMeta().getLore();
 		List<String> plore = new ArrayList<String>();
@@ -166,9 +165,8 @@ public class Equipment extends ItemStack
 		for(int i = 0;i<lore.get(0).length();i++)
 			p = p+"=";
 		lore.add(TString.Color(2)+p);
-		for(Power po : powers)
-			if(po instanceof PT_Lore)
-				lore.add(TString.Color(5)+'='+((PT_Lore)po).getLore(this));
+		for(PowerLore po : powerlores)
+				lore.add(TString.Color(5)+'='+po.getLore());
 		lore.add(TString.Color(2)+p);
 		for(String ps : plore)
 			lore.add(ps);
@@ -176,5 +174,4 @@ public class Equipment extends ItemStack
 		this.saveItemMeta();
 		return this;
 	}
-	*/
 }

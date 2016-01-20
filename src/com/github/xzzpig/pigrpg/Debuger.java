@@ -15,7 +15,7 @@ public class Debuger
 		for(Player p: Bukkit.getServer().getOnlinePlayers())
 		{
 			if(p.isOp())
-				p.sendMessage(s.toString());
+				p.sendMessage(s+"");
 		}
 	}
 	

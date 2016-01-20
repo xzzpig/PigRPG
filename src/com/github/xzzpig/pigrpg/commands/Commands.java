@@ -8,17 +8,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.Vars;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
-import com.github.xzzpig.pigrpg.*;
 
 public class Commands {
 	@SuppressWarnings("deprecation")
 	public static boolean command(CommandSender sender,Command cmd,String label,String[] args)  {
 		if(label.equalsIgnoreCase("PigRPG")||label.equalsIgnoreCase("pr")){
 			if(getarg(args, 0).equalsIgnoreCase("debug")){
-				((Player)sender).teleport(((Player)sender).getLocation().getChunk().getBlock(1,1,1).getLocation());
 				return true;
 			}
 			if(getarg(args, 0).equalsIgnoreCase("help")){

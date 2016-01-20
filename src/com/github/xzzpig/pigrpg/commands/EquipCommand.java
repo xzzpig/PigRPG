@@ -12,9 +12,6 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
 
-import com.github.xzzpig.pigrpg.power.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-
 public class EquipCommand
 {
 	@SuppressWarnings("deprecation")
@@ -36,12 +33,11 @@ public class EquipCommand
 				return true;
 			}
 			user.sendPluginMessage("&3特殊Lore列表:");
-			for(Power p:Power.values()){
-				PT_Lore pl = (PT_Lore)p;
-				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.getPowerName()).
-				tooltip(ChatColor.YELLOW+"用法:"+pl.getUsage()+"\n点击匹配").
-				suggest("/pr equip addlore "+pl.getUsage()).
-				send(player);
+			for(PowerLore p:PowerLore.powerlores){
+				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.name).
+					tooltip(ChatColor.YELLOW+"用法:"+p.getUsage()+"\n点击匹配").
+					suggest("/pr equip addlore "+p.getUsage()).
+					send(player);
 			}
 			return true;
 		}

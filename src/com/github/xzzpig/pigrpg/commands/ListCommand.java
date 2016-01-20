@@ -3,8 +3,7 @@ package com.github.xzzpig.pigrpg.commands;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.*;
-import com.github.xzzpig.pigrpg.power.type.*;
+import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
 import org.bukkit.*;
 import org.bukkit.command.*;
@@ -28,13 +27,18 @@ public class ListCommand
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("lore")){
 			user.sendPluginMessage("&3特殊Lore列表:");
-			for(Power p:Power.values()){
-				if(!(p instanceof PT_Lore))
-					continue;
-				PT_Lore pl = (PT_Lore)p;
-				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.getPowerName()).
-					tooltip(ChatColor.YELLOW+"用法:"+pl.getUsage()+"\n点击匹配").
-					suggest("/pr equip addlore "+pl.getUsage()).
+			for(PowerLore p:PowerLore.powerlores){
+				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.name).
+					tooltip(ChatColor.YELLOW+"用法:"+p.getUsage()+"\n点击匹配").
+					suggest("/pr equip addlore "+p.getUsage()).
+					send(player);
+			}
+			return true;
+		}
+		else if(getarg(args, 1).equalsIgnoreCase("runtime")){
+			user.sendPluginMessage("&3Lore可用执行时间:");
+			for(PowerRunTime p:PowerRunTime.values()){
+				Vars.nms.newFancyMessage(""+ChatColor.GREEN + ChatColor.UNDERLINE + p.toString()).
 					send(player);
 			}
 			return true;
