@@ -32,7 +32,7 @@ public class EquipListener implements Listener
 		}
 		for(EquipType et:EquipType.values()){
 			Equipment equip = user.getEquip(et);
-			pls:for(PowerLore pl:equip.powerlores){
+			pls:for(PowerLore pl:equip.getPowerLores()){
 				if(!pl.isRunTime(PowerRunTime.CloseEC))
 					continue pls;
 				ps:for(Power p:pl.powers){

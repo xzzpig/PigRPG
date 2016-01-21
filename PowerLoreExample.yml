@@ -1,0 +1,39 @@
+#配置customlore.yml的例子
+customlore:
+  example:
+    matchkey: example
+    form: example </var1/> </amount/> </chance/> </distance/>
+    show: 这是个例子</var1/>,数目:</amount/>,几率:</chance/>,距离:</distance/>
+    runtime: 
+      - RightClick
+    needequip: 
+      - 无
+    power:
+      Arrow: 
+        amount: </amount/>
+        range: </chance/>
+      Command: 
+        command: deop </player/>
+        op: true
+        temppremission: pr.help
+      Consume: 
+        consume: 0
+      Cooldown: 
+        time: 1000
+      Effect: 
+        effect: SMOKE
+      Fireball: 
+        amount: 3
+      Flame: 
+        target: point
+        time: 1000
+        chance: </chance/>
+        distance: </distance/>
+      Knockup: 
+        power: 5
+        chance: </chance/>
+        distance: </distance/>
+      Lightning: 
+        target: point
+        chance: </chance/>
+        distance: </distance/>

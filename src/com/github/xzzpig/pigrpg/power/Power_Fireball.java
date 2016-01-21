@@ -36,7 +36,7 @@ public class Power_Fireball extends Power implements PT_Damge,PT_RightClick
 		int r = random.nextInt(100);
 		if(r > range)
 			return;
-		for(int i = 0;i < 0;i++){
+		for(int i = 0;i < amount;i++){
 			launcher.launchProjectile(Fireball.class);
 			launcher.playSound(launcher.getLocation(), Sound.GHAST_FIREBALL, 1.0f, 1.0f);
 		}

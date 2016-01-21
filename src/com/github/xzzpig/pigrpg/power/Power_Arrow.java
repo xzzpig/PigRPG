@@ -1,12 +1,16 @@
 package com.github.xzzpig.pigrpg.power;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
+import java.util.Random;
+
+import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Damge;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Arrow extends Power implements PT_Damge,PT_RightClick
 {
@@ -35,7 +39,7 @@ public class Power_Arrow extends Power implements PT_Damge,PT_RightClick
 		int r = random.nextInt(100);
 		if(r > range)
 			return;
-		for(int i = 0;i < 0;i++){
+		for(int i = 0;i < amount;i++){
 			launcher.launchProjectile(Arrow.class);
 			launcher.playSound(launcher.getLocation(), Sound.SHOOT_ARROW, 1.0f, 1.0f);
 		}

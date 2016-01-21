@@ -7,7 +7,6 @@ public class Debuger
 	public static long time;
 	
 	public static boolean isdebug = true;
-	@SuppressWarnings("deprecation")
 	public static void print(Object s)
 	{
 		if(isdebug == false)return;

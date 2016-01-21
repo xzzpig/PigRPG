@@ -1,10 +1,13 @@
 package com.github.xzzpig.pigrpg.power;
 
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.configuration.*;
+import java.util.HashMap;
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
+
+import com.github.xzzpig.pigrpg.equip.Equipment;
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
 public class Power_Cooldown extends Power implements PT_Limit
 {
@@ -30,6 +33,7 @@ public class Power_Cooldown extends Power implements PT_Limit
 	@Override
 	public void run(){
 		this.finaltime = System.currentTimeMillis() + time;
+		times.put(equip.toString(), this.finaltime);
 	}
 	
 	@Override
@@ -47,8 +51,9 @@ public class Power_Cooldown extends Power implements PT_Limit
 	}
 	
 	private static long getTime(String item) {
-		if(!times.containsKey(item))
+		if(!times.containsKey(item)){
 			return System.currentTimeMillis();
+		}
 		return times.get(item);
 	}
 }

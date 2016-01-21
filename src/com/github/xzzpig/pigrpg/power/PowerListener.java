@@ -48,7 +48,7 @@ public class PowerListener implements Listener
 					return;
 				}
 			}
-			pls:for(PowerLore pl : equip.powerlores){
+			pls:for(PowerLore pl : equip.getPowerLores()){
 				if(!pl.isRunTime(PowerRunTime.Damage))
 					continue pls;
 				ps:for(Power p:pl.powers){
@@ -85,7 +85,7 @@ public class PowerListener implements Listener
 				return;
 			}
 		}
-		pls:for(PowerLore pl : equip.powerlores){
+		pls:for(PowerLore pl : equip.getPowerLores()){
 			if(!pl.isRunTime(PowerRunTime.RightClick))
 				continue pls;
 			ps:for(Power p:pl.powers){

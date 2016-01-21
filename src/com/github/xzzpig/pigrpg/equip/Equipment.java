@@ -14,7 +14,7 @@ public class Equipment extends ItemStack
 	private EquipType etype = EquipType.Default;;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
-	public List<PowerLore> powerlores = new ArrayList<PowerLore>();
+	private List<PowerLore> powerlores = new ArrayList<PowerLore>();
 
 	@SuppressWarnings("deprecation")
 	public Equipment(int id){
@@ -111,6 +111,10 @@ public class Equipment extends ItemStack
 		return false;
 	}
 
+	public PowerLore[] getPowerLores(){
+		return powerlores.toArray(new PowerLore[0]);
+	}
+	
 	public Equipment loadEnums(){
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();
@@ -139,7 +143,7 @@ public class Equipment extends ItemStack
 		for(String lore:lores)
 			for(PowerLore pl:PowerLore.powerlores){
 				if(lore.contains(pl.getKey()))
-					powerlores.add(pl.clone().loadVars(lore).loadPowers().setEquip(this));
+					powerlores.add(pl.setEquip(this).clone().loadVars(lore).loadPowers());
 			}
 		return this;
 	}

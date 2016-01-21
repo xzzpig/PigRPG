@@ -33,6 +33,7 @@ public  class TPlayer{
 		return level;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static Player[] getAllPlayers(){
 		return Bukkit.getOnlinePlayers();
 	}
