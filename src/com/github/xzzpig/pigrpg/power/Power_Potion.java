@@ -14,13 +14,13 @@ import org.bukkit.potion.*;
 public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equip
 {
 	private static Random rand = new Random();
-	
+
 	PotionEffectType potion;
 	int time,distance,level,chance;
 	String target;
-	
+
 	LivingEntity entity;
-	
+
 	@Override
 	public String getPowerName(){
 		return "Potion";
@@ -39,15 +39,17 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 
 	@Override
 	public void run(){
+		if(entity==null)
+			return;
 		if(rand.nextInt(100)<=chance)
-			new PotionEffect(potion, time, level).apply(entity);
+			new PotionEffect(potion,time,level).apply(entity);
 	}
 
 	@Override
 	public void rebulidDamage(EntityDamageByEntityEvent event){
-		if(target.equalsIgnoreCase("self"))
+		if(target.equalsIgnoreCase("self")){
 			if(event.getDamager() instanceof LivingEntity)
-				entity = (LivingEntity) event.getDamager();
+				entity = (LivingEntity) event.getDamager();}
 		else if(event.getEntity() instanceof LivingEntity)
 			entity = (LivingEntity) event.getEntity();
 	}
@@ -68,5 +70,5 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 			entity = TEntity.getTarget(event.getPlayer(),distance);
 		State.getFrom(entity).potions.add(potion);
 	}
-	
+
 }

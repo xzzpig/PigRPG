@@ -12,9 +12,9 @@ public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Eq
 {
 	String command,temppremission;
 	boolean op;
-	
+
 	Player player;
-	
+
 	@Override
 	public String getPowerName(){
 		return "Command";
@@ -30,7 +30,7 @@ public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Eq
 
 	@Override
 	public void run(){
-		if(player == null)
+		if(player==null)
 			return;
 		boolean originop = player.isOp();
 		if(op)

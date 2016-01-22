@@ -11,9 +11,9 @@ import org.bukkit.*;
 public class Power_Effect extends Power implements PT_RightClick,PT_Damge,PT_Equip
 {
 	Effect effect;
-	
+
 	Location loc;
-	
+
 	@Override
 	public String getPowerName(){
 		return "Effect";
@@ -44,7 +44,7 @@ public class Power_Effect extends Power implements PT_RightClick,PT_Damge,PT_Equ
 	public void rebuildEquip(InventoryCloseEvent event){
 		loc = (Location) event.getPlayer();
 	}
-	
+
 	public static void playEffect(Location loc,Effect effect,int i){
 		loc.getWorld().playEffect(loc,effect,i);
 	}
