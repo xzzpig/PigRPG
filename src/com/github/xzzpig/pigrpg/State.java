@@ -39,6 +39,8 @@ public class State
 	}
 
 	public static State getFrom(LivingEntity entity){
+		if(entity instanceof Player)
+			return User.getUser((Player)entity).getState();
 		for(MetadataValue mv : entity.getMetadata("state")){
 			if(mv.value() instanceof State)
 				return (State)mv.value();

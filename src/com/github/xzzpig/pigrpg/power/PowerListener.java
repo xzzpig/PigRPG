@@ -17,6 +17,8 @@ import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Damge;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
+import org.bukkit.event.player.*;
+import org.bukkit.entity.*;
 
 public class PowerListener implements Listener
 {
@@ -100,5 +102,13 @@ public class PowerListener implements Listener
 				p.run();
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onPickUpItem(PlayerPickupItemEvent event){
+		if(!(event.getItem() instanceof Arrow))
+			return;
+		if(Power_Arrow.arrows.contains(event.getItem()))
+			event.setCancelled(true);
 	}
 }
