@@ -13,6 +13,7 @@ import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
+import org.bukkit.potion.*;
 
 public class EquipListener implements Listener
 {
@@ -30,6 +31,9 @@ public class EquipListener implements Listener
 			else
 				user.setEquip(new Equipment(is));
 		}
+		for(PotionEffectType p:user.getState().potions)
+			user.getPlayer().removePotionEffect(p);
+		user.getState().potions.clear();
 		for(EquipType et:EquipType.values()){
 			Equipment equip = user.getEquip(et);
 			pls:for(PowerLore pl:equip.getPowerLores()){
