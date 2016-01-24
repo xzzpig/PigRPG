@@ -12,10 +12,10 @@ import com.github.xzzpig.pigrpg.*;
 public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equip
 {
 	String type,sdamage;
-	int range,damage,distance;
-	
+	int range,damage,distance,times;
+
 	LivingEntity entity,target;
-	
+
 	@Override
 	public String getPowerName(){
 		return "Damage";
@@ -27,25 +27,27 @@ public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		sdamage = pl.getReplaced(path.getString("damage","0"));
 		range = Integer.valueOf(pl.getReplaced(path.getString("range","0")));
 		distance = Integer.valueOf(pl.getReplaced(path.getString("distance","10")));
-		return null;
+		times = Integer.valueOf(pl.getReplaced(path.getString("times","1")));
+		return this;
 	}
 
 	@Override
 	public void run(){
-		if(entity == null)
+		if(entity==null)
 			return;
-		damage =(int)TCalculate.getResult(sdamage.replaceAll("</damage/>",State.getFrom(entity).getPhysicDamage()+""));
+		damage = (int)TCalculate.getResult(sdamage.replaceAll("</damage/>",State.getFrom(entity).getPhysicDamage()+""));
 		State state = State.getFrom(entity);
 		if(type.equalsIgnoreCase("set"))
 			state.setPhysicDamage(damage);
 		else if(type.equalsIgnoreCase("add"))
 			state.setPhysicDamage(damage+state.getPhysicDamage());
 		else{
-			if(target == null)
+			if(target==null)
 				target = TEntity.getTarget(entity,distance);
-			target.damage(damage,entity);
+			for(int i = 0;i<times;i++)
+				target.damage(damage,entity);
 		}
-		
+
 	}
 
 	@Override
@@ -66,5 +68,5 @@ public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equ
 	public void rebuildEquip(InventoryCloseEvent event){
 		entity = event.getPlayer();
 	}
-	
+
 }

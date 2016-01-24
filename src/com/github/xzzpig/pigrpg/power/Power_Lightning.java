@@ -27,7 +27,7 @@ public class Power_Lightning extends Power implements PT_Damge,PT_RightClick
 		target = pl.getReplaced(path.getString("target","point"));
 		chance = Integer.valueOf(pl.getReplaced(path.getString("chance","100")));
 		distance = Integer.valueOf(pl.getReplaced(path.getString("distance","10")));
-		return null;
+		return this;
 	}
 
 	@Override
