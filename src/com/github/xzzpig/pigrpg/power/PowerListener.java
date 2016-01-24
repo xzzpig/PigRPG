@@ -31,11 +31,8 @@ public class PowerListener implements Listener
 			return;
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
-		int damage = (int) event.getDamage();
-		damage = damage+State.getFrom(damager).getPhysicDamage()-State.getFrom(target).getPhysicDefence();
-		if(damage<0)
-			damage = 0;
-		event.setDamage(damage);
+		State dstate = State.getFrom(damager),tstate = State.getFrom(target) ;
+		int origindamage = dstate.getPhysicDamage();
 		if(event.getDamager() instanceof Player){
 			User user = User.getUser((Player)event.getDamager());
 			Equipment equip = user.getHandEquip();
@@ -65,6 +62,8 @@ public class PowerListener implements Listener
 					p.run();
 				}
 			}
+			event.setDamage(event.getDamage()+dstate.getPhysicDamage());
+			dstate.setPhysicDamage(origindamage);
 		}
 	}
 	
@@ -73,6 +72,8 @@ public class PowerListener implements Listener
 		if(event.getAction()!=Action.RIGHT_CLICK_AIR&&event.getAction()!=Action.RIGHT_CLICK_BLOCK)
 			return;
 		User user = User.getUser(event.getPlayer());
+		State state =user.getState() ;
+		int origindamage = state.getPhysicDamage();
 		Equipment equip = user.getHandEquip();
 		if(event.getMaterial().isBlock()&&equip.getEquiptype() != EquipType.Default)
 			event.setCancelled(true);
@@ -102,6 +103,7 @@ public class PowerListener implements Listener
 				p.run();
 			}
 		}
+		state.setPhysicDamage(origindamage);
 	}
 	
 	@EventHandler
