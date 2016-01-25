@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum PowerRunTime
 {
-	Never,RightClick,Damage,CloseEC;
+	Never,RightClick,Damage,CloseEC,BeDamage;
 	
 	private PowerRunTime() {}
 	

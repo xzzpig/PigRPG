@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.xzzpig.BukkitTools.TArgsSolver;
 import com.github.xzzpig.BukkitTools.TString;
+import java.util.*;
 
 public class Equipment extends ItemStack
 {
@@ -145,6 +146,10 @@ public class Equipment extends ItemStack
 				if(lore.contains(pl.getKey()))
 					powerlores.add(pl.setEquip(this).clone().loadVars(lore).loadPowers());
 			}
+		PowerLore[] pls = getPowerLores();
+		Arrays.sort(pls);
+		powerlores.clear();
+		powerlores.addAll(Arrays.asList(pls));
 		return this;
 	}
 

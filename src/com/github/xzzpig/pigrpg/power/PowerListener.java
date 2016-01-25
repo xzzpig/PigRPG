@@ -1,24 +1,17 @@
 package com.github.xzzpig.pigrpg.power;
 
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-
-import com.github.xzzpig.BukkitTools.TPremission;
-import com.github.xzzpig.pigrpg.State;
-import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.equip.EquipType;
-import com.github.xzzpig.pigrpg.equip.Equipment;
-import com.github.xzzpig.pigrpg.equip.PowerLore;
-import com.github.xzzpig.pigrpg.power.type.PT_Damge;
-import com.github.xzzpig.pigrpg.power.type.PT_Limit;
-import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
-import org.bukkit.event.player.*;
+import com.github.xzzpig.BukkitTools.*;
+import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.equip.*;
+import com.github.xzzpig.pigrpg.power.type.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.*;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.*;
+import org.bukkit.potion.*;
 
 public class PowerListener implements Listener
 {
@@ -48,7 +41,7 @@ public class PowerListener implements Listener
 				}
 			}
 			pls:for(PowerLore pl : equip.getPowerLores()){
-				if(!pl.isRunTime(PowerRunTime.Damage))
+				if(!(pl.isRunTime(PowerRunTime.Damage)))
 					continue pls;
 				ps:for(Power p:pl.powers){
 					if(p instanceof PT_Limit)
@@ -57,16 +50,31 @@ public class PowerListener implements Listener
 							break ps;
 						}
 					if(!(p instanceof PT_Damge))
-						continue;
+						continue ps;
 					((PT_Damge)p).rebulidDamage(event);
 					p.run();
 				}
 			}
-			event.setDamage(event.getDamage()+dstate.getPhysicDamage());
+			pls:for(PowerLore pl : equip.getPowerLores()){
+				if(!(pl.isRunTime(PowerRunTime.Damage)||pl.isRunTime(PowerRunTime.BeDamage)))
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if(!(p instanceof PT_BeDamage))
+						continue ps;
+					((PT_BeDamage)p).rebulidBeDamage(event);
+					p.run();
+				}
+			}
+			event.setDamage(event.getDamage()+dstate.getPhysicDamage()-tstate.getPhysicDefence());
 			dstate.setPhysicDamage(origindamage);
 		}
 	}
-	
+
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event){
 		if(event.getAction()!=Action.RIGHT_CLICK_AIR&&event.getAction()!=Action.RIGHT_CLICK_BLOCK)
@@ -75,7 +83,7 @@ public class PowerListener implements Listener
 		State state =user.getState() ;
 		int origindamage = state.getPhysicDamage();
 		Equipment equip = user.getHandEquip();
-		if(event.getMaterial().isBlock()&&equip.getEquiptype() != EquipType.Default)
+		if(event.getMaterial().isBlock()&&equip.getEquiptype()!=EquipType.Default)
 			event.setCancelled(true);
 		if(equip.getEquiptype()==EquipType.Core)
 			equip = user.getEquip(EquipType.Core);
@@ -105,12 +113,62 @@ public class PowerListener implements Listener
 		}
 		state.setPhysicDamage(origindamage);
 	}
-	
+
 	@EventHandler
 	public void onPickUpItem(PlayerPickupItemEvent event){
 		if(!(event.getItem() instanceof Arrow))
 			return;
 		if(Power_Arrow.arrows.contains(event.getItem()))
 			event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onCloseInv(InventoryCloseEvent event){
+		Player player = (Player) event.getPlayer();
+		User user = User.getUser(player);
+		if(event.getInventory()!=player.getInventory())
+			return;
+		for(ItemStack item:player.getInventory().getArmorContents()){
+			if(item==null)
+				continue;
+			Equipment equip = new Equipment(item);
+			for(PotionEffectType p:user.getState().potions)
+				user.getPlayer().removePotionEffect(p);
+			user.getState().potions.clear();
+			user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0).setMp(0).setPhysicDamage(1).setPhysicDefence(0);
+			pls:for(PowerLore pl:equip.getPowerLores()){
+				if(!pl.isRunTime(PowerRunTime.CloseEC))
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if(!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip)p).rebuildEquip(event);
+					p.run();
+				}
+			}
+		}
+		for(EquipType et:EquipType.values()){
+			Equipment equip = user.getEquip(et);
+			pls:for(PowerLore pl:equip.getPowerLores()){
+				if(!pl.isRunTime(PowerRunTime.CloseEC))
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if(!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip)p).rebuildEquip(event);
+					p.run();
+				}
+			}
+		}
 	}
 }

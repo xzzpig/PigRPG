@@ -34,6 +34,31 @@ public class EquipListener implements Listener
 		for(PotionEffectType p:user.getState().potions)
 			user.getPlayer().removePotionEffect(p);
 		user.getState().potions.clear();
+		user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0).setMp(0).setPhysicDamage(1).setPhysicDefence(0);
+		for(ItemStack item:user.getPlayer().getInventory().getArmorContents()){
+			if(item == null)
+				continue;
+			Equipment equip = new Equipment(item);
+			for(PotionEffectType p:user.getState().potions)
+				user.getPlayer().removePotionEffect(p);
+			user.getState().potions.clear();
+			user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0).setMp(0).setPhysicDamage(1).setPhysicDefence(0);
+			pls:for(PowerLore pl:equip.getPowerLores()){
+				if(!pl.isRunTime(PowerRunTime.CloseEC))
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if(!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip)p).rebuildEquip(event);
+					p.run();
+				}
+			}
+		}
 		for(EquipType et:EquipType.values()){
 			Equipment equip = user.getEquip(et);
 			pls:for(PowerLore pl:equip.getPowerLores()){

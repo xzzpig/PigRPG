@@ -13,7 +13,7 @@ import com.github.xzzpig.BukkitTools.TData;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
-public class PowerLore
+public class PowerLore implements Comparable
 {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
 
@@ -38,6 +38,7 @@ public class PowerLore
 	public TData data = new TData();
 	private ConfigurationSection path;
 	private Equipment equip;
+	private int level;
 	
 	private PowerLore() {}
 	public PowerLore(ConfigurationSection path){
@@ -45,6 +46,7 @@ public class PowerLore
 		matchkey = path.getString("matchkey");
 		form = path.getString("form");
 		show = path.getString("show");
+		level = path.getInt("level",0);
 		runtime = PowerRunTime.form(path.getStringList("runtime"));
 		if(runtime == null)
 			runtime = new PowerRunTime[]{PowerRunTime.Never};
@@ -65,6 +67,15 @@ public class PowerLore
 		pl.path = this.path;
 		pl.equip = this.equip;
 		return pl;
+	}
+	
+	@Override
+	public int compareTo(Object p1){
+		if(p1 == null)
+			return 1;
+		if(!(p1 instanceof PowerLore))
+			return 1;
+		return level - ((PowerLore)p1).level;
 	}
 	
 	public String getKey(){

@@ -4,6 +4,7 @@ customlore:
     matchkey: example
     form: example </var1/> </amount/> </chance/> </distance/>
     show: 这是个例子</var1/>,数目:</amount/>,几率:</chance/>,距离:</distance/>
+    level: 0
     runtime: 
       - RightClick
     needequip: 
