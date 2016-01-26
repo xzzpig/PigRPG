@@ -54,7 +54,7 @@ public class EquipCommand
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限执行该命令");
 				return true;
 			}
-			player.setItemInHand(new Equipment(player.getItemInHand()));
+			player.setItemInHand(new Equipment(player.getItemInHand(),player));
 			return true;
 		}
 		else if(getarg(args, 1).equalsIgnoreCase("setdisplayname")){
@@ -70,7 +70,7 @@ public class EquipCommand
 			if(player.getItemInHand() instanceof Equipment)
 				equip = (Equipment)player.getItemInHand();
 			else
-				equip = new Equipment(player.getItemInHand());
+				equip = new Equipment(player.getItemInHand(),player);
 			String name = getarg(args,2);
 			if(name.equalsIgnoreCase("")){
 				name = equip .getItemMeta().getDisplayName();
@@ -94,7 +94,7 @@ public class EquipCommand
 			if(player.getItemInHand() instanceof Equipment)
 				equip = (Equipment)player.getItemInHand();
 			else
-				equip = new Equipment(player.getItemInHand());
+				equip = new Equipment(player.getItemInHand(),player);
 			String sid = getarg(args,2);
 			if(sid.equalsIgnoreCase("")){
 				sid = equip.getTypeId()+"";
@@ -141,7 +141,7 @@ public class EquipCommand
 			if(player.getItemInHand() instanceof Equipment)
 				equip = (Equipment)player.getItemInHand();
 			else
-				equip = new Equipment(player.getItemInHand());
+				equip = new Equipment(player.getItemInHand(),player);
 			String squality = getarg(args,2);
 			EquipQuality quality = EquipQuality.fromName(squality);
 			if(quality == null)
@@ -190,7 +190,7 @@ public class EquipCommand
 			if(player.getItemInHand() instanceof Equipment)
 				equip = (Equipment)player.getItemInHand();
 			else
-				equip = new Equipment(player.getItemInHand());
+				equip = new Equipment(player.getItemInHand(),player);
 			String stype = getarg(args,2);
 			EquipType type = EquipType.getFrom(stype);
 			if(type == null){
@@ -261,7 +261,7 @@ public class EquipCommand
 			}
 			im.setLore(lore);
 			is.setItemMeta(im);
-			player.setItemInHand(new Equipment(is));
+			player.setItemInHand(new Equipment(is,player));
 			sender.sendMessage((TString.Prefix("PigRPG",4)+"lore已修改"));
 			return true;
 		}
@@ -316,7 +316,7 @@ public class EquipCommand
 			lore.remove(line);
 			im.setLore(lore);
 			is.setItemMeta(im);
-			player.setItemInHand(new Equipment(is));
+			player.setItemInHand(new Equipment(is,player));
 			sender.sendMessage((TString.Prefix("PigRPG",4)+"lore已删除"));
 			return true;
 		}

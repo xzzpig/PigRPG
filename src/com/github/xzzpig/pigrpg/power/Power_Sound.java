@@ -32,7 +32,7 @@ public class Power_Sound extends Power implements PT_Damge,PT_RightClick
 
 	@Override
 	public void run(){
-		// TODO: Implement this method
+		entity.getLocation().getWorld().playSound(entity.getLocation(),sound,10,10);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.github.xzzpig.BukkitTools.TArgsSolver;
 import com.github.xzzpig.BukkitTools.TString;
 import java.util.*;
+import org.bukkit.entity.*;
 
 public class Equipment extends ItemStack
 {
@@ -16,6 +17,7 @@ public class Equipment extends ItemStack
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
 	private List<PowerLore> powerlores = new ArrayList<PowerLore>();
+	private Player owner;
 
 	@SuppressWarnings("deprecation")
 	public Equipment(int id){
@@ -25,11 +27,20 @@ public class Equipment extends ItemStack
 		this.loadEnums();
 	}
 	@SuppressWarnings("deprecation")
-	public Equipment(ItemStack is){
+	public Equipment(ItemStack is,Player owner){
 		super(is);
 		if(this.getType()==Material.AIR)
 			super.setTypeId(1);
+		this.owner = owner;
 		loadEnums();
+	}
+
+	public void setOwner(Player owner){
+		this.owner = owner;
+	}
+
+	public Player getOwner(){
+		return owner;
 	}
 
 	public static boolean isEquipItem(ItemStack is){

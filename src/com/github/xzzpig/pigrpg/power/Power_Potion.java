@@ -17,7 +17,7 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 
 	PotionEffectType potion;
 	int time,distance,level,chance;
-	String target;
+	String target,type;
 
 	LivingEntity entity;
 
@@ -34,6 +34,7 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		chance = Integer.valueOf(pl.getReplaced(path.getString("chance","100")));
 		distance = Integer.valueOf(pl.getReplaced(path.getString("distance","10")));
 		target = pl.getReplaced(path.getString("target","self"));
+		type = pl.getReplaced(path.getString("type","add"));
 		return this;
 	}
 
@@ -41,8 +42,11 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 	public void run(){
 		if(entity==null)
 			return;
-		if(rand.nextInt(100)<=chance)
-			new PotionEffect(potion,time,level).apply(entity);
+		if(type.equalsIgnoreCase("add")){
+			if(rand.nextInt(100)<=chance)
+				new PotionEffect(potion,time,level).apply(entity);}
+		else
+			entity.removePotionEffect(potion);
 	}
 
 	@Override
@@ -68,7 +72,8 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 			entity = event.getPlayer();
 		else
 			entity = TEntity.getTarget(event.getPlayer(),distance);
-		State.getFrom(entity).potions.add(potion);
+		if(type.equalsIgnoreCase("add"))
+			State.getFrom(entity).potions.add(potion);
 	}
 
 }

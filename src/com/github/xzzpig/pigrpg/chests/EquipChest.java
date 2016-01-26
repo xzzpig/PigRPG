@@ -17,7 +17,7 @@ public class EquipChest
 			if(!type.isShow())
 				continue;
 			int loc = inv.firstEmpty();
-			inv.setItem(loc,new Equipment(ItemForChest.customItem(TString.Color(3)+type,type.getItemTypeId(),null)).setEquiptype(type));
+			inv.setItem(loc,new Equipment(ItemForChest.customItem(TString.Color(3)+type,type.getItemTypeId(),null),user.getPlayer()).setEquiptype(type));
 			inv.setItem(loc+9,user.getEquip(type));
 		}
 		return inv;

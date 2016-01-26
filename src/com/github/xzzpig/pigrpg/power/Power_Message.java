@@ -9,12 +9,13 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Equip
+public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_Killed
 {
 	String message,target;
 	int distance;
 	
 	Player player;
+	PowerLore pl;
 	
 	@Override
 	public String getPowerName(){
@@ -23,6 +24,7 @@ public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Eq
 
 	@Override
 	public Power reBuild(ConfigurationSection path,PowerLore pl){
+		this.pl = pl;
 		message = pl.getReplaced(path.getString("message"));
 		target = pl.getReplaced(path.getString("target","self"));
 		distance = Integer.valueOf(pl.getReplaced(path.getString("distance","10")));
@@ -33,6 +35,16 @@ public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Eq
 	public void run(){
 		if(player == null)
 			return;
+		pl.data.
+			setString("id",player.getName()).
+			setString("level",player.getLevel()+"").
+			setString("world",player.getWorld().getName()).
+			setString("loc",player.getLocation().toString()).
+			setString("health",player.getHealth()+"").
+			setString("maxhealth",player.getMaxHealth()+"").
+			setString("damage",State.getFrom(player).getPhysicDamage()+"").
+			setString("defence",State.getFrom(player).getPhysicDefence()+"");
+		message = pl.getReplaced(message);
 		User.getUser(player).sendPluginMessage(message);
 	}
 
@@ -65,4 +77,12 @@ public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Eq
 			player = (Player)event.getPlayer();
 	}
 	
+	@Override
+	public void rebulidKilled(EntityDeathEvent event){
+		if(target.equalsIgnoreCase("point")){
+			player = event.getEntity().getKiller();
+		}else
+		if(event.getEntity() instanceof Player)
+			player = (Player)event.getEntity();
+	}
 }

@@ -96,7 +96,7 @@ public class User
 			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip"+"_"+type+".yml").getItemStack("equip."+player.getName());
 			if(iequip==null)
 				continue;
-			setEquip(new Equipment(iequip));
+			setEquip(new Equipment(iequip,player));
 		}
 	}
 	public void setEquip(Equipment equip){
@@ -112,7 +112,7 @@ public class User
 	public Equipment getHandEquip(){
 		if(this.handitem != null&&handitem.toString().equalsIgnoreCase(player.getItemInHand().toString()))
 			return this.handequip;
-		Equipment equip = new Equipment(player.getItemInHand());
+		Equipment equip = new Equipment(player.getItemInHand(),player);
 		if(equip.getEquiptype() != EquipType.Default)
 			player.setItemInHand(equip);
 		player.updateInventory();

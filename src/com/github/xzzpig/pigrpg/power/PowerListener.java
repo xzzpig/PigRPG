@@ -24,7 +24,13 @@ public class PowerListener implements Listener
 			return;
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
-		State dstate = State.getFrom(damager),tstate = State.getFrom(target) ;
+		State dstate = State.getFrom(damager),tstate = State.getFrom(target);
+		for(Power p:dstate.getPowers()){
+			if(!(p instanceof PT_Damge))
+				continue;
+			((PT_Damge)p).rebulidDamage(event);
+			p.run();
+		}
 		int origindamage = dstate.getPhysicDamage();
 		if(event.getDamager() instanceof Player){
 			User user = User.getUser((Player)event.getDamager());
@@ -131,7 +137,7 @@ public class PowerListener implements Listener
 		for(ItemStack item:player.getInventory().getArmorContents()){
 			if(item==null)
 				continue;
-			Equipment equip = new Equipment(item);
+			Equipment equip = new Equipment(item,player);
 			for(PotionEffectType p:user.getState().potions)
 				user.getPlayer().removePotionEffect(p);
 			user.getState().potions.clear();
@@ -167,6 +173,65 @@ public class PowerListener implements Listener
 						continue;
 					((PT_Equip)p).rebuildEquip(event);
 					p.run();
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onKill(EntityDeathEvent event){
+		State state = State.getFrom(event.getEntity());
+		for(Power p:state.getPowers()){
+			if(!(p instanceof PT_Killed))
+				continue;
+			((PT_Killed)p).rebulidKilled(event);
+			p.run();
+		}
+		if(event.getEntity() instanceof Player){
+			User user = User.getUser((Player)event.getEntity());
+			Equipment equip = user.getHandEquip();
+			if(equip.getEquiptype()==EquipType.Core)
+				equip = user.getEquip(EquipType.Core);
+			else if(EquipType.Weapon.getInherit().hasChild(TPremission.valueOf(equip.getEquiptype().toString()))){
+				if(EquipType.getFrom(equip.getEquiptype().toString().replaceAll("核心","")).getInherit().hasChild(TPremission.valueOf(equip.getEquiptype().toString()))){
+					equip = user.getEquip(EquipType.Core);
+				}
+				else{
+					user.sendPluginMessage("&4由于武器类型不符，你无法使用该武器");
+					return;
+				}
+			}
+			pls:for(PowerLore pl : equip.getPowerLores()){
+				if(!(pl.isRunTime(PowerRunTime.Killed)))
+					continue pls;
+				ps:for(Power p:pl.powers){
+					if(p instanceof PT_Limit)
+						if(!((PT_Limit) p).can()){
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if(!(p instanceof PT_Killed))
+						continue ps;
+					((PT_Killed)p).rebulidKilled(event);
+					p.run();
+				}
+			}
+			for(EquipType et:EquipType.values()){
+				equip = user.getEquip(et);
+				pls:for(PowerLore pl:equip.getPowerLores()){
+					if(!pl.isRunTime(PowerRunTime.Killed))
+						continue pls;
+					ps:for(Power p:pl.powers){
+						if(p instanceof PT_Limit)
+							if(!((PT_Limit) p).can()){
+								user.sendPluginMessage(((PT_Limit) p).cantMessage());
+								break ps;
+							}
+						if(!(p instanceof PT_Killed))
+							continue;
+						((PT_Killed)p).rebulidKilled(event);
+						p.run();
+					}
 				}
 			}
 		}

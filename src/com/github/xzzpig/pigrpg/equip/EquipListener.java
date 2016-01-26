@@ -29,7 +29,7 @@ public class EquipListener implements Listener
 			if(is instanceof Equipment)
 				user.setEquip((Equipment)is);
 			else
-				user.setEquip(new Equipment(is));
+				user.setEquip(new Equipment(is,user.getPlayer()));
 		}
 		for(PotionEffectType p:user.getState().potions)
 			user.getPlayer().removePotionEffect(p);
@@ -38,7 +38,7 @@ public class EquipListener implements Listener
 		for(ItemStack item:user.getPlayer().getInventory().getArmorContents()){
 			if(item == null)
 				continue;
-			Equipment equip = new Equipment(item);
+			Equipment equip = new Equipment(item,user.getPlayer());
 			for(PotionEffectType p:user.getState().potions)
 				user.getPlayer().removePotionEffect(p);
 			user.getState().potions.clear();
@@ -106,12 +106,12 @@ public class EquipListener implements Listener
 		if((line%2)==0)
 			return;
 		ItemStack is = event.getCursor();
-		EquipType targettype = new Equipment(inv.getItem(iitem-9)).getEquiptype(); 
+		EquipType targettype = new Equipment(inv.getItem(iitem-9),(Player)event.getWhoClicked()).getEquiptype(); 
 		Equipment equip;
 		if(is instanceof Equipment)
 			equip = (Equipment)is;
 		else
-			equip = new Equipment(is);
+			equip = new Equipment(is,(Player)event.getWhoClicked());
 		if(equip.getEquiptype()!=targettype&&(!targettype.getInherit().getAllChildren().contains(equip.getEquiptype()))){
 			event.setCancelled(true);
 			User.getUser((Player)event.getWhoClicked()).sendPluginMessage("&4请将装备放入对应的装备栏");
