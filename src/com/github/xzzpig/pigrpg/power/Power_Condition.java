@@ -1,8 +1,12 @@
 package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.configuration.*;
+
 import com.github.xzzpig.pigrpg.equip.*;
+
 import org.bukkit.entity.*;
+
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 
@@ -61,6 +65,7 @@ public class Power_Condition extends Power implements PT_Limit
 		return buildStr(message,entity,false);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static String buildStr(String str,LivingEntity entity,boolean isInt){
 		State state = State.getFrom(entity);
 		String re = str.
@@ -70,7 +75,7 @@ public class Power_Condition extends Power implements PT_Limit
 			replaceAll("</y/>",entity.getLocation().getBlockY()+"").
 			replaceAll("</z/>",entity.getLocation().getBlockZ()+"").
 			replaceAll("</maxhealth/>",state.getHp()+"").
-			replaceAll("</currenthealth/>",""+(int)entity.getHealth()).
+			replaceAll("</currenthealth/>",""+(int)((Damageable)entity).getHealth()).
 			replaceAll("</name/>",entity.getCustomName()).
 			replaceAll("</type/>",entity.getType().toString());
 		if(entity instanceof Player){

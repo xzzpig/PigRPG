@@ -1,10 +1,10 @@
 package com.github.xzzpig.pigrpg.power;
 
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
 public class Power_Premission extends Power implements PT_Limit
 {

@@ -40,8 +40,8 @@ public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Eq
 			setString("level",player.getLevel()+"").
 			setString("world",player.getWorld().getName()).
 			setString("loc",player.getLocation().toString()).
-			setString("health",player.getHealth()+"").
-			setString("maxhealth",player.getMaxHealth()+"").
+			setString("health",((Damageable)player).getHealth()+"").
+			setString("maxhealth",((Damageable)player).getMaxHealth()+"").
 			setString("damage",State.getFrom(player).getPhysicDamage()+"").
 			setString("defence",State.getFrom(player).getPhysicDefence()+"");
 		message = pl.getReplaced(message);

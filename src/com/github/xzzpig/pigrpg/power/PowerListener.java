@@ -15,7 +15,6 @@ import org.bukkit.potion.*;
 
 public class PowerListener implements Listener
 {
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event){
 		if(!(event.getDamager() instanceof LivingEntity))

@@ -1,17 +1,22 @@
 package com.github.xzzpig.pigrpg.power;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.block.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
-import org.bukkit.scheduler.*;
-import org.bukkit.util.*;
+import java.util.HashSet;
+import java.util.Random;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Damge;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Rumble extends Power implements PT_Damge,PT_RightClick
 {

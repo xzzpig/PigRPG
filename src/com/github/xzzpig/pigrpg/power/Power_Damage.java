@@ -1,11 +1,13 @@
 package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.pigrpg.power.type.*;
 import com.github.xzzpig.pigrpg.equip.*;
+
 import org.bukkit.event.entity.*;
 import org.bukkit.configuration.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.entity.*;
+
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 
@@ -31,6 +33,7 @@ public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		return this;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run(){
 		if(entity==null)

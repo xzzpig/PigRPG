@@ -2,11 +2,13 @@ package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.configuration.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
+
 import com.github.xzzpig.pigrpg.*;
 
 public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equip
@@ -31,12 +33,13 @@ public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		return this;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run(){
 		if(entity==null)
 			return;
 		State state = State.getFrom(entity);
-		samount = samount.replaceAll("</health/>",((int)entity.getHealth())+"").replaceAll("</maxhealth/>",((int)entity.getMaxHealth())+"").replaceAll("</damage/>",state.getPhysicDamage()+"");
+		samount = samount.replaceAll("</health/>",((int)((Damageable)entity).getHealth())+"").replaceAll("</maxhealth/>",((int)((Damageable)entity).getMaxHealth())+"").replaceAll("</damage/>",state.getPhysicDamage()+"");
 		amount = (int)TCalculate.getResult(samount);
 		if(type.equalsIgnoreCase("max")&&type2.equalsIgnoreCase("set"))
 			state.setHp(amount);
@@ -48,7 +51,7 @@ public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		else if(type.equalsIgnoreCase("max")&&type2.equalsIgnoreCase("add"))
 			state.setHp(state.getHp()+amount);
 		else if(type.equalsIgnoreCase("current")&&type2.equalsIgnoreCase("add")){
-			amount = (int) entity.getHealth()+amount;
+			amount = (int) ((Damageable)entity).getHealth()+amount;
 			if(amount>state.getHp())
 				amount = state.getHp();
 			entity.setHealth(amount);

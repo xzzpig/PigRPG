@@ -13,7 +13,7 @@ import com.github.xzzpig.BukkitTools.TData;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
-public class PowerLore implements Comparable
+public class PowerLore implements Comparable<PowerLore>
 {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
 
@@ -70,10 +70,8 @@ public class PowerLore implements Comparable
 	}
 	
 	@Override
-	public int compareTo(Object p1){
+	public int compareTo(PowerLore p1){
 		if(p1 == null)
-			return 1;
-		if(!(p1 instanceof PowerLore))
 			return 1;
 		return level - ((PowerLore)p1).level;
 	}
