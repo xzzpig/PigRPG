@@ -8,7 +8,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 
-public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Equip
+public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Equip,PT_BeDamage
 {
 	String command,temppremission;
 	boolean op;
@@ -55,4 +55,11 @@ public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Eq
 	public void rebuildEquip(InventoryCloseEvent event){
 		player = (Player)event.getPlayer();
 	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(event.getDamager() instanceof Player)
+			player = (Player)event.getDamager();
+	}
+	
 }

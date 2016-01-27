@@ -9,7 +9,7 @@ import org.bukkit.entity.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equip
+public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	String type,sdamage;
 	int range,damage,distance,times;
@@ -41,6 +41,13 @@ public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equ
 			state.setPhysicDamage(damage);
 		else if(type.equalsIgnoreCase("add"))
 			state.setPhysicDamage(damage+state.getPhysicDamage());
+		else if(type.equalsIgnoreCase("add")){
+			if(target==null)
+				return;
+			state = State.getFrom(target);
+			if(state.getPhysicDamage()>damage)
+				state.setPhysicDamage(damage);
+		}
 		else{
 			if(target==null)
 				target = TEntity.getTarget(entity,distance);
@@ -68,5 +75,13 @@ public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equ
 	public void rebuildEquip(InventoryCloseEvent event){
 		entity = event.getPlayer();
 	}
-
+	
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(!(event.getDamager() instanceof LivingEntity))
+			return;
+		target = (LivingEntity) event.getDamager();
+		if(event.getEntity() instanceof LivingEntity)
+			entity = (LivingEntity) event.getEntity();
+	}
 }

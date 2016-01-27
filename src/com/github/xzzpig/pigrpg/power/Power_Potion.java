@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.*;
 
-public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equip
+public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	private static Random rand = new Random();
 
@@ -75,5 +75,13 @@ public class Power_Potion extends Power implements PT_Damge,PT_RightClick,PT_Equ
 		if(type.equalsIgnoreCase("add"))
 			State.getFrom(entity).potions.add(potion);
 	}
-
+	
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(target.equalsIgnoreCase("target")){
+			if(event.getDamager() instanceof LivingEntity)
+				entity = (LivingEntity) event.getDamager();}
+		else if(event.getEntity() instanceof LivingEntity)
+			entity = (LivingEntity) event.getEntity();
+	}
 }

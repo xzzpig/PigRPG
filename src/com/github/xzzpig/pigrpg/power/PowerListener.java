@@ -61,8 +61,25 @@ public class PowerListener implements Listener
 					p.run();
 				}
 			}
+			
+			
+		}
+		if(event.getEntity() instanceof Player){
+			User user = User.getUser((Player)event.getEntity());
+			Equipment equip = user.getHandEquip();
+			if(equip.getEquiptype()==EquipType.Core)
+				equip = user.getEquip(EquipType.Core);
+			else if(EquipType.Weapon.getInherit().hasChild(TPremission.valueOf(equip.getEquiptype().toString()))){
+				if(EquipType.getFrom(equip.getEquiptype().toString().replaceAll("核心","")).getInherit().hasChild(TPremission.valueOf(equip.getEquiptype().toString()))){
+					equip = user.getEquip(EquipType.Core);
+				}
+				else{
+					user.sendPluginMessage("&4由于武器类型不符，你无法使用该武器");
+					return;
+				}
+			}
 			pls:for(PowerLore pl : equip.getPowerLores()){
-				if(!(pl.isRunTime(PowerRunTime.Damage)||pl.isRunTime(PowerRunTime.BeDamage)))
+				if(!(pl.isRunTime(PowerRunTime.BeDamage)))
 					continue pls;
 				ps:for(Power p:pl.powers){
 					if(p instanceof PT_Limit)
@@ -76,9 +93,9 @@ public class PowerListener implements Listener
 					p.run();
 				}
 			}
-			event.setDamage(event.getDamage()+dstate.getPhysicDamage()-tstate.getPhysicDefence());
-			dstate.setPhysicDamage(origindamage);
 		}
+		event.setDamage(event.getDamage()+dstate.getPhysicDamage()-tstate.getPhysicDefence());
+		dstate.setPhysicDamage(origindamage);
 	}
 
 	@EventHandler

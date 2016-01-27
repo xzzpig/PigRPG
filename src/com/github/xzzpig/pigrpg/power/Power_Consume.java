@@ -8,7 +8,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 
-public class Power_Consume extends Power implements PT_Damge,PT_RightClick
+public class Power_Consume extends Power implements PT_Damge,PT_RightClick,PT_BeDamage
 {
 	Equipment equip;
 	User user;
@@ -49,6 +49,14 @@ public class Power_Consume extends Power implements PT_Damge,PT_RightClick
 		if(event.getDamager() instanceof Player){
 			user = User.getUser((Player)event.getDamager());
 			equip = User.getUser((Player)event.getDamager()).getHandEquip();
+		}
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(event.getEntity() instanceof Player){
+			user = User.getUser((Player)event.getEntity());
+			equip = User.getUser((Player)event.getEntity()).getHandEquip();
 		}
 	}
 	
