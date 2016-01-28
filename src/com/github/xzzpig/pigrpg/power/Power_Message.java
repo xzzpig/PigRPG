@@ -35,16 +35,7 @@ public class Power_Message extends Power implements PT_Damge,PT_RightClick,PT_Eq
 	public void run(){
 		if(player == null)
 			return;
-		pl.data.
-			setString("id",player.getName()).
-			setString("level",player.getLevel()+"").
-			setString("world",player.getWorld().getName()).
-			setString("loc",player.getLocation().toString()).
-			setString("health",((Damageable)player).getHealth()+"").
-			setString("maxhealth",((Damageable)player).getMaxHealth()+"").
-			setString("damage",State.getFrom(player).getPhysicDamage()+"").
-			setString("defence",State.getFrom(player).getPhysicDefence()+"");
-		message = pl.getReplaced(message);
+		message = Power_Condition.buildStr(message,player,false);
 		User.getUser(player).sendPluginMessage(message);
 	}
 

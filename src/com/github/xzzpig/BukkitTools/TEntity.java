@@ -1,15 +1,10 @@
 package com.github.xzzpig.BukkitTools;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.util.BlockIterator;
+import java.util.*;
+import org.bukkit.*;
+import org.bukkit.block.*;
+import org.bukkit.entity.*;
+import org.bukkit.util.*;
 
 public class TEntity {
 	private TEntity(){}
@@ -81,5 +76,12 @@ public class TEntity {
 	
 	public static LivingEntity getTarget(Player player) {
 		return getTarget(player,10);
+	}
+	
+	public static int getMaxHealth(LivingEntity entity){
+		return (int)((Damageable)entity).getMaxHealth();
+	}
+	public static int getHealth(LivingEntity entity){
+		return (int)((Damageable)entity).getHealth();
 	}
 }

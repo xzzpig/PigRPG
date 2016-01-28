@@ -75,7 +75,7 @@ public class Power_Condition extends Power implements PT_Limit
 			replaceAll("</y/>",entity.getLocation().getBlockY()+"").
 			replaceAll("</z/>",entity.getLocation().getBlockZ()+"").
 			replaceAll("</maxhealth/>",state.getHp()+"").
-			replaceAll("</currenthealth/>",""+(int)((Damageable)entity).getHealth()).
+			replaceAll("</currenthealth/>",""+TEntity.getHealth(entity)).
 			replaceAll("</name/>",entity.getCustomName()).
 			replaceAll("</type/>",entity.getType().toString());
 		if(entity instanceof Player){
