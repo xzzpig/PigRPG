@@ -117,6 +117,6 @@ public class State
 	}
 
 	public void remove(){
-		entity.removeMetadata("state",Bukkit.getPluginManager().getPlugin("PigPG"));
+		entity.removeMetadata("state",Bukkit.getPluginManager().getPlugin("PigRPG"));
 	}
 }
