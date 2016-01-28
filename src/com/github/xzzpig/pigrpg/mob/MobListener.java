@@ -9,11 +9,13 @@ public class MobListener implements Listener
 {
 	private static Random randm = new Random();
 	
-	@EventHandler
+	//@EventHandler
 	public void onChangeEntityToRpg(CreatureSpawnEvent event){
 		if(!RpgWorld.rpgworldlist.contains(event.getLocation().getWorld().getName()))
 			return;
 		LivingEntity entity = event.getEntity();
+		if(entity instanceof Player)
+			return;
 		RpgChunk rc = new RpgChunk(entity.getLocation().getChunk());
 		int levet = rc.getBasicLevel() + randm.nextInt(10) -5;
 		CustomMob.getRangeMob(entity,levet);

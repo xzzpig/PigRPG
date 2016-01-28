@@ -90,8 +90,9 @@ public class PowerLore implements Comparable<PowerLore>
 	public PowerLore loadPowers(){
 		Set<String> powernames = path.getConfigurationSection("power").getKeys(false);
 		for(String powername:powernames){
+			String solved = powername.split("_")[0];
 			try {
-				powers.add(((Power)Class.forName("com.github.xzzpig.pigrpg.power.Power_"+powername).newInstance()).reBuild(path.getConfigurationSection("power."+powername),this));
+				powers.add(((Power)Class.forName("com.github.xzzpig.pigrpg.power.Power_"+solved).newInstance()).reBuild(path.getConfigurationSection("power."+powername),this));
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

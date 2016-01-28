@@ -1,10 +1,12 @@
 package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.configuration.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.BukkitTools.*;
 
@@ -34,7 +36,7 @@ public class Power_Money extends Power implements PT_Damge,PT_RightClick,PT_Kill
 	public void run(){
 		if(entity==null)
 			return;
-		user = user.getUser(entity);
+		user = User.getUser(entity);
 		amount = (int) TCalculate.getResult(samount.replaceAll("</money/>",""+(int)user.getEcoAPI().getMoney()));
 		switch(type){
 			case "add":
@@ -86,7 +88,7 @@ public class Power_Money extends Power implements PT_Damge,PT_RightClick,PT_Kill
 	public boolean can(){
 		if(entity==null)
 			return false;
-		user = user.getUser(entity);
+		user = User.getUser(entity);
 		amount = (int) TCalculate.getResult(samount.replaceAll("</money/>",""+(int)user.getEcoAPI().getMoney()));
 		if(type.equalsIgnoreCase("take")||type.equalsIgnoreCase("has"))
 			return user.getEcoAPI().hasMoney(amount);

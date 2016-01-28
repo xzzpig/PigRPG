@@ -116,7 +116,8 @@ public class User
 		if(equip.getEquiptype() != EquipType.Default)
 			player.setItemInHand(equip);
 		player.updateInventory();
-		this.handitem = player.getItemInHand();		this.handequip = equip;
+		this.handitem = player.getItemInHand();
+		this.handequip = equip;
 		return equip;
 	}
 	

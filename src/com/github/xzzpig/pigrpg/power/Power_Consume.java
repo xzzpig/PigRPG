@@ -3,6 +3,7 @@ package com.github.xzzpig.pigrpg.power;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.pigrpg.equip.*;
 import com.github.xzzpig.pigrpg.power.type.*;
+
 import org.bukkit.configuration.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -23,6 +24,7 @@ public class Power_Consume extends Power implements PT_Damge,PT_RightClick,PT_Be
 		return this;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run(){
 		boolean hand = false;
@@ -36,6 +38,7 @@ public class Power_Consume extends Power implements PT_Damge,PT_RightClick,PT_Be
         }
         if(hand)
         	user.getPlayer().setItemInHand(equip);
+        user.getPlayer().updateInventory();
 	}
 
 	@Override

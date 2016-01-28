@@ -137,11 +137,11 @@ public class PowerListener implements Listener
 	}
 
 	@EventHandler
-	public void onPickUpItem(PlayerPickupItemEvent event){
-		if(!(event.getItem() instanceof Arrow))
+	public void onArrowHit(ProjectileHitEvent  event){
+		if(!(event.getEntity() instanceof Arrow))
 			return;
-		if(Power_Arrow.arrows.contains(event.getItem()))
-			event.setCancelled(true);
+		if(Power_Arrow.arrows.contains(event.getEntity()))
+			event.getEntity().remove();
 	}
 
 	@EventHandler
