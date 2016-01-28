@@ -15,10 +15,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.github.xzzpig.pigrpg.equip.PowerLore;
-import com.github.xzzpig.pigrpg.power.type.PT_Damge;
+import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
-public class Power_Rumble extends Power implements PT_Damge,PT_RightClick
+public class Power_Rumble extends Power implements PT_Damage,PT_RightClick
 {
 	int power,distance,chance;
 	

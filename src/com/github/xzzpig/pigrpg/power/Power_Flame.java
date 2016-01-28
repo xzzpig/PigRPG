@@ -9,7 +9,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 
-public class Power_Flame extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
+public class Power_Flame extends Power implements PT_Damage,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	private static Random rand = new Random();
 

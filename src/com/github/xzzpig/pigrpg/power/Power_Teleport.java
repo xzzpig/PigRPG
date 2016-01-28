@@ -13,7 +13,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.util.*;
 
-public class Power_Teleport extends Power implements PT_Damge,PT_RightClick
+public class Power_Teleport extends Power implements PT_Damage,PT_RightClick
 {
 	String target,type;
 	int distance;

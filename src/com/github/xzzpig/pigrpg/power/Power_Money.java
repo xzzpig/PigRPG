@@ -10,7 +10,7 @@ import org.bukkit.event.player.*;
 import com.github.xzzpig.pigrpg.*;
 import com.github.xzzpig.BukkitTools.*;
 
-public class Power_Money extends Power implements PT_Damge,PT_RightClick,PT_Killed,PT_Limit,PT_BeDamage
+public class Power_Money extends Power implements PT_Damage,PT_RightClick,PT_Killed,PT_Limit,PT_BeDamage
 {
 	String type,samount,target,message;
 

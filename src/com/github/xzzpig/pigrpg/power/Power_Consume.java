@@ -9,7 +9,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 
-public class Power_Consume extends Power implements PT_Damge,PT_RightClick,PT_BeDamage
+public class Power_Consume extends Power implements PT_Damage,PT_RightClick,PT_BeDamage
 {
 	Equipment equip;
 	User user;

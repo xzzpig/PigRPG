@@ -9,7 +9,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 
-public class Power_Fireball extends Power implements PT_Damge,PT_RightClick
+public class Power_Fireball extends Power implements PT_Damage,PT_RightClick
 {
 	Random random = new Random();
 

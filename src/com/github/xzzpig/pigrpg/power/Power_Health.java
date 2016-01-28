@@ -11,7 +11,7 @@ import org.bukkit.event.player.*;
 
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
+public class Power_Health extends Power implements PT_Damage,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	String target,type,type2,samount;
 	int distance;

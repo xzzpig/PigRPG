@@ -11,7 +11,7 @@ import org.bukkit.entity.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Damage extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
+public class Power_Damage extends Power implements PT_Damage,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	String type,sdamage;
 	int range,damage,distance,times;

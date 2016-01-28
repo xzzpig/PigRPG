@@ -8,7 +8,7 @@ import com.github.xzzpig.pigrpg.equip.*;
 import org.bukkit.event.player.*;
 import org.bukkit.*;
 
-public class Power_Effect extends Power implements PT_RightClick,PT_Damge,PT_Equip,PT_BeDamage
+public class Power_Effect extends Power implements PT_RightClick,PT_Damage,PT_Equip,PT_BeDamage
 {
 	Effect effect;
 

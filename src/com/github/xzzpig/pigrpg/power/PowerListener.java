@@ -25,9 +25,9 @@ public class PowerListener implements Listener
 		LivingEntity target = (LivingEntity) event.getEntity();
 		State dstate = State.getFrom(damager),tstate = State.getFrom(target);
 		for(Power p:dstate.getPowers()){
-			if(!(p instanceof PT_Damge))
+			if(!(p instanceof PT_Damage))
 				continue;
-			((PT_Damge)p).rebulidDamage(event);
+			((PT_Damage)p).rebulidDamage(event);
 			p.run();
 		}
 		int origindamage = dstate.getPhysicDamage();
@@ -54,9 +54,9 @@ public class PowerListener implements Listener
 							user.sendPluginMessage(((PT_Limit) p).cantMessage());
 							break ps;
 						}
-					if(!(p instanceof PT_Damge))
+					if(!(p instanceof PT_Damage))
 						continue ps;
-					((PT_Damge)p).rebulidDamage(event);
+					((PT_Damage)p).rebulidDamage(event);
 					p.run();
 				}
 			}

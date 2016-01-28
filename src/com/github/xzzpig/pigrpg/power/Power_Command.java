@@ -8,7 +8,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 
-public class Power_Command extends Power implements PT_RightClick,PT_Damge,PT_Equip,PT_BeDamage
+public class Power_Command extends Power implements PT_RightClick,PT_Damage,PT_Equip,PT_BeDamage
 {
 	String command,temppremission;
 	boolean op;

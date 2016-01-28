@@ -8,7 +8,7 @@ import org.bukkit.configuration.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 
-public class Power_Lightning extends Power implements PT_Damge,PT_RightClick
+public class Power_Lightning extends Power implements PT_Damage,PT_RightClick
 {
 	private static Random rand = new Random();
 	

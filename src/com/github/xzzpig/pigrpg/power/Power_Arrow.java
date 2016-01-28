@@ -9,11 +9,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.github.xzzpig.pigrpg.equip.PowerLore;
-import com.github.xzzpig.pigrpg.power.type.PT_Damge;
+import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
+
 import java.util.*;
 
-public class Power_Arrow extends Power implements PT_Damge,PT_RightClick
+public class Power_Arrow extends Power implements PT_Damage,PT_RightClick
 {
 	public static List<Arrow> arrows = new ArrayList<Arrow>();
 	
