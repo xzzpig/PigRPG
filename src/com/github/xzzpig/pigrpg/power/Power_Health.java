@@ -11,7 +11,7 @@ import org.bukkit.event.player.*;
 
 import com.github.xzzpig.pigrpg.*;
 
-public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equip
+public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	String target,type,type2,samount;
 	int distance;
@@ -67,6 +67,15 @@ public class Power_Health extends Power implements PT_Damge,PT_RightClick,PT_Equ
 			entity = (LivingEntity)event.getDamager();
 	}
 
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(target.equalsIgnoreCase("self")){
+			if(event.getEntity() instanceof LivingEntity)
+				entity = (LivingEntity)event.getEntity();}
+		else if(event.getDamager() instanceof LivingEntity)
+			entity = (LivingEntity)event.getDamager();
+	}
+	
 	@Override
 	public void rebuildRC(PlayerInteractEvent event){
 		if(target.equalsIgnoreCase("point"))

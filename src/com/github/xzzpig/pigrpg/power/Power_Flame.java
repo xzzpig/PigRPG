@@ -9,7 +9,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 
-public class Power_Flame extends Power implements PT_Damge,PT_RightClick,PT_Equip
+public class Power_Flame extends Power implements PT_Damge,PT_RightClick,PT_Equip,PT_BeDamage
 {
 	private static Random rand = new Random();
 
@@ -51,6 +51,15 @@ public class Power_Flame extends Power implements PT_Damge,PT_RightClick,PT_Equi
 			entity = (LivingEntity)event.getDamager();
 	}
 
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event){
+		if(target.equalsIgnoreCase("self")){
+			if(event.getEntity() instanceof LivingEntity)
+				entity = (LivingEntity)event.getEntity();}
+		else if(event.getDamager() instanceof LivingEntity)
+			entity = (LivingEntity)event.getDamager();
+	}
+	
 	@Override
 	public void rebuildRC(PlayerInteractEvent event){
 		if(target.equalsIgnoreCase("point"))

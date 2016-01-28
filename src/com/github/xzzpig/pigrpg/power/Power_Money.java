@@ -90,13 +90,12 @@ public class Power_Money extends Power implements PT_Damge,PT_RightClick,PT_Kill
 		amount = (int) TCalculate.getResult(samount.replaceAll("</money/>",""+(int)user.getEcoAPI().getMoney()));
 		if(type.equalsIgnoreCase("take")||type.equalsIgnoreCase("has"))
 			return user.getEcoAPI().hasMoney(amount);
-		return false;
+		return true;
 	}
 
 	@Override
 	public String cantMessage(){
-		// TODO: Implement this method
-		return null;
+		return message;
 	}
 	
 	
