@@ -35,7 +35,7 @@ public class Power_Consume extends Power implements PT_Damage,PT_RightClick,PT_B
         	hand = true;
 		int count = equip.getAmount() - 1;
         if (count == 0) {
-            equip.setAmount(0);
+            equip.setTypeId(0);;
         } else {
             equip.setAmount(count);
         }
