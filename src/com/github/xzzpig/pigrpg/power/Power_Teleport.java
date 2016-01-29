@@ -1,17 +1,22 @@
 package com.github.xzzpig.pigrpg.power;
 
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.Debuger;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.BlockIterator;
 
-import org.bukkit.*;
-import org.bukkit.block.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
-import org.bukkit.util.*;
+import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_Damage;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Teleport extends Power implements PT_Damage,PT_RightClick
 {
@@ -37,7 +42,6 @@ public class Power_Teleport extends Power implements PT_Damage,PT_RightClick
 			double y = Double.valueOf(pl.getReplaced(path.getString("y")));
 			double z = Double.valueOf(pl.getReplaced(path.getString("z")));
 			loc = new Location(Bukkit.getWorld(world),x,y,z);
-			Debuger.print(loc);
 		}
 		return this;
 	}

@@ -1,6 +1,7 @@
 package com.github.xzzpig.pigrpg.equip;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,13 +11,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
 public class PowerLore implements Comparable<PowerLore>
 {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
-
+	
 	static{
 		FileConfiguration config = TConfig.getConfigFile("PigRPG", "customlore.yml");
 		try {
@@ -28,6 +30,18 @@ public class PowerLore implements Comparable<PowerLore>
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static final PowerLore consume = new PowerLore();
+	static{
+		consume.name = "consume";
+		consume.matchkey = "用于装备类型 消耗品";
+		consume.form = consume.matchkey;
+		consume.show = "&2右键使用并消耗";
+		consume.runtime = new PowerRunTime[]{PowerRunTime.RightClick};
+		consume.needequip.addAll(Arrays.asList(EquipType.values()));
+		Power pconsume = Power.valueOf("Consume").reBuild(null, consume);
+		consume.powers.add(pconsume);
 	}
 	
 	public String name;
@@ -91,15 +105,12 @@ public class PowerLore implements Comparable<PowerLore>
 		Set<String> powernames = path.getConfigurationSection("power").getKeys(false);
 		for(String powername:powernames){
 			String solved = powername.split("_")[0];
-			try {
-				powers.add(((Power)Class.forName("com.github.xzzpig.pigrpg.power.Power_"+solved).newInstance()).reBuild(path.getConfigurationSection("power."+powername),this));
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				System.out.println("[PigRPG]错误:加载Power错误(未知的Power名称)");
+			Power p = (Power.valueOf(solved).reBuild(path.getConfigurationSection("power."+powername),this));
+			if(p == null){
+				System.out.println("[PigRPG]错误:加载Power错误(未知的Power名称)"+solved);
+				continue;
 			}
+			powers.add((Power.valueOf(solved).reBuild(path.getConfigurationSection("power."+powername),this)));
 		}
 		return this;
 	}
@@ -136,7 +147,7 @@ public class PowerLore implements Comparable<PowerLore>
 	public String getReplaced(String old){
 		for(Entry<String, String> set:data.getStrings().entrySet())
 			old = old.replaceAll("</"+set.getKey()+"/>",set.getValue());
-		return old;
+		return old.replaceAll("&",TString.s);
 		
 	}
 	public String getLore() {
@@ -170,4 +181,4 @@ lores:
       damage: 
         amount:</伤害/>
         target:target
-*/
+ */

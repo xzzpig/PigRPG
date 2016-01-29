@@ -1,16 +1,19 @@
 package com.github.xzzpig.pigrpg.power;
 
-import com.github.xzzpig.pigrpg.*;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.equip.Equipment;
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
+import com.github.xzzpig.pigrpg.power.type.PT_Damage;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Consume extends Power implements PT_Damage,PT_RightClick,PT_BeDamage
-{
+{	
 	Equipment equip;
 	User user;
 	

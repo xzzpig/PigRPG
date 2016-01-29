@@ -161,6 +161,8 @@ public class Equipment extends ItemStack
 		Arrays.sort(pls);
 		powerlores.clear();
 		powerlores.addAll(Arrays.asList(pls));
+		if(this.getEquiptype() == EquipType.Consume)
+			powerlores.add(PowerLore.consume);
 		return this;
 	}
 

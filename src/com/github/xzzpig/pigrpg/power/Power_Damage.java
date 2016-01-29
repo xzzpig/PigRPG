@@ -45,7 +45,6 @@ public class Power_Damage extends Power implements PT_Damage,PT_RightClick,PT_Eq
 		else if(type.equalsIgnoreCase("add"))
 			state.setPhysicDamage(damage+state.getPhysicDamage());
 		else if(type.equalsIgnoreCase("max")){
-			Debuger.print(damage);
 			if(state.getPhysicDamage()>damage){				
 				state.setPhysicDamage(damage);
 			}
