@@ -11,7 +11,7 @@ import com.github.xzzpig.pigrpg.equip.PowerLore;
 public abstract class Power
 {	
 	private static List<Class<?>> powerclasss = new ArrayList<Class<?>>();
-	
+
 	public static void regrestPowerClass(Class<?> powerclass){
 		powerclasss.add(powerclass);
 	}
@@ -20,65 +20,68 @@ public abstract class Power
 	}
 	static{
 		regrestPowerClass(new Class<?>[]
-				{
-				Power_Arrow.class,
-				Power_Chance.class,
-				Power_Command.class,
-				Power_Condition.class,
-				Power_Consume.class,
-				Power_Cooldown.class,
-				Power_Damage.class,
-				Power_Defence.class,
-				Power_Effect.class,
-				Power_Fireball.class,
-				Power_Flame.class,
-				Power_Health.class,
-				Power_Hungery.class,
-				Power_Knockup.class,
-				Power_Level.class,
-				Power_Lightning.class,
-				Power_Message.class,
-				Power_Money.class,
-				Power_Potion.class,
-				Power_Premission.class,
-				Power_Rumble.class,
-				Power_Sound.class,
-				Power_Teleport.class,
-				Power_Test.class
-				});
+						  {
+							  Power_Arrow.class,
+							  Power_Chance.class,
+							  Power_Command.class,
+							  Power_Condition.class,
+							  Power_Consume.class,
+							  Power_Cooldown.class,
+							  Power_Damage.class,
+							  Power_Defence.class,
+							  Power_Effect.class,
+							  Power_Fireball.class,
+							  Power_Flame.class,
+							  Power_Health.class,
+							  Power_Hungery.class,
+							  Power_Knockup.class,
+							  Power_Level.class,
+							  Power_Lightning.class,
+							  Power_Message.class,
+							  Power_Money.class,
+							  Power_Potion.class,
+							  Power_Prefix.class,
+							  Power_Premission.class,
+							  Power_Rumble.class,
+							  Power_Sound.class,
+							  Power_Teleport.class,
+							  Power_Test.class
+						  });
 	}
-	
+
 	public Power(){};
-	
+
 	public abstract String getPowerName();
-	
+
 	public String[] getAnotherName(){return new String[]{};};
-	
+
 	public abstract Power reBuild(ConfigurationSection path,PowerLore pl);
-	
+
 	public abstract void run();
-	
-	public static Power[] values() {
+
+	public static Power[] values(){
 		List<Power> powers = new ArrayList<Power>();
 		for(Class<?> c:powerclasss){
 			Power p = null;
-			try {
+			try{
 				Object instance = c.newInstance();
 				if(!(instance instanceof Power))
 					continue;
 				p = (Power) c.newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			}
+			catch(InstantiationException e){
 				e.printStackTrace();
 			}
-			if(p == null)
+			catch(IllegalAccessException e){
+				e.printStackTrace();
+			}
+			if(p==null)
 				continue;
 			powers.add(p);
 		}
 		return powers.toArray(new Power[0]);
 	}
-	
+
 	public static Power valueOf(String name){
 		for(Power p:values()){
 			if(p.getPowerName().equalsIgnoreCase(name))

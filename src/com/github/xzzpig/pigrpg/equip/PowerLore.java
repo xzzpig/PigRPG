@@ -24,7 +24,6 @@ public class PowerLore implements Comparable<PowerLore>
 		try {
 			for(String lorename:TConfig.getConfigPath("PigRPG", "customlore.yml","customlore")){
 				PowerLore pl = new PowerLore(config.getConfigurationSection("customlore."+lorename));
-				pl.name = lorename;
 				powerlores.add(pl);
 			}
 		} catch (Exception e) {
@@ -42,6 +41,26 @@ public class PowerLore implements Comparable<PowerLore>
 		consume.needequip.addAll(Arrays.asList(EquipType.values()));
 		Power pconsume = Power.valueOf("Consume").reBuild(null, consume);
 		consume.powers.add(pconsume);
+		powerlores.add(consume);
+	}
+	public static final PowerLore prefix = new PowerLore();
+	static{
+		prefix.name = "prefix";
+		prefix.matchkey = "用于装备类型 称号";
+		prefix.form = consume.matchkey;
+		prefix.show = "&2装备使用称号";
+		prefix.runtime = new PowerRunTime[]{PowerRunTime.CloseEC};
+		prefix.needequip.addAll(Arrays.asList(EquipType.values()));
+		Power pprefix = Power.valueOf("Prefix").reBuild(null, consume);
+		prefix.powers.add(pprefix);
+		powerlores.add(prefix);
+	}
+	
+	public static PowerLore getFromName(String name){
+		for(PowerLore pl:powerlores)
+			if(pl.name.equalsIgnoreCase(name))
+				return pl;
+		return null;
 	}
 	
 	public String name;
@@ -57,6 +76,7 @@ public class PowerLore implements Comparable<PowerLore>
 	private PowerLore() {}
 	public PowerLore(ConfigurationSection path){
 		this.path = path;
+		this.name = path.getName();
 		matchkey = path.getString("matchkey");
 		form = path.getString("form");
 		show = path.getString("show");
@@ -71,6 +91,7 @@ public class PowerLore implements Comparable<PowerLore>
 	@Override
 	public PowerLore clone(){
 		PowerLore pl = new PowerLore();
+		pl.name = this.name;
 		pl.matchkey = this.matchkey;
 		pl.form = this.form;
 		pl.show = this.show;
@@ -87,7 +108,7 @@ public class PowerLore implements Comparable<PowerLore>
 	public int compareTo(PowerLore p1){
 		if(p1 == null)
 			return 1;
-		return level - ((PowerLore)p1).level;
+		return level - p1.level;
 	}
 	
 	public String getKey(){

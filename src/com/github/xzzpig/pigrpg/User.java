@@ -27,7 +27,7 @@ public class User
 	private ChatChannel chatchannel;
 	private List<ChatChannel> acceptchannel;
 	private static HashMap<EquipType,Equipment> equiplist = new HashMap<EquipType,Equipment>();
-	private String justsay = "";
+	private String justsay = "",prefix;
 	private Chat chat;
 	private TData data = new TData();
 	private Eco eco;
@@ -46,7 +46,33 @@ public class User
 		this.chat = new Chat(this);
 		this.eco = new Eco(this);
 		this.state = new State(player);
+		this.prefix = TConfig.getConfigFile("PigRPG","userdata.yml").getString(player.getName()+".prefix","null");
+		freshDisplayName();
 		loadEquis();
+	}
+
+	public User freshDisplayName(){
+		player.setDisplayName(TString.Color(6)+"*"+prefix.replaceAll("&",TString.s)+TString.Color(6)+"*\n"+
+							  Color.WHITE+player.getName());
+		return this;
+	}
+
+	public void setJustsay(String justsay){
+		this.justsay = justsay;
+	}
+
+	public String getJustsay(){
+		return justsay;
+	}
+
+	public void setPrefix(String prefix){
+		this.prefix = prefix;
+		TConfig.saveConfig("PigRPG","userdata.yml",player.getName()+".prefix",prefix);
+		freshDisplayName();
+	}
+
+	public String getPrefix(){
+		return prefix;
 	}
 
 	public static User getUser(Player player){
@@ -66,7 +92,7 @@ public class User
 						catch(InterruptedException e){}					}
 					userlist.remove(player);
 				}
-			}).start();;
+			}).start();
 	}
 
 	public boolean isAcceptChatChannel(ChatChannel c){
@@ -90,7 +116,7 @@ public class User
 	public ChatChannel getChatchannel(){
 		return chatchannel;
 	}
-	
+
 	private void loadEquis(){
 		for(EquipType type:EquipType.values()){
 			ItemStack iequip = TConfig.getConfigFile("PigRPG","equip"+"_"+type+".yml").getItemStack("equip."+player.getName());
@@ -110,17 +136,17 @@ public class User
 	}
 	@SuppressWarnings("deprecation")
 	public Equipment getHandEquip(){
-		if(this.handitem != null&&handitem.toString().equalsIgnoreCase(player.getItemInHand().toString()))
+		if(this.handitem!=null&&handitem.toString().equalsIgnoreCase(player.getItemInHand().toString()))
 			return this.handequip;
 		Equipment equip = new Equipment(player.getItemInHand(),player);
-		if(equip.getEquiptype() != EquipType.Default)
+		if(equip.getEquiptype()!=EquipType.Default)
 			player.setItemInHand(equip);
 		player.updateInventory();
 		this.handitem = player.getItemInHand();
 		this.handequip = equip;
 		return equip;
 	}
-	
+
 	public boolean hasFriend(String friend){
 		return Friend.hasFriend(player.getName(),friend);
 	}
@@ -217,7 +243,9 @@ public class User
 		String prefix = ChatColor.GREEN+"["+fromuser.getChatchannel().getName();
 		if(fromuser.getChatchannel()!=ChatChannel.World)
 			prefix = prefix+"_"+fromuser.getPlayer().getWorld().getName();
-		prefix = prefix+"]\n\t"+ChatColor.RESET;
+		prefix = prefix+"]\n";
+		if(!fromuser.getPrefix().equalsIgnoreCase("null"))
+			prefix = prefix+ChatColor.GOLD+"["+fromuser.getPrefix()+ChatColor.GOLD+"]";
 		if(fromuser.getPlayer().isOp())
 			prefix = prefix+ChatColor.RED;
 		prefix = prefix+fromuser.getPlayer().getName()+ChatColor.RESET+":";

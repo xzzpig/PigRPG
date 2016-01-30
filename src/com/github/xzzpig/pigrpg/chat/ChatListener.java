@@ -23,6 +23,7 @@ public class ChatListener implements Listener{
 		for(Player p:TPlayer.getAllPlayers()){
 			User.getUser(p).sendChatMessage(user);
 		}
+		System.out.println(user.getPlayer().getName()+":"+event.getMessage());
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -6,20 +6,22 @@ import org.bukkit.configuration.file.FileConfiguration;
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TPremission;
 import com.github.xzzpig.BukkitTools.TString;
+import java.util.*;
 
 public class EquipType
 {
 	private static HashMap<String,EquipType> typelist = new HashMap<String,EquipType>();
 	
-	public static final EquipType Default = new EquipType("无",false,280);
-	public static final EquipType Weapon = new EquipType("武器",false,268);
-	public static final EquipType Core = new EquipType("核心",268);
-	public static final EquipType Head = new EquipType("头盔",298);
-	public static final EquipType Chest = new EquipType("护甲",299);
-	public static final EquipType Leg = new EquipType("战靴",300);
-	public static final EquipType Hand = new EquipType("首饰",40);
-	public static final EquipType Neck = new EquipType("项链",111);
-	public static final EquipType Consume = new EquipType("消耗品",false,260);
+	public static final EquipType Default = new EquipType("无",false,280,null);
+	public static final EquipType Weapon = new EquipType("武器",false,268,null);
+	public static final EquipType Core = new EquipType("核心",268,null);
+	public static final EquipType Head = new EquipType("头盔",298,null);
+	public static final EquipType Chest = new EquipType("护甲",299,null);
+	public static final EquipType Leg = new EquipType("战靴",300,null);
+	public static final EquipType Hand = new EquipType("首饰",40,null);
+	public static final EquipType Neck = new EquipType("项链",111,null);
+	public static final EquipType Consume = new EquipType("消耗品",false,260,Arrays.asList(new String[]{"consume"}));
+	public static final EquipType Prefix = new EquipType("称号",1,Arrays.asList(new String[]{"consume"}));
 
 	
 	private String typename;
@@ -27,16 +29,17 @@ public class EquipType
 	private TPremission Inherit;
 	private int type = 1;
 	private String parent = "无";
+	public List<PowerLore> pls = new ArrayList<PowerLore>();
 
-	EquipType(String typename,int typeid){
-		build(typename,typeid);
+	EquipType(String typename,int typeid,List<String> spls){
+		build(typename,typeid,spls);
 	}
-	EquipType(String typename,boolean show,int typeid){
-		build(typename,typeid);
+	EquipType(String typename,boolean show,int typeid,List<String> spls){
+		build(typename,typeid,spls);
 		this.show = show;
 	}
-	EquipType(String typename,boolean show,int typeid,String parent){
-		build(typename,typeid);
+	EquipType(String typename,boolean show,int typeid,String parent,List<String> spls){
+		build(typename,typeid,spls);
 		this.show = show;
 		this.parent = parent;
 	}
@@ -62,7 +65,8 @@ public class EquipType
 				if(!show)
 					parent = config.getString("type."+typename+".parent","无");
 				int typeid = config.getInt("type."+typename+".typeid",1);
-				new EquipType(typename,show,typeid,parent).getInherit();
+				List<String> spls = config.getStringList("type."+typename+".powerlore");
+				new EquipType(typename,show,typeid,parent,spls).getInherit();
 				TString.Print(TString.Prefix("PigRPG",3)+"自定义装备类型 "+ typename + "	已加载");
 			}
 		} catch (Exception e) {
@@ -80,11 +84,14 @@ public class EquipType
 		return typelist.values().toArray(new EquipType[0]);
 	}
 
-	private void build(String typename,int typeid){
+	private void build(String typename,int typeid,List<String> spls){
 		this.typename = typename;
 		this.type = typeid;
 		typelist.put(typename,this);
 		this.Inherit = new TPremission(typename,null);
+		if(spls != null)
+			for(String name:spls)
+				pls.add(PowerLore.getFromName(name));
 	}
 	
 	private static void resetParents(){
@@ -130,6 +137,10 @@ public class EquipType
 		config.set("type."+typename+".show",show);
 		config.set("type."+typename+".parent",parent);
 		config.set("type."+typename+".typeid",type);
+		List<String> spls = new ArrayList<String>();
+		for(PowerLore pl:pls)
+			spls.add(pl.name);
+		config.set("type."+typename+".powerlore",spls);
 		TConfig.saveConfig("PigRPG", config, "equiptype.yml");
 	}
 
