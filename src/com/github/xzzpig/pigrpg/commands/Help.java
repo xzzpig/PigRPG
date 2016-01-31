@@ -12,7 +12,8 @@ public class Help
 		CommandHelp pr_tel = PIGRPG.addSubCommandHelp(   "tel","   获取 传送系统 的帮助","输入/pr tel help 查看帮助","");
 		CommandHelp pr_sale = PIGRPG.addSubCommandHelp(  "sale","  获取 拍卖系统 的帮助","输入/pr sale help 查看帮助","");
 		CommandHelp pr_equip = PIGRPG.addSubCommandHelp( "equip"," 获取 装备系统 的帮助","输入/pr equip help 查看帮助","");
-		CommandHelp pr_list = PIGRPG.addSubCommandHelp( "list"," 获取 所有列表","输入/pr list help 查看帮助","");
+		CommandHelp pr_team = PIGRPG.addSubCommandHelp(  "team","  获取 组队系统 的帮助","输入/pr team help 查看帮助","");
+		CommandHelp pr_list = PIGRPG.addSubCommandHelp(  "list","  获取 所有列表","输入/pr list help 查看帮助","");
 		PIGRPG.addSubCommandHelp("showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
 		
 		pr_friend.addSubCommandHelp("list","  打开好友列表","","");
@@ -51,6 +52,10 @@ public class Help
 		pr_equip.addSubCommandHelp("settype","设置手中装备的装备类型","可输入/pr equip typelist 查看所有装备类型\n(默认类型 无)","<装备类型>");
 		pr_equip.addSubCommandHelp("addlore","给手中物品添加lore","","[lore] <行数>");
 		pr_equip.addSubCommandHelp("dellore","给手中物品删除lore","","[行数]");
+		
+		pr_team.addSubCommandHelp("accept","接受组队请求","","");
+		pr_team.addSubCommandHelp("deny","  拒绝组队请求","","");
+		pr_team.addSubCommandHelp("list","  列出队伍所有成员","","");
 		
 		pr_list.addSubCommandHelp("lore","列出所有特殊lore","","");
 		pr_list.addSubCommandHelp("runtime","列出所有Lore触发时间参数","","");		

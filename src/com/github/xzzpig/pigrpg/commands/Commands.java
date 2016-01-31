@@ -98,6 +98,14 @@ public class Commands {
 					return true;
 				}
 			}
+			else if(getarg(args, 0).equalsIgnoreCase("team")){
+				if(sender instanceof Player)
+					return TeamCommand.command(sender, cmd, label, args);
+				else{
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
+					return true;
+				}
+			}
 			else if(getarg(args, 0).equalsIgnoreCase("showhand")){
 				if(sender instanceof Player){
 					String target = getarg(args,1);

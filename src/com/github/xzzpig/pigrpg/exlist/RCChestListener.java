@@ -11,6 +11,8 @@ import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.chests.RCChest;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.trade.PlayerTrade;
+import com.github.xzzpig.pigrpg.*;
+import com.github.xzzpig.pigrpg.team.*;
 
 public class RCChestListener implements Listener
 {
@@ -34,10 +36,14 @@ public class RCChestListener implements Listener
 		else
 			return;
 		if(event.getInventory().getItem(event.getRawSlot()) != null){
+			User clicker = User.getUser((Player) event.getWhoClicked());
+			User target = User.getUser(TEntity.toPlayer(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), "")));
 			if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"添加好友"))
 				Friend.addFriendQue((Player) event.getWhoClicked(), TEntity.toPlayer(event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), "")));
 			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"申请交易"))
 				new PlayerTrade((Player) event.getWhoClicked(), event.getInventory().getTitle().replaceAll("的右键菜单", "").replaceAll(TString.Color(5), ""));
+			else if(event.getInventory().getItem(event.getRawSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(TString.Color(3)+"组队信息"))
+				new TeamQue(clicker,target);
 			event.getWhoClicked().closeInventory();
 			}
 	}
