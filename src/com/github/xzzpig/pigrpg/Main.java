@@ -21,6 +21,7 @@ import com.github.xzzpig.pigrpg.power.*;
 import com.github.xzzpig.BukkitTools.*;
 import com.github.xzzpig.pigrpg.rpgworld.*;
 import com.github.xzzpig.pigrpg.mob.*;
+import com.github.xzzpig.pigrpg.rpg.*;
 
 public class Main extends JavaPlugin{
 	@Override
@@ -61,6 +62,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PowerListener(), this);
 		getServer().getPluginManager().registerEvents(new RpgWorldListener(), this);
 		getServer().getPluginManager().registerEvents(new MobListener(), this);
+		getServer().getPluginManager().registerEvents(new RPGListener(), this);
 		
 	}
 	

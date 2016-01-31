@@ -17,6 +17,7 @@ import me.confuser.barapi.*;
 import com.github.xzzpig.pigrpg.equip.*;
 
 import org.bukkit.inventory.*;
+import com.github.xzzpig.pigrpg.team.*;
 
 public class User
 {
@@ -34,6 +35,7 @@ public class User
 	private State state;
 	private ItemStack handitem;
 	private Equipment handequip;
+	private int exp;
 
 	public User(Player player){
 		this.player = player;
@@ -47,8 +49,20 @@ public class User
 		this.eco = new Eco(this);
 		this.state = new State(player);
 		this.prefix = TConfig.getConfigFile("PigRPG","userdata.yml").getString(player.getName()+".prefix","null");
+		this.exp = TConfig.getConfigFile("PigRPG","userdata.yml").getInt(player.getName()+".exp",0);
 		freshDisplayName();
 		loadEquis();
+	}
+	
+	public void addExp(int exp){
+		this.setExp(this.exp + exp);
+	}
+	public void setExp(int exp){
+		this.exp = exp;
+		TConfig.saveConfig("PigRPG","userdata.yml",player.getName()+".exp",exp);
+	}
+	public int getExp(){
+		return exp;
 	}
 
 	public User freshDisplayName(){
@@ -75,6 +89,13 @@ public class User
 		return prefix;
 	}
 
+	public Team getTeam(){
+		return Team.getFrom(this);
+	}
+	public boolean hasTeam(){
+		return (getTeam() != null);
+	}
+	
 	public static User getUser(Player player){
 		if(!userlist.containsKey(player))
 			return new User(player);
@@ -173,7 +194,11 @@ public class User
 	public Player getPlayer(){
 		return this.player;
 	}
-
+	
+	public int getLevel(){
+		return TPlayer.ExpToLevel(exp);
+	}
+	
 	public boolean hasPremission(String prmission){
 		if(player.hasPermission(prmission))
 			return true;

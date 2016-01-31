@@ -18,6 +18,7 @@ public class RCChest
 		}
 		else
 			player.sendMessage(TString.Prefix("PigRPG",4)+"你没有权限发起交易");
+		inv.addItem(ItemForChest.teamAsk(player,opener));
 		return inv;
 	}
 	

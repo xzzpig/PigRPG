@@ -13,30 +13,30 @@ import org.bukkit.material.MaterialData;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.teleport.Warp;
+import com.github.xzzpig.pigrpg.*;
+import org.bukkit.*;
 
 public class ItemForChest
 {
 	@SuppressWarnings("deprecation")
-	public static ItemStack customItem(String displayname,int type,List<String> lore)
-	{
+	public static ItemStack customItem(String displayname,int type,List<String> lore){
 		ItemStack is = new ItemStack(type);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(TString.Color(3)+ displayname);
-		if(lore != null)
+		im.setDisplayName(TString.Color(3)+displayname);
+		if(lore!=null)
 			im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	protected static ItemStack playerInform(Player player)
-	{
+	protected static ItemStack playerInform(Player player){
 		ItemStack is = new ItemStack(397);
 		MaterialData data = is.getData();
 		data.setData((byte) 3);
 		is.setData(data);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(TString.Color(3)+ "玩家信息");
+		im.setDisplayName(TString.Color(3)+"玩家信息");
 		List<String> lore = new ArrayList<String>();
 		lore.add(TString.Color(2)+"昵名:"+player.getDisplayName());
 		lore.add(TString.Color(2)+"位置:"+player.getWorld().getName()+","+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ());
@@ -49,10 +49,9 @@ public class ItemForChest
 		is.setItemMeta(im);
 		return is;
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	protected static ItemStack friendInform(String player)
-	{
+	protected static ItemStack friendInform(String player){
 		ItemStack is = new ItemStack(397);
 		MaterialData data = is.getData();
 		data.setData((byte) 3);
@@ -79,12 +78,11 @@ public class ItemForChest
 		return is;
 	}
 
-	protected static ItemStack AddFriend(String player,String target)
-	{
+	protected static ItemStack AddFriend(String player,String target){
 		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(154);
+			ItemStack is = new ItemStack(154);
 		ItemMeta im = is.getItemMeta();
-		if(Friend.hasFriend(player, target))
+		if(Friend.hasFriend(player,target))
 			im.setDisplayName(TString.Color(3)+"对方已是你的好友");
 		else
 			im.setDisplayName(TString.Color(3)+"添加好友");			
@@ -93,10 +91,9 @@ public class ItemForChest
 		is.setItemMeta(im);
 		return is;
 	}
-	protected static ItemStack tradeQue()
-	{
+	protected static ItemStack tradeQue(){
 		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(399);
+			ItemStack is = new ItemStack(399);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+"申请交易");
 		List<String> lore = new ArrayList<String>();
@@ -104,14 +101,43 @@ public class ItemForChest
 		is.setItemMeta(im);
 		return is;
 	}
-	protected static ItemStack warpInfo(Warp warp)
-	{
+	protected static ItemStack warpInfo(Warp warp){
 		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(368);
+			ItemStack is = new ItemStack(368);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3)+warp.getName());
 		List<String> lore = new ArrayList<String>();
 		lore.add(TString.Color(7)+"所在世界:"+warp.getLocation().getWorld().getName());
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+	protected static ItemStack teamAsk(Player player,Player opener){
+		@SuppressWarnings("deprecation")
+			ItemStack is = new ItemStack(1);
+		User target = User.getUser(player),launcher = User.getUser(opener);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3)+"组队信息");
+		List<String> lore = new ArrayList<String>();
+
+		if(launcher.hasTeam()){
+			if(target.hasTeam())
+				if(launcher.getTeam()==target.getTeam())
+					lore.add(Color.BLUE+"对方已是你队友");
+				else
+					lore.add(Color.GRAY+"对方已有队伍，不可重复邀请");
+			else{
+				if(launcher.getTeam().getLeader()==launcher)
+					lore.add(Color.GREEN+"点击邀请对方加入队伍");
+				else
+					lore.add(Color.GRAY+"你不是队长,无法邀请对方加入队伍");}
+		}else{
+			if(target.hasTeam())
+				lore.add(Color.YELLOW+"申请加入对方队伍");
+			else
+				lore.add(Color.GREEN+"创建并邀请对方加入队伍");
+		}
+
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
