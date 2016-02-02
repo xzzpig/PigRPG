@@ -264,6 +264,10 @@ public class User
 				return;
 			if(fromuser.getChatchannel()==ChatChannel.Self&&fromuser.chatTarget!=this)
 				return;
+			if(fromuser.getChatchannel()==ChatChannel.Team&&(fromuser.getTeam()==null))
+				return;
+			if(fromuser.getChatchannel()==ChatChannel.Team&&(!fromuser.getTeam().hasMember(this)))
+				return;
 		}
 		String prefix = ChatColor.GREEN+"["+fromuser.getChatchannel().getName();
 		if(fromuser.getChatchannel()!=ChatChannel.World)
