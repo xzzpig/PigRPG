@@ -41,6 +41,10 @@ public class Commands {
 				}	
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("friend")){
+				if(!Vars.FriendSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return FriendCommand.command(sender, cmd, label, args);
 				else{
@@ -49,6 +53,10 @@ public class Commands {
 				}	
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("trade")){
+				if(!Vars.TradeSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return  PlayerTradeCommand.command(sender, cmd, label, args);
 				else{
@@ -57,6 +65,10 @@ public class Commands {
 				}
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("chat")){
+				if(!Vars.ChatSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return  ChatCommand.command(sender, cmd, label, args);
 				else{
@@ -66,6 +78,10 @@ public class Commands {
 				
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("tel")){
+				if(!Vars.TeleportSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return TeleportCommand.command(sender, cmd, label, args);
 				else{
@@ -75,6 +91,10 @@ public class Commands {
 				
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("sale")){
+				if(!Vars.SaleSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return SaleCommand.command(sender, cmd, label, args);
 				else{
@@ -83,6 +103,10 @@ public class Commands {
 				}
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("equip")){
+				if(!Vars.EquipSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return EquipCommand.command(sender, cmd, label, args);
 				else{
@@ -99,6 +123,10 @@ public class Commands {
 				}
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("team")){
+				if(!Vars.TeamSystem){
+					sender.sendMessage(TString.Prefix("PigRPG",4)+"该系统未开启");
+					return false;
+				}
 				if(sender instanceof Player)
 					return TeamCommand.command(sender, cmd, label, args);
 				else{
