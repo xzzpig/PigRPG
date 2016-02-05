@@ -21,7 +21,7 @@ public class EquipType
 	public static final EquipType Hand = new EquipType("首饰",40,null);
 	public static final EquipType Neck = new EquipType("项链",111,null);
 	public static final EquipType Consume = new EquipType("消耗品",false,260,Arrays.asList(new String[]{"consume"}));
-	public static final EquipType Prefix = new EquipType("称号",1,Arrays.asList(new String[]{"consume"}));
+	public static final EquipType Prefix = new EquipType("称号",1,Arrays.asList(new String[]{"prefix"}));
 
 	
 	private String typename;

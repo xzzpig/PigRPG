@@ -76,7 +76,7 @@ public class EquipCommand
 				name = equip .getItemMeta().getDisplayName();
 				sender.sendMessage(TString.Prefix("PigRPG",4)+"错误:装备名称为，已默认设为 "+name);
 			}
-			equip.setDisplayName(name);
+			equip.setDisplayName(name.replaceAll("&",TString.s));
 			player.setItemInHand(equip);
 			user.getPlayer().sendMessage(TString.Prefix("PigRPG",2)+"手中装备名称已设置为 "+name);
 			return true;
