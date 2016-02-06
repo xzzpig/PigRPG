@@ -62,7 +62,6 @@ public class EquipListener implements Listener
 			}
 		}
 		for(EquipType et:EquipType.values()){
-			Debuger.print("正在加载"+et+"效果");
 			Equipment equip = user.getEquip(et);
 			pls:for(PowerLore pl:equip.getPowerLores()){
 				if(!pl.isRunTime(PowerRunTime.CloseEC))
@@ -75,7 +74,6 @@ public class EquipListener implements Listener
 						}
 					if(!(p instanceof PT_Equip))
 						continue;
-					Debuger.print("检测到效果"+p.getPowerName());
 					((PT_Equip)p).rebuildEquip(event);
 					p.run();
 				}

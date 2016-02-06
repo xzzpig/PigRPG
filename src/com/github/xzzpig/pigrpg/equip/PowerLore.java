@@ -47,7 +47,7 @@ public class PowerLore implements Comparable<PowerLore>
 	static{
 		prefix.name = "prefix";
 		prefix.matchkey = "用于装备类型 称号";
-		prefix.form = consume.matchkey;
+		prefix.form = prefix.matchkey;
 		prefix.show = "&2装备使用称号";
 		prefix.runtime = new PowerRunTime[]{PowerRunTime.CloseEC};
 		prefix.needequip.addAll(Arrays.asList(EquipType.values()));

@@ -17,6 +17,10 @@ customlore:
         command: deop </player/>
         op: true
         temppremission: pr.help
+      Command_2: 
+        command: pr help
+        op: true
+        temppremission: pr.help
       Consume: 
         consume: 0
       Cooldown: 
