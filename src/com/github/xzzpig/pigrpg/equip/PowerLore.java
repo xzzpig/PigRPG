@@ -51,7 +51,7 @@ public class PowerLore implements Comparable<PowerLore>
 		prefix.show = "&2装备使用称号";
 		prefix.runtime = new PowerRunTime[]{PowerRunTime.CloseEC};
 		prefix.needequip.addAll(Arrays.asList(EquipType.values()));
-		Power pprefix = Power.valueOf("Prefix").reBuild(null, consume);
+		Power pprefix = Power.valueOf("Prefix").reBuild(null, prefix);
 		prefix.powers.add(pprefix);
 		powerlores.add(prefix);
 	}

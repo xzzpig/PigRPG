@@ -1,6 +1,8 @@
 package com.github.xzzpig.pigrpg.rpg;
 import java.util.*;
+
 import com.github.xzzpig.BukkitTools.*;
+
 import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 
@@ -16,6 +18,7 @@ public class RpgClass
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private String name,displayname;
 	
 	public RpgClass(ConfigurationSection path){

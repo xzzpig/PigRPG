@@ -18,8 +18,10 @@ public class Power_Prefix extends Power implements PT_Equip
 
 	@Override
 	public Power reBuild(ConfigurationSection path,PowerLore pl){
-		if(path == null)
+		if(path == null){
+			prefix = null;
 			return this;
+		}
 		prefix = pl.getReplaced(path.getString("prefix"));
 		return this;
 	}

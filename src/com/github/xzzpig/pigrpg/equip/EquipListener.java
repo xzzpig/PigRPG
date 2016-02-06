@@ -8,11 +8,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
+
 import org.bukkit.potion.*;
 
 public class EquipListener implements Listener
@@ -60,6 +62,7 @@ public class EquipListener implements Listener
 			}
 		}
 		for(EquipType et:EquipType.values()){
+			Debuger.print("正在加载"+et+"效果");
 			Equipment equip = user.getEquip(et);
 			pls:for(PowerLore pl:equip.getPowerLores()){
 				if(!pl.isRunTime(PowerRunTime.CloseEC))
@@ -72,6 +75,7 @@ public class EquipListener implements Listener
 						}
 					if(!(p instanceof PT_Equip))
 						continue;
+					Debuger.print("检测到效果"+p.getPowerName());
 					((PT_Equip)p).rebuildEquip(event);
 					p.run();
 				}

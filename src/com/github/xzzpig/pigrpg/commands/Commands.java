@@ -1,11 +1,20 @@
 package com.github.xzzpig.pigrpg.commands;
 
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.*;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
-import org.bukkit.*;
-import org.bukkit.command.*;
-import org.bukkit.entity.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import com.github.xzzpig.BukkitTools.TPlayer;
+import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigrpg.FanMessage;
+import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.Vars;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class Commands {
 	@SuppressWarnings("deprecation")
@@ -39,6 +48,13 @@ public class Commands {
 					sender.sendMessage(TString.Prefix("PigRPG",4)+"该命令只能由玩家使用");
 					return true;
 				}	
+			}
+			else if(getarg(args, 0).equalsIgnoreCase("reload")){
+				Plugin pigrpg = Bukkit.getPluginManager().getPlugin("PigRPG");
+				Bukkit.getPluginManager().disablePlugin(pigrpg);
+				Bukkit.getPluginManager().enablePlugin(pigrpg);
+				sender.sendMessage("PigRPG重载完成");
+				return true;
 			}
 			else if(getarg(args, 0).equalsIgnoreCase("friend")){
 				if(!Vars.FriendSystem){

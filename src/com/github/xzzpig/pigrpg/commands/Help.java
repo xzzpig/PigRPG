@@ -15,6 +15,7 @@ public class Help
 		CommandHelp pr_team = PIGRPG.addSubCommandHelp(  "team","  获取 组队系统 的帮助","输入/pr team help 查看帮助","");
 		CommandHelp pr_list = PIGRPG.addSubCommandHelp(  "list","  获取 所有列表","输入/pr list help 查看帮助","");
 		PIGRPG.addSubCommandHelp("showhand","展示手中物品", "输入/pr help 查看帮助","<展示玩家>(不填为全部)");
+		PIGRPG.addSubCommandHelp("reload","重载插件", "","");
 		
 		pr_friend.addSubCommandHelp("list","  打开好友列表","","");
 		CommandHelp pr_friend_del = pr_friend.addSubCommandHelp("del","   处理好友删除请求","","");

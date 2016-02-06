@@ -1,27 +1,28 @@
 package com.github.xzzpig.pigrpg;
 
-import com.earth2me.essentials.*;
-import com.github.xzzpig.pigrpg.chat.*;
-import com.github.xzzpig.pigrpg.commands.*;
-import com.github.xzzpig.pigrpg.exlist.*;
-import com.github.xzzpig.pigrpg.friend.*;
-import com.github.xzzpig.pigrpg.sale.*;
-import com.github.xzzpig.pigrpg.teleport.*;
-import com.github.xzzpig.pigrpg.trade.*;
-import com.gmail.filoghost.holographicdisplays.util.*;
-
-import org.bukkit.*;
-import org.bukkit.command.*;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.*;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.*;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.*;
-import com.github.xzzpig.BukkitTools.*;
-import com.github.xzzpig.pigrpg.rpgworld.*;
-import com.github.xzzpig.pigrpg.mob.*;
-import com.github.xzzpig.pigrpg.rpg.*;
+import com.earth2me.essentials.Essentials;
+import com.github.xzzpig.BukkitTools.TUpdate;
+import com.github.xzzpig.pigrpg.chat.ChatListener;
+import com.github.xzzpig.pigrpg.commands.Commands;
+import com.github.xzzpig.pigrpg.equip.EquipListener;
+import com.github.xzzpig.pigrpg.equip.EquipType;
+import com.github.xzzpig.pigrpg.exlist.RCChestListener;
+import com.github.xzzpig.pigrpg.friend.FriendEvent;
+import com.github.xzzpig.pigrpg.power.Power;
+import com.github.xzzpig.pigrpg.power.PowerListener;
+import com.github.xzzpig.pigrpg.sale.Sale;
+import com.github.xzzpig.pigrpg.sale.SaleListener;
+import com.github.xzzpig.pigrpg.teleport.TelListener;
+import com.github.xzzpig.pigrpg.teleport.Warp;
+import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
+import com.gmail.filoghost.holographicdisplays.nms.interfaces.NMSManager;
+import com.gmail.filoghost.holographicdisplays.util.VersionUtils;
 
 public class Main extends JavaPlugin
 {
@@ -71,9 +72,9 @@ public class Main extends JavaPlugin
 			getServer().getPluginManager().registerEvents(new EquipListener(),this);
 		if(Vars.PowerSystem)
 			getServer().getPluginManager().registerEvents(new PowerListener(),this);
-		getServer().getPluginManager().registerEvents(new RpgWorldListener(),this);
-		getServer().getPluginManager().registerEvents(new MobListener(),this);
-		getServer().getPluginManager().registerEvents(new RPGListener(),this);
+		//getServer().getPluginManager().registerEvents(new RpgWorldListener(),this);
+		//getServer().getPluginManager().registerEvents(new MobListener(),this);
+		//getServer().getPluginManager().registerEvents(new RPGListener(),this);
 
 	}
 
