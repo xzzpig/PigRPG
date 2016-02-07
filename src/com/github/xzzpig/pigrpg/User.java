@@ -81,7 +81,9 @@ public class User
 
 	public void setPrefix(String prefix){
 		this.prefix = prefix;
-		TConfig.saveConfig("PigRPG","userdata.yml",player.getName()+".prefix",prefix);
+		if(prefix.contains("STONE")||prefix.contains("称号"))
+			this.prefix = "null";
+		TConfig.saveConfig("PigRPG","userdata.yml",player.getName()+".prefix",this.prefix);
 		freshDisplayName();
 	}
 
@@ -188,7 +190,7 @@ public class User
 		this.justsay = justsay;
 	}
 	public String getJustSay(){
-		return justsay;
+		return justsay.replaceAll("&", TString.s);
 	}
 
 	public Player getPlayer(){
@@ -272,6 +274,8 @@ public class User
 		String prefix = ChatColor.GREEN+"["+fromuser.getChatchannel().getName();
 		if(fromuser.getChatchannel()!=ChatChannel.World)
 			prefix = prefix+"_"+fromuser.getPlayer().getWorld().getName();
+		if(fromuser.getChatchannel()==ChatChannel.Self)
+			prefix = prefix + "_=>"+this.player.getName();
 		prefix = prefix+"]\n";
 		if(!fromuser.getPrefix().equalsIgnoreCase("null"))
 			prefix = prefix+ChatColor.GOLD+"["+fromuser.getPrefix()+ChatColor.GOLD+"]";

@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.*;
 public class Power_Prefix extends Power implements PT_Equip
 {
 	String prefix;
+	boolean isCustom;
 	
 	User user;
 	@Override
@@ -23,6 +24,7 @@ public class Power_Prefix extends Power implements PT_Equip
 			return this;
 		}
 		prefix = pl.getReplaced(path.getString("prefix"));
+		isCustom = true;
 		return this;
 	}
 
@@ -36,8 +38,9 @@ public class Power_Prefix extends Power implements PT_Equip
 	@Override
 	public void rebuildEquip(InventoryCloseEvent event){
 		user = User.getUser((Player)event.getPlayer());
-		if(prefix == null)
+		if(!isCustom){
 			prefix = User.getUser((Player)event.getPlayer()).getEquip(EquipType.Prefix).getItemMeta().getDisplayName();
+		}
 	}
 	
 }

@@ -5,17 +5,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
-import com.github.xzzpig.pigrpg.Debuger;
 import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.chests.EquipChest;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
-
-import org.bukkit.potion.*;
 
 public class EquipListener implements Listener
 {
@@ -119,5 +119,25 @@ public class EquipListener implements Listener
 			User.getUser((Player)event.getWhoClicked()).sendPluginMessage("&4请将装备放入对应的装备栏");
 			return;
 		}
+	}
+
+	@EventHandler
+	public void onRightClick(PlayerInteractEvent event){
+		ItemStack item = event.getItem();
+		if(item == null)
+			return;
+		User user = User.getUser(event.getPlayer());
+		Equipment equip = user.getHandEquip();
+		EquipType et = equip.getEquiptype();
+		if(!et.isShow())
+			return;
+		Equipment equiped = user.getEquip(et);
+		if(equiped.getItemMeta().getDisplayName().contains("STONE"))
+			equiped = null;
+		user.setEquip(equip);
+		user.getPlayer().setItemInHand(equiped);
+		user.getPlayer().openInventory(EquipChest.getInventory(user));
+		user.getPlayer().closeInventory();
+		user.sendPluginMessage("&2装备 &f"+equip.getItemMeta().getDisplayName()+" &2已装备");
 	}
 }
