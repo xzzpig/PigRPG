@@ -27,7 +27,7 @@ public class Power_Damage extends Power implements PT_Damage,PT_RightClick,PT_Eq
 	public Power reBuild(ConfigurationSection path,PowerLore pl){
 		type = pl.getReplaced(path.getString("type"));
 		sdamage = pl.getReplaced(path.getString("damage","0"));
-		range = Integer.valueOf(pl.getReplaced(path.getString("range","0")));
+		range = (int) TCalculate.getResult(pl.getReplaced(path.getString("range","0")));
 		distance = Integer.valueOf(pl.getReplaced(path.getString("distance","10")));
 		times = Integer.valueOf(pl.getReplaced(path.getString("times","1")));
 		return this;

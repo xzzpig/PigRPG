@@ -66,8 +66,8 @@ public class User
 	}
 
 	public User freshDisplayName(){
-		player.setDisplayName(TString.Color(6)+"*"+prefix.replaceAll("&",TString.s)+TString.Color(6)+"*\n"+
-							  Color.WHITE+player.getName());
+		player.setCustomName(TString.Color(6)+"["+prefix.replaceAll("&",TString.s)+TString.Color(6)+"]\n"+
+							  TString.Color("f")+player.getName());
 		return this;
 	}
 
