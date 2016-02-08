@@ -10,22 +10,25 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class TClass {
-	public static List<Class<?>> getClass(String packageName){
+	public static List<Class<?>> getClass(String packageName) {
 		List<Class<?>> r = new ArrayList<Class<?>>();
-		for(String cl:TClass.getClassName(packageName)){
+		for (String cl : TClass.getClassName(packageName)) {
 			String[] arg = cl.replace('.', '簨').split("簨");
-			String name = arg[arg.length-1];
+			String name = arg[arg.length - 1];
 			try {
-				Class<?> cc = Class.forName("aaa.bbb.ccc."+name);
+				Class<?> cc = Class.forName("aaa.bbb.ccc." + name);
 				r.add(cc);
-			} catch (ClassNotFoundException e) {}
+			} catch (ClassNotFoundException e) {
+			}
 		}
 		return r;
 	}
-	
+
 	/**
 	 * 获取某包下（包括该包的所有子包）所有类
-	 * @param packageName 包名
+	 * 
+	 * @param packageName
+	 *            包名
 	 * @return 类的完整名称
 	 */
 	public static List<String> getClassName(String packageName) {
@@ -34,11 +37,15 @@ public class TClass {
 
 	/**
 	 * 获取某包下所有类
-	 * @param packageName 包名
-	 * @param childPackage 是否遍历子包
+	 * 
+	 * @param packageName
+	 *            包名
+	 * @param childPackage
+	 *            是否遍历子包
 	 * @return 类的完整名称
 	 */
-	public static List<String> getClassName(String packageName, boolean childPackage) {
+	public static List<String> getClassName(String packageName,
+			boolean childPackage) {
 		List<String> fileNames = null;
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String packagePath = packageName.replace(".", "/");
@@ -46,36 +53,46 @@ public class TClass {
 		if (url != null) {
 			String type = url.getProtocol();
 			if (type.equals("file")) {
-				fileNames = getClassNameByFile(url.getPath(), null, childPackage);
+				fileNames = getClassNameByFile(url.getPath(), null,
+						childPackage);
 			} else if (type.equals("jar")) {
 				fileNames = getClassNameByJar(url.getPath(), childPackage);
 			}
 		} else {
-			fileNames = getClassNameByJars(((URLClassLoader) loader).getURLs(), packagePath, childPackage);
+			fileNames = getClassNameByJars(((URLClassLoader) loader).getURLs(),
+					packagePath, childPackage);
 		}
 		return fileNames;
 	}
 
 	/**
 	 * 从项目文件获取某包下所有类
-	 * @param filePath 文件路径
-	 * @param className 类名集合
-	 * @param childPackage 是否遍历子包
+	 * 
+	 * @param filePath
+	 *            文件路径
+	 * @param className
+	 *            类名集合
+	 * @param childPackage
+	 *            是否遍历子包
 	 * @return 类的完整名称
 	 */
-	private static List<String> getClassNameByFile(String filePath, List<String> className, boolean childPackage) {
+	private static List<String> getClassNameByFile(String filePath,
+			List<String> className, boolean childPackage) {
 		List<String> myClassName = new ArrayList<String>();
 		File file = new File(filePath);
 		File[] childFiles = file.listFiles();
 		for (File childFile : childFiles) {
 			if (childFile.isDirectory()) {
 				if (childPackage) {
-					myClassName.addAll(getClassNameByFile(childFile.getPath(), myClassName, childPackage));
+					myClassName.addAll(getClassNameByFile(childFile.getPath(),
+							myClassName, childPackage));
 				}
 			} else {
 				String childFilePath = childFile.getPath();
 				if (childFilePath.endsWith(".class")) {
-					childFilePath = childFilePath.substring(childFilePath.indexOf("\\classes") + 9, childFilePath.lastIndexOf("."));
+					childFilePath = childFilePath.substring(
+							childFilePath.indexOf("\\classes") + 9,
+							childFilePath.lastIndexOf("."));
 					childFilePath = childFilePath.replace("\\", ".");
 					myClassName.add(childFilePath);
 				}
@@ -87,12 +104,16 @@ public class TClass {
 
 	/**
 	 * 从jar获取某包下所有类
-	 * @param jarPath jar文件路径
-	 * @param childPackage 是否遍历子包
+	 * 
+	 * @param jarPath
+	 *            jar文件路径
+	 * @param childPackage
+	 *            是否遍历子包
 	 * @return 类的完整名称
 	 */
 	@SuppressWarnings("resource")
-	private static List<String> getClassNameByJar(String jarPath, boolean childPackage) {
+	private static List<String> getClassNameByJar(String jarPath,
+			boolean childPackage) {
 		List<String> myClassName = new ArrayList<String>();
 		String[] jarInfo = jarPath.split("!");
 		String jarFilePath = jarInfo[0].substring(jarInfo[0].indexOf("/"));
@@ -106,7 +127,8 @@ public class TClass {
 				if (entryName.endsWith(".class")) {
 					if (childPackage) {
 						if (entryName.startsWith(packagePath)) {
-							entryName = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
+							entryName = entryName.replace("/", ".").substring(
+									0, entryName.lastIndexOf("."));
 							myClassName.add(entryName);
 						}
 					} else {
@@ -118,7 +140,8 @@ public class TClass {
 							myPackagePath = entryName;
 						}
 						if (myPackagePath.equals(packagePath)) {
-							entryName = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
+							entryName = entryName.replace("/", ".").substring(
+									0, entryName.lastIndexOf("."));
 							myClassName.add(entryName);
 						}
 					}
@@ -132,12 +155,17 @@ public class TClass {
 
 	/**
 	 * 从所有jar中搜索该包，并获取该包下所有类
-	 * @param urls URL集合
-	 * @param packagePath 包路径
-	 * @param childPackage 是否遍历子包
+	 * 
+	 * @param urls
+	 *            URL集合
+	 * @param packagePath
+	 *            包路径
+	 * @param childPackage
+	 *            是否遍历子包
 	 * @return 类的完整名称
 	 */
-	private static List<String> getClassNameByJars(URL[] urls, String packagePath, boolean childPackage) {
+	private static List<String> getClassNameByJars(URL[] urls,
+			String packagePath, boolean childPackage) {
 		List<String> myClassName = new ArrayList<String>();
 		if (urls != null) {
 			for (int i = 0; i < urls.length; i++) {

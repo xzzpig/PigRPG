@@ -6,12 +6,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
-public class Power_Test extends Power implements PT_RightClick{
+public class Power_Test extends Power implements PT_RightClick {
 	String var;
-	
+
 	@Override
 	public void rebuildRC(PlayerInteractEvent event) {
-		
+
 	}
 
 	@Override
@@ -29,5 +29,5 @@ public class Power_Test extends Power implements PT_RightClick{
 	public void run() {
 		System.out.println(var);
 	}
-	
+
 }

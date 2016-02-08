@@ -1,18 +1,57 @@
 package com.github.xzzpig.pigrpg;
-import com.github.xzzpig.BukkitTools.*;
 
-public class StringMatcher
-{
-	public static String solve(String ps){
-		return ps.replaceAll("&",TString.s);
+import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+
+import com.earth2me.essentials.craftbukkit.SetExpFix;
+import com.github.xzzpig.BukkitTools.TCalculate;
+import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.BukkitTools.TString;
+
+public class StringMatcher {
+	public static String solve(String ps) {
+		return ps.replaceAll("&", TString.s);
 	}
+
 	@SuppressWarnings("deprecation")
-	public static String solve(String arg,User user){
-		arg = solve(arg);
-		arg = arg.replaceAll("<Player>",user.getPlayer().getName()).
-			replaceAll("<World>",user.getPlayer().getLocation().getWorld().getName()).
-			replaceAll("<Item>",user.getPlayer().getItemInHand().getItemMeta().getDisplayName()+"("+user.getPlayer().getItemInHand().getType()+user.getPlayer().getItemInHand().getTypeId()+")").
-			replaceAll("<Loc>","("+user.getPlayer().getLocation().getBlockX()+","+user.getPlayer().getLocation().getBlockY()+","+user.getPlayer().getLocation().getBlockY()+")");
-		return arg;
+	public static String buildStr(String str, LivingEntity entity, boolean isInt) {
+		State state = State.getFrom(entity);
+		String re = str
+				.replaceAll("</world/>", entity.getWorld().getName())
+				.replaceAll("</loc/>", entity.getLocation().toString())
+				.replaceAll("</x/>", entity.getLocation().getBlockX() + "")
+				.replaceAll("</y/>", entity.getLocation().getBlockY() + "")
+				.replaceAll("</z/>", entity.getLocation().getBlockZ() + "")
+				.replaceAll("</maxhealth/>", state.getHp() + "")
+				.replaceAll("</currenthealth/>", "" + TEntity.getHealth(entity))
+				.replaceAll("</name/>", entity.getCustomName())
+				.replaceAll("</type/>", entity.getType().toString())
+				.replaceAll("</online/>", Bukkit.getOnlinePlayers().length + "")
+				.replaceAll("</worldpvp/>", entity.getWorld().getPVP() + "");
+		if (entity instanceof Player) {
+			Player player = (Player) entity;
+			User user = User.getUser(player);
+			re = re.replaceAll("</fly/>", player.getAllowFlight() + "")
+					.replaceAll("</exp/>",
+							SetExpFix.getTotalExperience(player) + "")
+					.replaceAll("</handid/>",
+							player.getItemInHand().getTypeId() + "")
+					.replaceAll("</level/>", player.getLevel() + "")
+					.replaceAll("</gamemode/>", player.getGameMode().name())
+					.replaceAll("</chatchannel/>",
+							user.getChatchannel().getName())
+					.replaceAll("</money/>",
+							"" + (int) user.getEcoAPI().getMoney())
+					.replaceAll("</op/>", player.isOp() + "")
+					.replaceAll("</sneak/>", "" + player.isSneaking())
+					.replaceAll("</rpgexp/>", user.getExp() + "")
+					.replaceAll("</rpglevel/>", user.getLevel() + "")
+					.replaceAll("</hunger/>",
+							user.getPlayer().getFoodLevel() + "");
+		}
+		if (isInt)
+			re = ((int) TCalculate.getResult(re)) + "";
+		return re;
 	}
 }

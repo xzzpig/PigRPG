@@ -1,65 +1,71 @@
 package com.github.xzzpig.pigrpg.power;
-import com.github.xzzpig.pigrpg.equip.*;
-import com.github.xzzpig.pigrpg.power.type.*;
-import org.bukkit.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.*;
 
-public class Power_Command extends Power implements PT_RightClick,PT_Damage,PT_Equip,PT_BeDamage
-{
-	String command,temppremission;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
+import com.github.xzzpig.pigrpg.power.type.PT_Damage;
+import com.github.xzzpig.pigrpg.power.type.PT_Equip;
+import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
+
+public class Power_Command extends Power implements PT_RightClick, PT_Damage,
+		PT_Equip, PT_BeDamage {
+	String command, temppremission;
 	boolean op;
 
 	Player player;
 
 	@Override
-	public String getPowerName(){
+	public String getPowerName() {
 		return "Command";
 	}
 
 	@Override
-	public Power reBuild(ConfigurationSection path,PowerLore pl){
-		command = pl.getReplaced(path.getString("command","help"));
-		op = Boolean.valueOf(pl.getReplaced(path.getString("op","false")));
-		temppremission = pl.getReplaced(path.getString("temppremission",""));
+	public Power reBuild(ConfigurationSection path, PowerLore pl) {
+		command = pl.getReplaced(path.getString("command", "help"));
+		op = Boolean.valueOf(pl.getReplaced(path.getString("op", "false")));
+		temppremission = pl.getReplaced(path.getString("temppremission", ""));
 		return this;
 	}
 
 	@Override
-	public void run(){
-		if(player==null)
+	public void run() {
+		if (player == null)
 			return;
 		boolean originop = player.isOp();
-		if(op)
+		if (op)
 			player.setOp(true);
-		player.addAttachment(Bukkit.getPluginManager().getPlugin("PigRPG"),temppremission,true,10);
-		player.chat("/"+command.replaceAll("</player/>",player.getName()));
+		player.addAttachment(Bukkit.getPluginManager().getPlugin("PigRPG"),
+				temppremission, true, 10);
+		player.chat("/" + command.replaceAll("</player/>", player.getName()));
 		player.setOp(originop);
 	}
 
 	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event){
-		if(event.getDamager() instanceof Player)
-			player = (Player)event.getDamager();
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event){
+	public void rebuildRC(PlayerInteractEvent event) {
 		player = event.getPlayer();
 	}
 
 	@Override
-	public void rebuildEquip(InventoryCloseEvent event){
-		player = (Player)event.getPlayer();
+	public void rebuildEquip(InventoryCloseEvent event) {
+		player = (Player) event.getPlayer();
 	}
 
 	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event){
-		if(event.getDamager() instanceof Player)
-			player = (Player)event.getDamager();
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
 	}
-	
+
 }

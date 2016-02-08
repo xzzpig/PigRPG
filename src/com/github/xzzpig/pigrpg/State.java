@@ -1,122 +1,135 @@
 package com.github.xzzpig.pigrpg;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.PotionEffectType;
 
-import com.github.xzzpig.pigrpg.power.*;
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigrpg.power.Power;
 
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import org.bukkit.potion.*;
-import com.github.xzzpig.BukkitTools.*;
-
-public class State
-{
+public class State {
 	private User user;
 	private LivingEntity entity;
-	private int hp=20,mp,pda,mda,pde,mde;
+	private int hp = 20, mp, pda, mda, pde, mde;
 	private List<Power> powers = new ArrayList<Power>();
 	public List<PotionEffectType> potions = new ArrayList<PotionEffectType>();
 	public TData data = new TData();
 
-	public State(LivingEntity entity){
-		FixedMetadataValue fd = new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("PigRPG"),this);
-		entity.setMetadata("state",fd);
+	public State(LivingEntity entity) {
+		FixedMetadataValue fd = new FixedMetadataValue(Bukkit
+				.getPluginManager().getPlugin("PigRPG"), this);
+		entity.setMetadata("state", fd);
 		this.entity = entity;
-		if(entity instanceof Player){
-			this.user = User.getUser((Player)entity);
+		if (entity instanceof Player) {
+			this.user = User.getUser((Player) entity);
 		}
 	}
 
-	public User getUser(){
+	public User getUser() {
 		return user;
 	}
 
-	public LivingEntity getEntity(){
+	public LivingEntity getEntity() {
 		return entity;
 	}
 
-	public static State getFrom(LivingEntity entity){
-		if(entity instanceof Player)
-			return User.getUser((Player)entity).getState();
-		for(MetadataValue mv : entity.getMetadata("state")){
-			if(mv.value() instanceof State)
-				return (State)mv.value();
+	public static State getFrom(LivingEntity entity) {
+		if (entity instanceof Player)
+			return User.getUser((Player) entity).getState();
+		for (MetadataValue mv : entity.getMetadata("state")) {
+			if (mv.value() instanceof State)
+				return (State) mv.value();
 		}
 		return new State(entity);
 	}
-	public static boolean hasState(LivingEntity entity){
-		return getFrom(entity)!=null;
+
+	public static boolean hasState(LivingEntity entity) {
+		return getFrom(entity) != null;
 	}
 
 	@SuppressWarnings("deprecation")
-	public State setHp(int hp){
+	public State setHp(int hp) {
 		this.hp = hp;
 		entity.setMaxHealth(hp);
 		return this;
 	}
-	public int getHp(){
+
+	public int getHp() {
 		return hp;
 	}
 
-	public State setMp(int mp){
+	public State setMp(int mp) {
 		this.mp = mp;
 		return this;
 	}
-	public int getMp(){
+
+	public int getMp() {
 		return mp;
 	}
-	public State setPhysicDamage(int pda){
+
+	public State setPhysicDamage(int pda) {
 		this.pda = pda;
 		return this;
 	}
-	public int getPhysicDamage(){
+
+	public int getPhysicDamage() {
 		return pda;
 	}
 
-	public State setMagicDamage(int mda){
+	public State setMagicDamage(int mda) {
 		this.mda = mda;
 		return this;
 	}
-	public int getMagicDamage(){
+
+	public int getMagicDamage() {
 		return mda;
 	}
 
-	public State setPhysicDefence(int pde){
+	public State setPhysicDefence(int pde) {
 		this.pde = pde;
 		return this;
 	}
-	public int getPhysicDefence(){
+
+	public int getPhysicDefence() {
 		return pde;
 	}
 
-	public State addPowers(Power power){
+	public State addPowers(Power power) {
 		this.powers.add(power);
 		return this;
 	}
-	public State delPowers(Power power){
+
+	public State delPowers(Power power) {
 		this.powers.remove(power);
 		return this;
 	}
-	public List<Power> getPowers(){
+
+	public List<Power> getPowers() {
 		return powers;
 	}
-	public State setPowers(List<Power> powers){
+
+	public State setPowers(List<Power> powers) {
 		this.powers = powers;
 		return this;
 	}
 
-	public State setMagicDefine(int mde){
+	public State setMagicDefine(int mde) {
 		this.mde = mde;
 		return this;
 	}
-	public int getMagicDefine(){
+
+	public int getMagicDefine() {
 		return mde;
 	}
 
-	public void remove(){
-		entity.removeMetadata("state",Bukkit.getPluginManager().getPlugin("PigRPG"));
+	public void remove() {
+		entity.removeMetadata("state",
+				Bukkit.getPluginManager().getPlugin("PigRPG"));
 	}
 }

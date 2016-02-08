@@ -6,35 +6,34 @@ import org.bukkit.entity.Player;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
-public class Power_Premission extends Power implements PT_Limit
-{
+public class Power_Premission extends Power implements PT_Limit {
 	String premission;
 
 	Player player;
 
 	@Override
-	public String getPowerName(){
+	public String getPowerName() {
 		return "Premission";
 	}
 
 	@Override
-	public Power reBuild(ConfigurationSection path,PowerLore pl){
+	public Power reBuild(ConfigurationSection path, PowerLore pl) {
 		player = pl.getEquip().getOwner();
 		premission = pl.getReplaced(path.getString("pression"));
 		return this;
 	}
 
 	@Override
-	public void run(){
+	public void run() {
 	}
 
 	@Override
-	public boolean can(){
+	public boolean can() {
 		return player.hasPermission(premission);
 	}
 
 	@Override
-	public String cantMessage(){
+	public String cantMessage() {
 		return "权限不足,无法使用";
 	}
 

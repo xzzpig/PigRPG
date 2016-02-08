@@ -15,56 +15,58 @@ import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
-public class PowerLore implements Comparable<PowerLore>
-{
+public class PowerLore implements Comparable<PowerLore> {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
-	
-	static{
-		FileConfiguration config = TConfig.getConfigFile("PigRPG", "customlore.yml");
+
+	static {
+		FileConfiguration config = TConfig.getConfigFile("PigRPG",
+				"customlore.yml");
 		try {
-			for(String lorename:TConfig.getConfigPath("PigRPG", "customlore.yml","customlore")){
-				PowerLore pl = new PowerLore(config.getConfigurationSection("customlore."+lorename));
+			for (String lorename : TConfig.getConfigPath("PigRPG",
+					"customlore.yml", "customlore")) {
+				PowerLore pl = new PowerLore(
+						config.getConfigurationSection("customlore." + lorename));
 				powerlores.add(pl);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static final PowerLore consume = new PowerLore();
-	static{
+	static {
 		consume.name = "consume";
 		consume.matchkey = "用于装备类型 消耗品";
 		consume.form = consume.matchkey;
 		consume.show = "&2右键使用并消耗";
-		consume.runtime = new PowerRunTime[]{PowerRunTime.RightClick};
+		consume.runtime = new PowerRunTime[] { PowerRunTime.RightClick };
 		consume.needequip.addAll(Arrays.asList(EquipType.values()));
 		Power pconsume = Power.valueOf("Consume").reBuild(null, consume);
 		consume.powers.add(pconsume);
 		powerlores.add(consume);
 	}
 	public static final PowerLore prefix = new PowerLore();
-	static{
+	static {
 		prefix.name = "prefix";
 		prefix.matchkey = "用于装备类型 称号";
 		prefix.form = prefix.matchkey;
 		prefix.show = "&2装备使用称号";
-		prefix.runtime = new PowerRunTime[]{PowerRunTime.CloseEC};
+		prefix.runtime = new PowerRunTime[] { PowerRunTime.CloseEC };
 		prefix.needequip.addAll(Arrays.asList(EquipType.values()));
 		Power pprefix = Power.valueOf("Prefix").reBuild(null, prefix);
 		prefix.powers.add(pprefix);
 		powerlores.add(prefix);
 	}
-	
-	public static PowerLore getFromName(String name){
-		for(PowerLore pl:powerlores)
-			if(pl.name.equalsIgnoreCase(name))
+
+	public static PowerLore getFromName(String name) {
+		for (PowerLore pl : powerlores)
+			if (pl.name.equalsIgnoreCase(name))
 				return pl;
 		return null;
 	}
-	
+
 	public String name;
-	private String matchkey,form,show;
+	private String matchkey, form, show;
 	private PowerRunTime[] runtime;
 	private List<EquipType> needequip = new ArrayList<EquipType>();
 	public List<Power> powers = new ArrayList<Power>();
@@ -72,24 +74,26 @@ public class PowerLore implements Comparable<PowerLore>
 	private ConfigurationSection path;
 	private Equipment equip;
 	private int level;
-	
-	private PowerLore() {}
-	public PowerLore(ConfigurationSection path){
+
+	private PowerLore() {
+	}
+
+	public PowerLore(ConfigurationSection path) {
 		this.path = path;
 		this.name = path.getName();
 		matchkey = path.getString("matchkey");
 		form = path.getString("form");
 		show = path.getString("show");
-		level = path.getInt("level",0);
+		level = path.getInt("level", 0);
 		runtime = PowerRunTime.form(path.getStringList("runtime"));
-		if(runtime == null)
-			runtime = new PowerRunTime[]{PowerRunTime.Never};
-		for(String type:path.getStringList("needequip"))
+		if (runtime == null)
+			runtime = new PowerRunTime[] { PowerRunTime.Never };
+		for (String type : path.getStringList("needequip"))
 			needequip.add(EquipType.getFrom(type));
 	}
-	
+
 	@Override
-	public PowerLore clone(){
+	public PowerLore clone() {
 		PowerLore pl = new PowerLore();
 		pl.name = this.name;
 		pl.matchkey = this.matchkey;
@@ -103,103 +107,97 @@ public class PowerLore implements Comparable<PowerLore>
 		pl.equip = this.equip;
 		return pl;
 	}
-	
+
 	@Override
-	public int compareTo(PowerLore p1){
-		if(p1 == null)
+	public int compareTo(PowerLore p1) {
+		if (p1 == null)
 			return 1;
 		return level - p1.level;
 	}
-	
-	public String getKey(){
+
+	public String getKey() {
 		return matchkey;
 	}
-	
-	public PowerLore setEquip(Equipment equip){
+
+	public PowerLore setEquip(Equipment equip) {
 		this.equip = equip;
 		return this;
 	}
-	public Equipment getEquip(){
+
+	public Equipment getEquip() {
 		return equip;
 	}
-	public PowerLore loadPowers(){
-		Set<String> powernames = path.getConfigurationSection("power").getKeys(false);
-		for(String powername:powernames){
+
+	public PowerLore loadPowers() {
+		Set<String> powernames = path.getConfigurationSection("power").getKeys(
+				false);
+		for (String powername : powernames) {
 			String solved = powername.split("_")[0];
-			Power p = (Power.valueOf(solved).reBuild(path.getConfigurationSection("power."+powername),this));
-			if(p == null){
-				System.out.println("[PigRPG]错误:加载Power错误(未知的Power名称)"+solved);
+			Power p = (Power.valueOf(solved).reBuild(
+					path.getConfigurationSection("power." + powername), this));
+			if (p == null) {
+				System.out.println("[PigRPG]错误:加载Power错误(未知的Power名称)" + solved);
 				continue;
 			}
-			powers.add((Power.valueOf(solved).reBuild(path.getConfigurationSection("power."+powername),this)));
+			powers.add((Power.valueOf(solved).reBuild(
+					path.getConfigurationSection("power." + powername), this)));
 		}
 		return this;
 	}
-	
-	public PowerLore loadVars(String lore){
+
+	public PowerLore loadVars(String lore) {
 		String form = this.form;
 		String match = lore;
-		while(true){
+		while (true) {
 			int start = form.indexOf("</");
-			int end = form.indexOf("/>",start);
-			if(start == -1)
+			int end = form.indexOf("/>", start);
+			if (start == -1)
 				break;
-			String key = form.substring(start+2,end);
-			int nextstart = form.indexOf("</",end);
-			if(nextstart == -1)
+			String key = form.substring(start + 2, end);
+			int nextstart = form.indexOf("</", end);
+			if (nextstart == -1)
 				nextstart = form.length();
-			String mid = form.substring(end+2,nextstart);
+			String mid = form.substring(end + 2, nextstart);
 			String value;
-			if(mid.equalsIgnoreCase(""))
+			if (mid.equalsIgnoreCase(""))
 				value = match.substring(start);
-			else{
-				value = match.substring(start,match.indexOf(mid,start));
+			else {
+				value = match.substring(start, match.indexOf(mid, start));
 			}
 			data.setString(key, value);
-			form = form.substring(end+2);
-			match = match.substring(start+value.length());
+			form = form.substring(end + 2);
+			match = match.substring(start + value.length());
 		}
 		return this;
 	}
+
 	public String getUsage() {
 		return this.form;
 	}
-	
-	public String getReplaced(String old){
-		for(Entry<String, String> set:data.getStrings().entrySet())
-			old = old.replaceAll("</"+set.getKey()+"/>",set.getValue());
-		return old.replaceAll("&",TString.s);
-		
+
+	public String getReplaced(String old) {
+		for (Entry<String, String> set : data.getStrings().entrySet())
+			old = old.replaceAll("</" + set.getKey() + "/>", set.getValue());
+		return old.replaceAll("&", TString.s);
+
 	}
+
 	public String getLore() {
 		return this.getReplaced(show);
 	}
-	
-	public boolean isRunTime(PowerRunTime rt){
-		for(PowerRunTime prt:runtime)
-			if(rt == prt)
+
+	public boolean isRunTime(PowerRunTime rt) {
+		for (PowerRunTime prt : runtime)
+			if (rt == prt)
 				return true;
 		return false;
 	}
-	
+
 }
 /*
-漏了
-
-lores: 
-  ksyd: 
-    form: 快速移动  </距离/>  </冷却/> </伤害/>
-    show:快速向前移动</距离/>格
-    runtime:
-      - rightclick
-    needequip: 
-      - 核心
-      - 鞋子
-    power: 
-      teleport: 
-        distance: </距离/>
-      cooldown:</冷却/>
-      damage: 
-        amount:</伤害/>
-        target:target
+ * 漏了
+ * 
+ * lores: ksyd: form: 快速移动 </距离/> </冷却/> </伤害/> show:快速向前移动</距离/>格 runtime: -
+ * rightclick needequip: - 核心 - 鞋子 power: teleport: distance: </距离/>
+ * cooldown:</冷却/> damage: amount:</伤害/> target:target
  */

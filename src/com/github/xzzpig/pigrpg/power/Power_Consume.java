@@ -12,58 +12,59 @@ import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
-public class Power_Consume extends Power implements PT_Damage,PT_RightClick,PT_BeDamage
-{	
+public class Power_Consume extends Power implements PT_Damage, PT_RightClick,
+		PT_BeDamage {
 	Equipment equip;
 	User user;
-	
+
 	@Override
-	public String getPowerName(){
+	public String getPowerName() {
 		return "Consume";
 	}
 
 	@Override
-	public Power reBuild(ConfigurationSection path,PowerLore pl){
+	public Power reBuild(ConfigurationSection path, PowerLore pl) {
 		return this;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void run(){
+	public void run() {
 		boolean hand = false;
-        if(equip == user.getHandEquip())
-        	hand = true;
+		if (equip == user.getHandEquip())
+			hand = true;
 		int count = equip.getAmount() - 1;
-        if (count == 0) {
-            equip.setTypeId(0);;
-        } else {
-            equip.setAmount(count);
-        }
-        if(hand)
-        	user.getPlayer().setItemInHand(equip);
-        user.getPlayer().updateInventory();
+		if (count == 0) {
+			equip.setTypeId(0);
+			;
+		} else {
+			equip.setAmount(count);
+		}
+		if (hand)
+			user.getPlayer().setItemInHand(equip);
+		user.getPlayer().updateInventory();
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event){
+	public void rebuildRC(PlayerInteractEvent event) {
 		user = User.getUser(event.getPlayer());
 		equip = User.getUser(event.getPlayer()).getHandEquip();
 	}
 
 	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event){
-		if(event.getDamager() instanceof Player){
-			user = User.getUser((Player)event.getDamager());
-			equip = User.getUser((Player)event.getDamager()).getHandEquip();
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player) {
+			user = User.getUser((Player) event.getDamager());
+			equip = User.getUser((Player) event.getDamager()).getHandEquip();
 		}
 	}
 
 	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event){
-		if(event.getEntity() instanceof Player){
-			user = User.getUser((Player)event.getEntity());
-			equip = User.getUser((Player)event.getEntity()).getHandEquip();
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (event.getEntity() instanceof Player) {
+			user = User.getUser((Player) event.getEntity());
+			equip = User.getUser((Player) event.getEntity()).getHandEquip();
 		}
 	}
-	
+
 }
