@@ -119,7 +119,15 @@ public class ChatCommand {
 							+ message.replaceAll("_", " ").replaceAll("&",
 									TString.s), 5);
 			return true;
+		} else if (getarg(args, 1).equalsIgnoreCase("hl")) {
+			User.getUser((Player) sender).chatHighLight = !User
+					.getUser((Player) sender).chatHighLight;
+			User.getUser((Player) sender).sendPluginMessage(
+					"你的ChatHighLight已设置为"
+							+ User.getUser((Player) sender).chatHighLight);
+			return true;
 		}
+
 		Vars.nms.newFancyMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr chat help")
 				.tooltip(

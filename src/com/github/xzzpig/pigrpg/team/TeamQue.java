@@ -1,7 +1,6 @@
 package com.github.xzzpig.pigrpg.team;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.User;
@@ -16,29 +15,29 @@ public class TeamQue {
 		if (launcher.hasTeam()) {
 			if (target.hasTeam())
 				if (launcher.getTeam() == target.getTeam())
-					message = (Color.BLUE + "对方已是你队友");
+					message = (ChatColor.BLUE + "对方已是你队友");
 				else
-					message = (Color.GRAY + "对方已有队伍，不可重复邀请");
+					message = (ChatColor.GRAY + "对方已有队伍，不可重复邀请");
 			else {
 				if (launcher.getTeam().getLeader() == launcher)
-					message = (Color.GREEN + "点击邀请对方加入队伍");
+					message = (ChatColor.GREEN + "点击邀请对方加入队伍");
 				else
-					message = (Color.GRAY + "你不是队长,无法邀请 对方加入队伍");
+					message = (ChatColor.GRAY + "你不是队长,无法邀请 对方加入队伍");
 			}
 		} else {
 			if (target.hasTeam())
-				message = (Color.YELLOW + "申请加入对方队伍");
+				message = (ChatColor.YELLOW + "申请加入对方队伍");
 			else
-				message = (Color.GREEN + "创建并邀请对方加入队伍");
+				message = (ChatColor.GREEN + "创建并邀请对方加入队伍");
 		}
 
 		if (message.contains("邀请对方加入队伍")) {
-			launcher.sendPluginMessage(Color.GREEN + "邀请已发送");
-			target.sendPluginMessage(Color.BLUE
-					+ launcher.getPlayer().getName() + Color.GREEN
+			launcher.sendPluginMessage(ChatColor.GREEN + "邀请已发送");
+			target.sendPluginMessage(ChatColor.BLUE
+					+ launcher.getPlayer().getName() + ChatColor.GREEN
 					+ "邀请你加入他的队伍");
 			Vars.nms.newFancyMessage(
-					TString.Prefix("PigRPG", 3) + "输入/pr list ")
+					TString.Prefix("PigRPG", 3) + "输入/pr team ")
 					.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 							+ "accept")
 					.tooltip("同意\n/pr team accept")
@@ -50,9 +49,10 @@ public class TeamQue {
 			type = 1;
 		} else if (message.equalsIgnoreCase("申请加入对方队伍")) {
 			target = target.getTeam().getLeader();
-			launcher.sendPluginMessage(Color.GREEN + "申请已发送");
-			target.sendPluginMessage(Color.BLUE
-					+ launcher.getPlayer().getName() + Color.GREEN + "申请加入你的队伍");
+			launcher.sendPluginMessage(ChatColor.GREEN + "申请已发送");
+			target.sendPluginMessage(ChatColor.BLUE
+					+ launcher.getPlayer().getName() + ChatColor.GREEN
+					+ "申请加入你的队伍");
 			Vars.nms.newFancyMessage(
 					TString.Prefix("PigRPG", 3) + "输入/pr list ")
 					.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
@@ -65,7 +65,7 @@ public class TeamQue {
 					.suggest("/pr team deny").send(target.getPlayer());
 			type = 2;
 		} else {
-			launcher.sendPluginMessage(Color.RED + "对方已有队伍或你不是队长");
+			launcher.sendPluginMessage(ChatColor.RED + "对方已有队伍或你不是队长");
 			return;
 		}
 		this.launcher = launcher;

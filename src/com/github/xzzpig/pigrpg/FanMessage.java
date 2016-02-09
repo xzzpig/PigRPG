@@ -1,6 +1,10 @@
 package com.github.xzzpig.pigrpg;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -10,7 +14,8 @@ import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 public class FanMessage {
 	@SuppressWarnings("deprecation")
 	public static FancyMessage getBy(ItemStack is) {
-		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD + "  物品信息");
+		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD + "  "
+				+ is.getItemMeta().getDisplayName());
 		ItemMeta im = is.getItemMeta();
 		String tip = ChatColor.RESET + "  物品名称:" + im.getDisplayName() + "\n"
 				+ ChatColor.GRAY + "  类型:" + is.getType() + "("
@@ -21,7 +26,47 @@ public class FanMessage {
 				tip = tip + "\n    " + ChatColor.RESET + lore;
 		else
 			tip = tip + ChatColor.RED + "无";
+		tip = tip + "\n" + ChatColor.YELLOW + "  附魔:";
+		Iterator<Entry<Enchantment, Integer>> ir = is.getEnchantments()
+				.entrySet().iterator();
+		while (ir.hasNext()) {
+			Entry<Enchantment, Integer> e = ir.next();
+			tip = tip + "\n    " + ChatColor.BLUE + e.getKey().getName() + ":"
+					+ e.getValue();
+		}
+		if (is.getEnchantments().isEmpty())
+			tip = tip + ChatColor.RED + "无";
 		fm.tooltip(tip);
+		return fm;
+	}
+
+	public static FancyMessage getBy(String str, boolean highlight) {
+		return getBy(Vars.nms.newFancyMessage(""), str, highlight);
+	}
+
+	public static FancyMessage getBy(FancyMessage fm, String str,
+			boolean highlight) {
+		str = str.replaceAll("&", TString.s).replace('^', '醃');
+		String[] strs = str.split("醃");
+		if (strs.length == 1) {
+			return fm.then(str);
+		}
+		boolean istip = false;
+		int i = 1;
+		for (String s : strs) {
+			if (!istip) {
+				if (highlight && i != strs.length
+						&& (!strs[i].equalsIgnoreCase("")))
+					s = "§l§n" + rePlaceColor(s) + ChatColor.RESET;
+				fm.then(s);
+				istip = true;
+				i++;
+			} else {
+				fm.tooltip(s);
+				istip = false;
+				i++;
+			}
+		}
 		return fm;
 	}
 
@@ -40,4 +85,10 @@ public class FanMessage {
 		return fm;
 	}
 
+	public static String rePlaceColor(String str) {
+		for (int i = 0; i < 10; i++) {
+			str = str.replaceAll("§" + i, "§" + i + "§l§n");
+		}
+		return str;
+	}
 }

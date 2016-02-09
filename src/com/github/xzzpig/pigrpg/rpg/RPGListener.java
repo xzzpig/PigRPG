@@ -52,7 +52,7 @@ public class RPGListener implements Listener {
 		if (!exptype.equalsIgnoreCase("normal"))
 			for (EntityType et : EntityType.values()) {
 				int exp = TConfig.getConfigFile("PigRPG", "skillconfig.yml")
-						.getInt("level.exp." + et, 1);
+						.getInt("level.exp." + et, -1);
 				exps.put(et, exp);
 				TConfig.saveConfig("PigRPG", "skillconfig.yml", "level.exp."
 						+ et, exp);
@@ -68,6 +68,8 @@ public class RPGListener implements Listener {
 		int exp = event.getDroppedExp();
 		if (!exptype.equalsIgnoreCase("normal"))
 			exp = exps.get(event.getEntityType());
+		if (exp == -1)
+			exp = event.getDroppedExp();
 		user.addExp(exp);
 		user.sendPluginMessage(message.replaceAll("</exp/>", "" + exp));
 		user.buildScore();

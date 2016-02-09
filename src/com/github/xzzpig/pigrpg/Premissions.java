@@ -68,9 +68,7 @@ public class Premissions {
 		pigrpg_admin_.addChild(pigrpg_default_).addChild(pigrpg_command_admin)
 				.addChild(pigrpg_equip_);
 		pigrpg_default_.addChild(pigrpg_command_default)
-				.addChild(pigrpg_trade_default)
-				.addChild(pigrpg_teleport_default)
-				.addChild(pigrpg_equip_default);
+				.addChild(pigrpg_trade_default).addChild(pigrpg_equip_default);
 		pigrpg_command_.addChild(pigrpg_command_admin);
 		pigrpg_command_admin.addChild(pigrpg_command_default)
 				.addChild(pigrpg_command_equip_).addChild(pigrpg_command_list);

@@ -14,11 +14,13 @@ import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.BukkitTools.TEntity;
 import com.github.xzzpig.BukkitTools.TPremission;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.BukkitTools.scoreboard.ScoreboardUtil;
 import com.github.xzzpig.pigrpg.chat.Chat;
 import com.github.xzzpig.pigrpg.chat.ChatChannel;
+import com.github.xzzpig.pigrpg.commands.Help;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.Equipment;
 import com.github.xzzpig.pigrpg.friend.Friend;
@@ -44,6 +46,7 @@ public class User {
 	private Equipment handequip;
 	private int exp;
 	private HashMap<String, Object> scorelist = new HashMap<String, Object>();
+	public boolean chatHighLight = true;
 
 	public User(Player player) {
 		this.player = player;
@@ -62,7 +65,6 @@ public class User {
 				player.getName() + ".exp", 0);
 		freshDisplayName();
 		loadEquis();
-		player.getScoreboard().getObjectives().clear();
 		buildScore();
 	}
 
@@ -84,6 +86,27 @@ public class User {
 			Entry<String, Object> next = ir.next();
 			list.add(("&l" + next.getKey() + ":&f" + next.getValue())
 					.replaceAll("&", TString.s));
+		}
+		if (this.hasTeam()) {
+			list.add("&5&l[TEAM]".replaceAll("&", TString.s));
+			if (this.getTeam().getLeader() != this)
+				list.add(("&l*" + getTeam().getLeader().getPlayer().getName()
+						+ ":&4"
+						+ TEntity.getHealth(getTeam().getLeader().getPlayer())
+						+ "/" + TEntity.getMaxHealth(getTeam().getLeader()
+						.getPlayer())).replaceAll("&", TString.s));
+			for (User user : this.getTeam().getNoLeaderMembers()) {
+				if (user == this)
+					continue;
+				if (!user.getPlayer().isOnline()) {
+					this.getTeam().removeMember(user);
+					continue;
+				}
+				list.add(("&l" + user.getPlayer().getName() + ":&4"
+						+ TEntity.getHealth(user.getPlayer()) + "/" + TEntity
+						.getMaxHealth(user.getPlayer())).replaceAll("&",
+						TString.s));
+			}
 		}
 		ScoreboardUtil.unrankedSidebarDisplay(player,
 				list.toArray(new String[0]));
@@ -156,7 +179,6 @@ public class User {
 					}
 					User.this.buildScore();
 				}
-				Debuger.print("remove");
 				userlist.remove(player);
 			}
 		}).start();
@@ -241,6 +263,35 @@ public class User {
 		return this.eco;
 	}
 
+	public List<String> getInfo() {
+		List<String> info = new ArrayList<String>();
+		info.add(TString.Color(2) + "昵名:" + player.getDisplayName());
+		info.add(TString.Color(2)
+				+ "生命:"
+				+ StringMatcher.buildStr("</currenthealth/>/</maxhealth/>",
+						player, false));
+		info.add(TString.Color(2) + "位置:" + player.getWorld().getName() + ","
+				+ player.getLocation().getBlockX() + ","
+				+ player.getLocation().getBlockY() + ","
+				+ player.getLocation().getBlockZ());
+		info.add(TString.Color(2) + "游戏等级:"
+				+ ((float) player.getLevel() + player.getExp()));
+		info.add(TString.Color(2)
+				+ "RPG经验:"
+				+ StringMatcher.buildStr("</rpgexp/>(</rpglevel/>)", player,
+						false));
+		info.add(TString.Color(2) + "游戏模式:"
+				+ StringMatcher.buildStr("</gamemode/>", player, false));
+		if (player.isOp())
+			info.add(TString.Color(4) + "OP");
+		if (player.getAllowFlight())
+			info.add(TString.Color(8) + "允许飞行");
+		if (player.isFlying())
+			info.add(TString.Color(8) + "正在飞行");
+		return info;
+
+	}
+
 	public void setJustSay(String justsay) {
 		this.justsay = justsay;
 	}
@@ -284,9 +335,23 @@ public class User {
 		target.willChat = this;
 		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
 				+ target.getPlayer().getName() + "才能看到");
-		this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
+		Vars.nms.newFancyMessage("输入/pr chat change")
+				.tooltip(
+						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat change")
+								.getDescribe())
+				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
+				.suggest("/pr chat change").tooltip("更换聊天频道")
+				.send(this.getPlayer());
+		// this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
 		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
-		target.sendPluginMessage("&7输入/pr chat self 进入私聊频道");
+		Vars.nms.newFancyMessage("输入/pr chat self")
+				.tooltip(
+						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat self")
+								.getDescribe())
+				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
+				.suggest("/pr chat self").tooltip("更换聊天频道")
+				.send(target.getPlayer());
+		// target.sendPluginMessage("&7输入/pr chat self 进入私聊频道");
 	}
 
 	public void setSelfChat() {
@@ -343,20 +408,39 @@ public class User {
 				return;
 		}
 		String prefix = ChatColor.GREEN + "["
-				+ fromuser.getChatchannel().getName();
+				+ fromuser.getChatchannel().getName()
+				+ "^&3聊天频道(/pr chat change 更换频道)^";
 		if (fromuser.getChatchannel() != ChatChannel.World)
-			prefix = prefix + "_" + fromuser.getPlayer().getWorld().getName();
-		if (fromuser.getChatchannel() == ChatChannel.Self)
-			prefix = prefix + "_=>" + this.player.getName();
-		prefix = prefix + "]\n";
+			prefix = prefix + "_^^" + ChatColor.YELLOW
+					+ fromuser.getPlayer().getWorld().getName() + "^&3所在世界^";
+		if (fromuser.getChatchannel() == ChatChannel.Self) {
+			prefix = prefix + "_=>^^"
+					+ fromuser.chatTarget.getPlayer().getName();
+			String info = "";
+			for (String s : fromuser.chatTarget.getInfo()) {
+				info = info + s + "\n";
+			}
+			prefix = prefix + "^" + info + "^";
+		}
+		prefix = prefix + "]^^";
+		FanMessage.getBy(prefix, false).send(this.player);
+		prefix = "";
 		if (!fromuser.getPrefix().equalsIgnoreCase("null"))
 			prefix = prefix + ChatColor.GOLD + "[" + fromuser.getPrefix()
-					+ ChatColor.GOLD + "]";
+					+ ChatColor.GOLD + "]" + "^&3玩家称号^";
 		if (fromuser.getPlayer().isOp())
 			prefix = prefix + ChatColor.RED;
-		prefix = prefix + fromuser.getPlayer().getName() + ChatColor.RESET
-				+ ":";
-		this.player.sendMessage(prefix + fromuser.getJustSay());
+		prefix = prefix + fromuser.getPlayer().getName();
+		String info = "";
+		for (String s : fromuser.getInfo()) {
+			info = info + s + "\n";
+		}
+		prefix = prefix + "^" + info + "^";
+		prefix = prefix + ChatColor.RESET + ":^^";
+		FanMessage.getBy(FanMessage.getBy(prefix, false),
+				fromuser.getJustSay(), fromuser.chatHighLight)
+				.send(this.player);
+		// this.player.sendMessage(prefix + fromuser.getJustSay());
 	}
 
 	public void sendPluginMessage(String message) {

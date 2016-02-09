@@ -17,6 +17,7 @@ import com.github.xzzpig.pigrpg.friend.FriendEvent;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerListener;
 import com.github.xzzpig.pigrpg.rpg.RPGListener;
+import com.github.xzzpig.pigrpg.rpgworld.RpgWorldListener;
 import com.github.xzzpig.pigrpg.sale.Sale;
 import com.github.xzzpig.pigrpg.sale.SaleListener;
 import com.github.xzzpig.pigrpg.teleport.TelListener;
@@ -81,8 +82,9 @@ public class Main extends JavaPlugin {
 		if (Vars.PowerSystem)
 			getServer().getPluginManager().registerEvents(new PowerListener(),
 					this);
-		// getServer().getPluginManager().registerEvents(new
-		// RpgWorldListener(),this);
+		if (Vars.RpgWorldSystem)
+			getServer().getPluginManager().registerEvents(
+					new RpgWorldListener(), this);
 		// getServer().getPluginManager().registerEvents(new
 		// MobListener(),this);
 		getServer().getPluginManager().registerEvents(new RPGListener(), this);

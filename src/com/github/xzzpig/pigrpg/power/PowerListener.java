@@ -80,7 +80,7 @@ public class PowerListener implements Listener {
 					p.run();
 				}
 			}
-
+			user.buildScore();
 		}
 		if (event.getEntity() instanceof Player) {
 			User user = User.getUser((Player) event.getEntity());
@@ -118,6 +118,7 @@ public class PowerListener implements Listener {
 					p.run();
 				}
 			}
+			user.buildScore();
 		}
 		event.setDamage(event.getDamage() + dstate.getPhysicDamage()
 				- tstate.getPhysicDefence());
@@ -170,6 +171,7 @@ public class PowerListener implements Listener {
 			}
 		}
 		state.setPhysicDamage(origindamage);
+		user.buildScore();
 	}
 
 	@EventHandler

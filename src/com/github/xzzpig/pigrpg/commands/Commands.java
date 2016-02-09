@@ -14,6 +14,7 @@ import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.Vars;
+import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class Commands {
@@ -22,6 +23,10 @@ public class Commands {
 			String label, String[] args) {
 		if (label.equalsIgnoreCase("PigRPG") || label.equalsIgnoreCase("pr")) {
 			if (getarg(args, 0).equalsIgnoreCase("debug")) {
+				User user = User.getUser((Player) sender);
+				user.getPlayer().teleport(
+						user.getPlayer().getLocation().getChunk()
+								.getBlock(0, 0, 0).getLocation());
 				return true;
 			}
 			if (getarg(args, 0).equalsIgnoreCase("help")) {
@@ -36,20 +41,7 @@ public class Commands {
 							.command("/pr helpall").send((Player) sender);
 					return true;
 				}
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr friend -获取 好友系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr trade  -获取 交易系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr chat   -获取 聊天系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr tel    -获取 传送系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr sale   -获取 拍卖系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr equip  -获取 装备系统 的帮助");
-				sender.sendMessage(TString.Prefix("PigRPG", 3)
-						+ "/pr showhand <展示玩家>(不填为全部)   -展示手中物品");
+				sender.sendMessage(TString.Prefix("PigRPG", 4) + "该命令只能由玩家使用");
 				return true;
 			} else if (getarg(args, 0).equalsIgnoreCase("helpall")) {
 				if (sender instanceof Player)
@@ -65,6 +57,7 @@ public class Commands {
 				Plugin pigrpg = Bukkit.getPluginManager().getPlugin("PigRPG");
 				Bukkit.getPluginManager().disablePlugin(pigrpg);
 				Bukkit.getPluginManager().enablePlugin(pigrpg);
+				PowerLore.loadpower();
 				sender.sendMessage("PigRPG重载完成");
 				return true;
 			} else if (getarg(args, 0).equalsIgnoreCase("friend")) {

@@ -3,7 +3,7 @@ package com.github.xzzpig.pigrpg.team;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Color;
+import org.bukkit.ChatColor;
 
 import com.github.xzzpig.pigrpg.User;
 
@@ -26,7 +26,7 @@ public class Team {
 
 	public Team(User leader) {
 		teams.add(this);
-		this.leader = leader;
+		this.setLeader(leader);
 	}
 
 	public User getLeader() {
@@ -51,7 +51,7 @@ public class Team {
 
 	public Team addMember(User member) {
 		users.add(member);
-		broadMessage(Color.BLUE + member.getPlayer().getName() + "&3加入了队伍",
+		broadMessage(ChatColor.BLUE + member.getPlayer().getName() + "&3加入了队伍",
 				true);
 		return this;
 	}
@@ -60,14 +60,21 @@ public class Team {
 		return users.toArray(new User[0]);
 	}
 
+	public User[] getNoLeaderMembers() {
+		List<User> cusers = new ArrayList<User>();
+		cusers.addAll(users);
+		cusers.remove(leader);
+		return cusers.toArray(new User[0]);
+	}
+
 	public boolean hasMember(User member) {
 		return users.contains(member);
 	}
 
 	public Team removeMember(User member) {
-		users.remove(member);
-		broadMessage(Color.BLUE + member.getPlayer().getName() + "&3离开了队伍",
+		broadMessage(ChatColor.BLUE + member.getPlayer().getName() + "&3离开了队伍",
 				true);
+		users.remove(member);
 		return this;
 	}
 

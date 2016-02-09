@@ -1,7 +1,6 @@
 package com.github.xzzpig.pigrpg.commands;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,7 +37,7 @@ public class TeamCommand extends Commands {
 				return true;
 			}
 			user.sendPluginMessage("&3你拒绝了组队请求");
-			tq.launcher.sendPluginMessage(Color.BLUE
+			tq.launcher.sendPluginMessage(TString.Color(3)
 					+ user.getPlayer().getName() + "&3拒绝了你的组队请求");
 			user.getDatas().setObject("teamque", null);
 			return true;
@@ -57,7 +56,16 @@ public class TeamCommand extends Commands {
 				user.getPlayer().sendMessage(s.replaceAll("&", TString.s));
 			}
 			return true;
+		} else if (getarg(args, 1).equalsIgnoreCase("leave")) {
+			Team team = user.getTeam();
+			if (team == null) {
+				user.sendPluginMessage("&4你不在队伍中");
+				return true;
+			}
+			user.getTeam().removeMember(user);
+			return true;
 		}
+
 		Vars.nms.newFancyMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr team help")
 				.tooltip(

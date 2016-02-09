@@ -43,33 +43,40 @@ public class RpgChunk {
 
 	public RpgChunk change() {
 		if (!isChanged())
-			this.chunk.getBlock(1, 1, 1).setType(Material.CHEST);
+			this.chunk.getBlock(0, 0, 0).setType(Material.CHEST);
 		String name = TString.getRandomCH(Math.abs(random.nextInt(4)) + 1);
 		for (Chunk ch : getNextChunks()) {
 			RpgChunk rctest = new RpgChunk(ch);
-			if (ch.getBlock(1, 1, 1).getBiome() == this.chunk.getBlock(1, 1, 1)
+			if (ch.getBlock(0, 0, 0).getBiome() == this.chunk.getBlock(0, 0, 0)
 					.getBiome() && rctest.getData("name") != null) {
 				name = rctest.getData("name");
 				break;
 			}
 		}
 		setData("name", name);
+//		if (Debuger.isdebug) {
+//			Debuger.print("change");
+//			try {
+//				change(chunk);
+//			} catch (Exception e) {
+//			}
+//		}
 		return this;
 	}
 
 	public Biome getBiome() {
-		return chunk.getBlock(1, 1, 1).getBiome();
+		return chunk.getBlock(0, 100, 0).getBiome();
 	}
 
 	public boolean isChanged() {
-		Block block = this.chunk.getBlock(1, 1, 1);
+		Block block = this.chunk.getBlock(0, 0, 0);
 		if (block.getType() == Material.CHEST)
 			return true;
 		return false;
 	}
 
 	public Inventory getDatas() {
-		Block block = this.chunk.getBlock(1, 1, 1);
+		Block block = this.chunk.getBlock(0, 0, 0);
 		if (block.getState() instanceof Chest)
 			return ((Chest) block.getState()).getBlockInventory();
 		return null;
@@ -118,7 +125,7 @@ public class RpgChunk {
 	}
 
 	public int getBasicLevel() {
-		Block block = this.chunk.getBlock(1, 1, 1);
+		Block block = this.chunk.getBlock(0, 0, 0);
 		Location spawn = block.getWorld().getSpawnLocation();
 		double distance = spawn.distance(block.getLocation());
 		int level = (int) distance / RpgWorld.part;
@@ -134,4 +141,24 @@ public class RpgChunk {
 		cs[3] = loc.clone().add(0, 0, -16).getChunk();
 		return cs;
 	}
+
+//	private void change(final Chunk c) throws Exception {
+//				new Thread(new Runnable() {
+//					@SuppressWarnings("deprecation")
+//					public void run() {
+//						for(int i1 = 0;i1<16;i1++){
+//							for(int i2 = 0;i2<16;i2++){
+//								c.getBlock(i1, 100, i2).setTypeId(getid());
+//							}
+//						}
+//					}
+//				}).start();
+//	}
+//	
+//	private int getid(){
+//		for(int i = 0;i<Biome.values().length;i++)
+//			if(getBiome()==Biome.values()[i])
+//				return i+1;
+//		return 1;
+//	}
 }

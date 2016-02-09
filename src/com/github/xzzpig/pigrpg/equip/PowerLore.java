@@ -19,6 +19,10 @@ public class PowerLore implements Comparable<PowerLore> {
 	public static List<PowerLore> powerlores = new ArrayList<PowerLore>();
 
 	static {
+		loadpower();
+	}
+
+	public static void loadpower() {
 		FileConfiguration config = TConfig.getConfigFile("PigRPG",
 				"customlore.yml");
 		try {
@@ -26,6 +30,7 @@ public class PowerLore implements Comparable<PowerLore> {
 					"customlore.yml", "customlore")) {
 				PowerLore pl = new PowerLore(
 						config.getConfigurationSection("customlore." + lorename));
+				powerlores.remove(getFromName(pl.name));
 				powerlores.add(pl);
 			}
 		} catch (Exception e) {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,18 +36,7 @@ public class ItemForChest {
 		is.setData(data);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(TString.Color(3) + "玩家信息");
-		List<String> lore = new ArrayList<String>();
-		lore.add(TString.Color(2) + "昵名:" + player.getDisplayName());
-		lore.add(TString.Color(2) + "位置:" + player.getWorld().getName() + ","
-				+ player.getLocation().getBlockX() + ","
-				+ player.getLocation().getBlockY() + ","
-				+ player.getLocation().getBlockZ());
-		lore.add(TString.Color(2) + "游戏等级:"
-				+ ((float) player.getLevel() + player.getExp()));
-		if (player.isOp())
-			lore.add(TString.Color(4) + "OP");
-		if (player.getAllowFlight())
-			lore.add(TString.Color(8) + "允许飞行");
+		List<String> lore = User.getUser(player).getInfo();
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
@@ -131,20 +119,20 @@ public class ItemForChest {
 		if (launcher.hasTeam()) {
 			if (target.hasTeam())
 				if (launcher.getTeam() == target.getTeam())
-					lore.add(Color.BLUE + "对方已是你队友");
+					lore.add(TString.Color(3) + "对方已是你队友");
 				else
-					lore.add(Color.GRAY + "对方已有队伍，不可重复邀请");
+					lore.add(TString.Color(7) + "对方已有队伍，不可重复邀请");
 			else {
 				if (launcher.getTeam().getLeader() == launcher)
-					lore.add(Color.GREEN + "点击邀请对方加入队伍");
+					lore.add(TString.Color(2) + "点击邀请对方加入队伍");
 				else
-					lore.add(Color.GRAY + "你不是队长,无法邀请对方加入队伍");
+					lore.add(TString.Color(7) + "你不是队长,无法邀请对方加入队伍");
 			}
 		} else {
 			if (target.hasTeam())
-				lore.add(Color.YELLOW + "申请加入对方队伍");
+				lore.add(TString.Color(6) + "申请加入对方队伍");
 			else
-				lore.add(Color.GREEN + "创建并邀请对方加入队伍");
+				lore.add(TString.Color(2) + "创建并邀请对方加入队伍");
 		}
 
 		im.setLore(lore);

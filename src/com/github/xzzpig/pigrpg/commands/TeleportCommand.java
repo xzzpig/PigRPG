@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.WarpChest;
 import com.github.xzzpig.pigrpg.teleport.Warp;
@@ -21,7 +22,7 @@ public class TeleportCommand {
 				ch.getHelpMessage().send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("list")) {
-			player.openInventory(WarpChest.getInventory());
+			player.openInventory(WarpChest.getInventory(User.getUser(player)));
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("setwarp")) {
 			if (getarg(args, 2).equalsIgnoreCase("")) {

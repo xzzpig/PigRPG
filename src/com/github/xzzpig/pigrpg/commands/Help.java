@@ -25,7 +25,7 @@ public class Help {
 				"输入/pr list help 查看帮助", "");
 		PIGRPG.addSubCommandHelp("showhand", "展示手中物品", "输入/pr help 查看帮助",
 				"<展示玩家>(不填为全部)");
-		PIGRPG.addSubCommandHelp("reload", "重载插件", "", "");
+		// PIGRPG.addSubCommandHelp("reload", "重载插件", "", "");
 
 		pr_friend.addSubCommandHelp("list", "  打开好友列表", "", "");
 		CommandHelp pr_friend_del = pr_friend.addSubCommandHelp("del",
@@ -78,6 +78,7 @@ public class Help {
 		pr_team.addSubCommandHelp("accept", "接受组队请求", "", "");
 		pr_team.addSubCommandHelp("deny", "  拒绝组队请求", "", "");
 		pr_team.addSubCommandHelp("list", "  列出队伍所有成员", "", "");
+		pr_team.addSubCommandHelp("team", "  离开队伍", "", "");
 
 		pr_list.addSubCommandHelp("lore", "列出所有特殊lore", "", "");
 		pr_list.addSubCommandHelp("runtime", "列出所有Lore触发时间参数", "", "");

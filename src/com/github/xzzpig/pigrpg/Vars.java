@@ -45,6 +45,8 @@ public class Vars {
 			"Power", true);
 	public static final boolean ScoreSystem = Vars.switchconfig.getBoolean(
 			"Score", true);
+	public static final boolean RpgWorldSystem = Vars.switchconfig.getBoolean(
+			"RpgWorld", true);
 	static {
 		TConfig.saveConfig("PigRPG", "switch.yml", "RightClick", RCSystem);
 		TConfig.saveConfig("PigRPG", "switch.yml", "Friend", FriendSystem);
@@ -56,6 +58,8 @@ public class Vars {
 		TConfig.saveConfig("PigRPG", "switch.yml", "Equip", EquipSystem);
 		TConfig.saveConfig("PigRPG", "switch.yml", "Power", PowerSystem);
 		TConfig.saveConfig("PigRPG", "switch.yml", "Score", ScoreSystem);
+		TConfig.saveConfig("PigRPG", "switch.yml", "RpgWorld", RpgWorldSystem);
+
 	}
 
 }

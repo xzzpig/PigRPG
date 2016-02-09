@@ -101,4 +101,14 @@ public class TString {
 		}
 		return ret;
 	}
+
+	public static String[] splitColor(String str) {
+		String[] result = new String[] { "", "" };
+		while (str.startsWith("§")) {
+			result[0] = result[0] + str.substring(0, 2);
+			str = str.substring(2, str.length());
+		}
+		result[1] = str;
+		return result;
+	}
 }

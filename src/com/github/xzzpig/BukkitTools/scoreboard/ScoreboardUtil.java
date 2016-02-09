@@ -25,8 +25,8 @@ public class ScoreboardUtil {
 
 		for (int i = 1; i < elements.length; i++)
 			if (elements[i] != null)
-				if (elements[i].length() > 40)
-					elements[i] = elements[i].substring(0, 40);
+				if (elements[i].length() > 16)
+					elements[i] = elements[i].substring(0, 16);
 
 		return elements;
 	}
@@ -138,7 +138,6 @@ public class ScoreboardUtil {
 
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

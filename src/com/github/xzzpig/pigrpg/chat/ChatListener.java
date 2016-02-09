@@ -88,6 +88,8 @@ public class ChatListener implements Listener {
 		if (messages[0].equalsIgnoreCase("?")) {
 			user.sendPluginMessage("&3@[玩家] -发起与该玩家的私聊");
 		} else {
+			if (messages[0].equalsIgnoreCase(""))
+				messages[0] = messages[1];
 			user.setSelfChat(User.getUser(Bukkit.getPlayer(messages[0])));
 		}
 	}

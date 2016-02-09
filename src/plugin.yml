@@ -27,7 +27,6 @@ premission:
     children:
       pigrpg.command.default: true
       pigrpg.trade.default: true
-      pigrpg.teleport.default: true
       pigrpg.equip.default: true
   pigrpg.command.*:
     description: PigRPG的所有命令权限
