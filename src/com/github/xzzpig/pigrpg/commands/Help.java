@@ -40,7 +40,7 @@ public class Help {
 		pr_trade.addSubCommandHelp("deny", "  拒绝交易请求", "", "");
 
 		pr_chat.addSubCommandHelp("setaccept", "打开设置接受聊天频道列表", "", "");
-		pr_chat.addSubCommandHelp("change", "   打开设置接受聊天频道列表", "", "");
+		pr_chat.addSubCommandHelp("change", "   打开改变聊天频道列表", "", "");
 		pr_chat.addSubCommandHelp("self",
 				"     进入私聊频道\n在聊天栏中以@[玩家]开头发起与该玩家的私聊(非命令)", "", "");
 		pr_chat.addSubCommandHelp("ban", "屏蔽含关键字聊天", "", "[关键字]");
@@ -78,7 +78,7 @@ public class Help {
 		pr_team.addSubCommandHelp("accept", "接受组队请求", "", "");
 		pr_team.addSubCommandHelp("deny", "  拒绝组队请求", "", "");
 		pr_team.addSubCommandHelp("list", "  列出队伍所有成员", "", "");
-		pr_team.addSubCommandHelp("team", "  离开队伍", "", "");
+		pr_team.addSubCommandHelp("leave", "  离开队伍", "", "");
 
 		pr_list.addSubCommandHelp("lore", "列出所有特殊lore", "", "");
 		pr_list.addSubCommandHelp("runtime", "列出所有Lore触发时间参数", "", "");

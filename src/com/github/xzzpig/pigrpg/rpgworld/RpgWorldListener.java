@@ -17,12 +17,12 @@ public class RpgWorldListener implements Listener {
 		if (rc.isChanged())
 			return;
 		rc.change();
-		User user = User.getUser(event.getPlayer());
-		user.sendBroadMessage(
-				ChatColor.GREEN + "欢迎来到" + ChatColor.BLUE + rc.getData("name")
-						+ RpgChunk.chbiome.get(rc.getBiome()), 3);
-		user.sendPluginMessage(ChatColor.GREEN + "欢迎来到" + ChatColor.BLUE
-				+ rc.getData("name") + RpgChunk.chbiome.get(rc.getBiome()));
+//		User user = User.getUser(event.getPlayer());
+//		user.sendBroadMessage(
+//				ChatColor.GREEN + "欢迎来到" + ChatColor.BLUE + rc.getData("name")
+//						+ RpgChunk.chbiome.get(rc.getBiome()), 3);
+//		user.sendPluginMessage(ChatColor.GREEN + "欢迎来到" + ChatColor.BLUE
+//				+ rc.getData("name") + RpgChunk.chbiome.get(rc.getBiome()));
 	}
 
 	@EventHandler
