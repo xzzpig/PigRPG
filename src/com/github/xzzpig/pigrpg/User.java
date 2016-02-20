@@ -25,6 +25,8 @@ import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.Equipment;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.rpg.RPGListener;
+import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
+import com.github.xzzpig.pigrpg.rpgworld.RpgWorld;
 import com.github.xzzpig.pigrpg.score.CustomScore;
 import com.github.xzzpig.pigrpg.team.Team;
 import com.github.xzzpig.pigrpg.teleport.Warp;
@@ -282,6 +284,8 @@ public class User {
 						false));
 		info.add(TString.Color(2) + "游戏模式:"
 				+ StringMatcher.buildStr("</gamemode/>", player, false));
+		RpgChunk rc = new RpgChunk(player.getLocation().getChunk());
+		info.add(TString.Color(2) + "区域:"+StringMatcher.buildStr("</areaname/>(Lv:</arealevel/>)", player, false));
 		if (player.isOp())
 			info.add(TString.Color(4) + "OP");
 		if (player.getAllowFlight())
@@ -407,12 +411,17 @@ public class User {
 					&& (!fromuser.getTeam().hasMember(this)))
 				return;
 		}
-		String prefix = ChatColor.GREEN + "["
+		String prefix = "[" + ChatColor.GREEN
 				+ fromuser.getChatchannel().getName()
-				+ "^&3聊天频道(/pr chat change 更换频道)^";
-		if (fromuser.getChatchannel() != ChatChannel.World)
+				+ "^&3聊天频道(/pr chat change 更换频道)#c/pr chat change^";
+		if (fromuser.getChatchannel() != ChatChannel.World) {
 			prefix = prefix + "_^^" + ChatColor.YELLOW
 					+ fromuser.getPlayer().getWorld().getName() + "^&3所在世界^";
+		}
+		if (RpgWorld.rpgworldlist.contains(fromuser.getPlayer().getWorld().getName())) {
+			RpgChunk rc = new RpgChunk(fromuser.getPlayer().getLocation().getChunk());
+			prefix = prefix + "_"+rc.getData("name")+ RpgChunk.chbiome.get(rc.getBiome())+"^&3区域等级:Lv"+rc.getBasicLevel()+"^";
+		}
 		if (fromuser.getChatchannel() == ChatChannel.Self) {
 			prefix = prefix + "_=>^^"
 					+ fromuser.chatTarget.getPlayer().getName();
@@ -422,7 +431,7 @@ public class User {
 			}
 			prefix = prefix + "^" + info + "^";
 		}
-		prefix = prefix + "]^^";
+		prefix += "]^^";
 		FanMessage.getBy(prefix, false).send(this.player);
 		prefix = "";
 		if (!fromuser.getPrefix().equalsIgnoreCase("null"))
@@ -444,8 +453,8 @@ public class User {
 	}
 
 	public void sendPluginMessage(String message) {
-		this.player.sendMessage(TString.Prefix("PigRPG", 3)
-				+ message.replaceAll("&", "§"));
+		FanMessage.getBy(TString.Prefix("PigRPG", 3)+ message.replaceAll("&", "§"), true).send(player);
+		//this.player.sendMessage(TString.Prefix("PigRPG", 3)+ message.replaceAll("&", "§"));
 	}
 
 	public void teleport(Warp warp) {

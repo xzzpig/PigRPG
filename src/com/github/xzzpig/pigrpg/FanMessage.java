@@ -54,6 +54,17 @@ public class FanMessage {
 		boolean istip = false;
 		int i = 1;
 		for (String s : strs) {
+			if(s.equalsIgnoreCase("")){
+				//continue;
+			}
+			if(s.contains("#s")){
+				fm.suggest(s.split("#s")[1]);
+				s = s.replaceAll("#s"+s.split("#s")[1],"");
+			}
+			if(s.contains("#c")){
+				fm.command(s.split("#c")[1]);
+				s = s.replaceAll("#c"+s.split("#c")[1],"");
+			}
 			if (!istip) {
 				if (highlight && i != strs.length
 						&& (!strs[i].equalsIgnoreCase("")))

@@ -8,6 +8,7 @@ import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.github.xzzpig.BukkitTools.TCalculate;
 import com.github.xzzpig.BukkitTools.TEntity;
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 
 public class StringMatcher {
 	public static String solve(String ps) {
@@ -28,7 +29,9 @@ public class StringMatcher {
 				.replaceAll("</name/>", entity.getCustomName())
 				.replaceAll("</type/>", entity.getType().toString())
 				.replaceAll("</online/>", Bukkit.getOnlinePlayers().length + "")
-				.replaceAll("</worldpvp/>", entity.getWorld().getPVP() + "");
+				.replaceAll("</worldpvp/>", entity.getWorld().getPVP() + "")
+				.replaceAll("</areaname/>", new RpgChunk(entity.getLocation().getChunk()).getData("name")+ RpgChunk.chbiome.get(new RpgChunk(entity.getLocation().getChunk()).getBiome()))
+				.replaceAll("</arealevel/>", new RpgChunk(entity.getLocation().getChunk()).getBasicLevel()+"");
 		if (entity instanceof Player) {
 			Player player = (Player) entity;
 			User user = User.getUser(player);
