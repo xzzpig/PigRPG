@@ -51,7 +51,9 @@ public class StringMatcher {
 					.replaceAll("</rpgexp/>", user.getExp() + "")
 					.replaceAll("</rpglevel/>", user.getLevel() + "")
 					.replaceAll("</hunger/>",
-							user.getPlayer().getFoodLevel() + "");
+							user.getPlayer().getFoodLevel() + "")
+					.replaceAll("</rpgclass/>",user.getRpgClass().getName())
+					.replaceAll("</rpgclassname/>",user.getRpgClass().getDisplayName());
 		}
 		if (isInt)
 			re = ((int) TCalculate.getResult(re)) + "";

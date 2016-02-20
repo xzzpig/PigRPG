@@ -25,6 +25,7 @@ import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.Equipment;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.rpg.RPGListener;
+import com.github.xzzpig.pigrpg.rpg.RpgClass;
 import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 import com.github.xzzpig.pigrpg.rpgworld.RpgWorld;
 import com.github.xzzpig.pigrpg.score.CustomScore;
@@ -49,6 +50,7 @@ public class User {
 	private int exp;
 	private HashMap<String, Object> scorelist = new HashMap<String, Object>();
 	public boolean chatHighLight = true;
+	private String rpgclass;
 
 	public User(Player player) {
 		this.player = player;
@@ -65,6 +67,8 @@ public class User {
 				.getString(player.getName() + ".prefix", "null");
 		this.exp = TConfig.getConfigFile("PigRPG", "userdata.yml").getInt(
 				player.getName() + ".exp", 0);
+		this.rpgclass = TConfig.getConfigFile("PigRPG", "userdata.yml").getString(
+				player.getName() + ".rpgclass","default");
 		freshDisplayName();
 		loadEquis();
 		buildScore();
@@ -156,6 +160,17 @@ public class User {
 		return prefix;
 	}
 
+	public User setRpgClass(RpgClass rpgclass){
+		this.rpgclass = rpgclass.getName();
+		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName() + ".rpgclass",
+				this.rpgclass);
+		return this;
+	}
+	
+	public RpgClass getRpgClass(){
+		return RpgClass.valueOf(rpgclass);
+	}
+	
 	public Team getTeam() {
 		return Team.getFrom(this);
 	}
@@ -187,10 +202,7 @@ public class User {
 	}
 
 	public boolean isAcceptChatChannel(ChatChannel c) {
-		if (acceptchannel.contains(c))
-			return true;
-		else
-			return false;
+		return acceptchannel.contains(c);
 	}
 
 	public void addAcceptChatChannel(ChatChannel c) {
@@ -278,6 +290,8 @@ public class User {
 				+ player.getLocation().getBlockZ());
 		info.add(TString.Color(2) + "游戏等级:"
 				+ ((float) player.getLevel() + player.getExp()));
+		info.add(TString.Color(2) + "职业:"
+				+ getRpgClass().getDisplayName());
 		info.add(TString.Color(2)
 				+ "RPG经验:"
 				+ StringMatcher.buildStr("</rpgexp/>(</rpglevel/>)", player,

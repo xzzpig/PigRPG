@@ -62,8 +62,9 @@ public class RPGListener implements Listener {
 	@EventHandler
 	public void onKillEntity(EntityDeathEvent event) {
 		Player player = event.getEntity().getKiller();
-		if (player == null)
+		if (player == null) {
 			return;
+		}
 		User user = User.getUser(player);
 		int exp = event.getDroppedExp();
 		if (!exptype.equalsIgnoreCase("normal"))
