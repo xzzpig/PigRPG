@@ -50,7 +50,11 @@ public class RpgClass {
 		defaultclass.preclass = "default";
 		defaultclass.maxlevel = -1;
 		
+		try {
 		load();
+		} catch (Exception e) {
+			save();
+		}
 		save();
 	}
 	

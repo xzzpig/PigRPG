@@ -88,7 +88,6 @@ public class Main extends JavaPlugin {
 		// getServer().getPluginManager().registerEvents(new
 		// MobListener(),this);
 		getServer().getPluginManager().registerEvents(new RPGListener(), this);
-
 	}
 
 	// 插件停用函数
