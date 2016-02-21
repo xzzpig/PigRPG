@@ -9,21 +9,23 @@ import com.github.xzzpig.BukkitTools.TCalculate;
 import com.github.xzzpig.pigrpg.State;
 
 public class CustomMob {
+	@SuppressWarnings("unused")
 	private static final Random random = new Random();
 
+	@SuppressWarnings("unused")
 	public static LivingEntity getRangeMob(LivingEntity entity, int level) {
 		if (entity instanceof Player)
 			return entity;
 		State.getFrom(entity).remove();
 		State state = new State(entity);
 		CustomMob mob = new CustomMob(entity);
-		mob.setMobQuality(MobQuality.valueOf(random.nextInt(MobQuality.values().length)));
-		state.setHp((int) TCalculate.getResult(Equation.Hp.replaceAll("$level",
+		//mob.setMobQuality(MobQuality.valueOf(random.nextInt(MobQuality.values().length)));
+		state.setHp((int) TCalculate.getResult(Equation.Hp.replaceAll("</level/>",
 				level + "")));
 		state.setPhysicDamage((int) TCalculate.getResult(Equation.Damage
-				.replaceAll("$level", level + "")));
+				.replaceAll("</level/>", level + "")));
 		state.setPhysicDefence((int) TCalculate.getResult(Equation.Defence
-				.replaceAll("$level", level + "")));
+				.replaceAll("</level/>", level + "")));
 		/*
 		 * Power power = null; Power[] powers = Power.values(); for(int i = 0;i
 		 * < mob.getMobQuality().getPowerNumber();i++){ while(power instanceof

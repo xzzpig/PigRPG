@@ -100,12 +100,15 @@ public class State {
 		return pde;
 	}
 
-	public State addPowers(Power power) {
+	public State addPower(Power power) {
 		this.powers.add(power);
 		return this;
 	}
-
-	public State delPowers(Power power) {
+	public State addPowers(List<Power> powers) {
+		this.powers.addAll(powers);
+		return this;
+	}
+	public State delPower(Power power) {
 		this.powers.remove(power);
 		return this;
 	}

@@ -298,7 +298,6 @@ public class User {
 						false));
 		info.add(TString.Color(2) + "游戏模式:"
 				+ StringMatcher.buildStr("</gamemode/>", player, false));
-		RpgChunk rc = new RpgChunk(player.getLocation().getChunk());
 		info.add(TString.Color(2) + "区域:"+StringMatcher.buildStr("</areaname/>(Lv:</arealevel/>)", player, false));
 		if (player.isOp())
 			info.add(TString.Color(4) + "OP");

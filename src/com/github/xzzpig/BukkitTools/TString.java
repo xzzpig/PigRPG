@@ -3,6 +3,7 @@ package com.github.xzzpig.BukkitTools;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Random;
+import org.bukkit.ChatColor;
 
 import org.bukkit.entity.Player;
 
@@ -13,11 +14,11 @@ public class TString {
 	}
 
 	public static String Prefix(String prefix) {
-		return "§6[" + prefix + "]§f";
+		return  ChatColor.GOLD+"[" + prefix + "]"+ChatColor.RESET;
 	}
 
 	public static String Prefix(String prefix, int colorid) {
-		return "§6[" + prefix + "]" + Color(colorid);
+		return ChatColor.GOLD+"[" + prefix + "]" + Color(colorid);
 	}
 
 	public static String Prefix(String prefix, String colorid) {

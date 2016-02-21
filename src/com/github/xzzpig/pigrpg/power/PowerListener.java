@@ -37,13 +37,13 @@ public class PowerListener implements Listener {
 		LivingEntity damager = (LivingEntity) event.getDamager();
 		LivingEntity target = (LivingEntity) event.getEntity();
 		State dstate = State.getFrom(damager), tstate = State.getFrom(target);
+		int origindamage = dstate.getPhysicDamage();
 		for (Power p : dstate.getPowers()) {
 			if (!(p instanceof PT_Damage))
 				continue;
 			((PT_Damage) p).rebulidDamage(event);
 			p.run();
 		}
-		int origindamage = dstate.getPhysicDamage();
 		if (event.getDamager() instanceof Player) {
 			User user = User.getUser((Player) event.getDamager());
 			Equipment equip = user.getHandEquip();
@@ -65,17 +65,17 @@ public class PowerListener implements Listener {
 					return;
 				}
 			}
-			pls: for (PowerLore pl : equip.getPowerLores()) {
+			for (PowerLore pl : equip.getPowerLores()) {
 				if (!(pl.isRunTime(PowerRunTime.Damage)))
-					continue pls;
-				ps: for (Power p : pl.powers) {
+					continue;
+				for (Power p : pl.powers) {
 					if (p instanceof PT_Limit)
 						if (!((PT_Limit) p).can()) {
 							user.sendPluginMessage(((PT_Limit) p).cantMessage());
-							break ps;
+							break;
 						}
 					if (!(p instanceof PT_Damage))
-						continue ps;
+						continue;
 					((PT_Damage) p).rebulidDamage(event);
 					p.run();
 				}
@@ -103,25 +103,27 @@ public class PowerListener implements Listener {
 					return;
 				}
 			}
-			pls: for (PowerLore pl : equip.getPowerLores()) {
+			for (PowerLore pl : equip.getPowerLores()) {
 				if (!(pl.isRunTime(PowerRunTime.BeDamage)))
-					continue pls;
-				ps: for (Power p : pl.powers) {
+					continue;
+				for (Power p : pl.powers) {
 					if (p instanceof PT_Limit)
 						if (!((PT_Limit) p).can()) {
 							user.sendPluginMessage(((PT_Limit) p).cantMessage());
-							break ps;
+							break;
 						}
 					if (!(p instanceof PT_BeDamage))
-						continue ps;
+						continue;
 					((PT_BeDamage) p).rebulidBeDamage(event);
 					p.run();
 				}
 			}
 			user.buildScore();
 		}
-		event.setDamage(event.getDamage() + dstate.getPhysicDamage()
-				- tstate.getPhysicDefence());
+		double findamage = event.getDamage() + dstate.getPhysicDamage()- tstate.getPhysicDefence();
+		if(findamage<0)
+			findamage = 0;
+		event.setDamage(findamage);
 		dstate.setPhysicDamage(origindamage);
 	}
 

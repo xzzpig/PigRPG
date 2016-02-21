@@ -6,11 +6,11 @@ import com.github.xzzpig.BukkitTools.TConfig;
 
 public class Equation {
 	public static String Hp = TConfig.getConfigFile("PigRPG", "mob.yml")
-			.getString("calculate.hp", "$level*$level+20");
+			.getString("calculate.hp", "</level/>*</level/>+20");
 	public static String Damage = TConfig.getConfigFile("PigRPG", "mob.yml")
-			.getString("calculate.pdamage", "$level");
+			.getString("calculate.pdamage", "</level/>");
 	public static String Defence = TConfig.getConfigFile("PigRPG", "mob.yml")
-			.getString("calculate.pdefence", "$level*2");
+			.getString("calculate.pdefence", "</level/>");
 	static {
 		FileConfiguration config = TConfig.getConfigFile("PigRPG", "mob.yml");
 		config.set("calculate.hp", Hp);

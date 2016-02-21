@@ -14,6 +14,7 @@ import com.github.xzzpig.pigrpg.equip.EquipListener;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.exlist.RCChestListener;
 import com.github.xzzpig.pigrpg.friend.FriendEvent;
+import com.github.xzzpig.pigrpg.mob.MobListener;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerListener;
 import com.github.xzzpig.pigrpg.rpg.RPGListener;
@@ -44,7 +45,7 @@ public class Main extends JavaPlugin {
 						getLogger().info(
 								"已检测到该插件有所更新,更新内容:"
 										+ TUpdate.getNewestMessgae(plugin,
-												"Aide").split("||")[1]);
+												"Updating").split("||")[1]);
 				} catch (Exception e) {
 					getLogger().info("更新检测失败");
 				}
@@ -85,8 +86,8 @@ public class Main extends JavaPlugin {
 		if (Vars.RpgWorldSystem)
 			getServer().getPluginManager().registerEvents(
 					new RpgWorldListener(), this);
-		// getServer().getPluginManager().registerEvents(new
-		// MobListener(),this);
+		if (Vars.RpgMobSystem)
+		getServer().getPluginManager().registerEvents(new MobListener(),this);
 		getServer().getPluginManager().registerEvents(new RPGListener(), this);
 	}
 

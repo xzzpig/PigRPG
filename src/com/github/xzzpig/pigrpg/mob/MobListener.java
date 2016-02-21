@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -13,7 +14,7 @@ import com.github.xzzpig.pigrpg.rpgworld.RpgWorld;
 public class MobListener implements Listener {
 	private static Random randm = new Random();
 
-	// @EventHandler
+	@EventHandler
 	public void onChangeEntityToRpg(CreatureSpawnEvent event) {
 		if (!RpgWorld.rpgworldlist.contains(event.getLocation().getWorld()
 				.getName()))
@@ -24,5 +25,9 @@ public class MobListener implements Listener {
 		RpgChunk rc = new RpgChunk(entity.getLocation().getChunk());
 		int levet = rc.getBasicLevel() + randm.nextInt(10) - 5;
 		CustomMob.getRangeMob(entity, levet);
+//		State state = State.getFrom(entity);
+//		Debuger.print("hp:"+state.getHp());
+//		Debuger.print("damage:"+state.getPhysicDamage());
+//		Debuger.print("def:"+state.getPhysicDefence());
 	}
 }
