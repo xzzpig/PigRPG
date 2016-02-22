@@ -7,6 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TCalculate {
+	public static double getResult(String expression, double def) {
+		try {
+			return getResult(expression);
+		} catch (Exception e) {
+			return def;
+		}
+	}
+
 	public static double getResult(String expression) {
 		// String expression = "1+5*(2+1)";
 		Pattern entryOfExpression = Pattern

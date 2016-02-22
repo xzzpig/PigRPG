@@ -54,13 +54,13 @@ public class RpgChunk {
 			}
 		}
 		setData("name", name);
-//		if (Debuger.isdebug) {
-//			Debuger.print("change");
-//			try {
-//				change(chunk);
-//			} catch (Exception e) {
-//			}
-//		}
+		// if (Debuger.isdebug) {
+		// Debuger.print("change");
+		// try {
+		// change(chunk);
+		// } catch (Exception e) {
+		// }
+		// }
 		return this;
 	}
 
@@ -142,23 +142,23 @@ public class RpgChunk {
 		return cs;
 	}
 
-//	private void change(final Chunk c) throws Exception {
-//				new Thread(new Runnable() {
-//					@SuppressWarnings("deprecation")
-//					public void run() {
-//						for(int i1 = 0;i1<16;i1++){
-//							for(int i2 = 0;i2<16;i2++){
-//								c.getBlock(i1, 100, i2).setTypeId(getid());
-//							}
-//						}
-//					}
-//				}).start();
-//	}
-//	
-//	private int getid(){
-//		for(int i = 0;i<Biome.values().length;i++)
-//			if(getBiome()==Biome.values()[i])
-//				return i+1;
-//		return 1;
-//	}
+	// private void change(final Chunk c) throws Exception {
+	// new Thread(new Runnable() {
+	// @SuppressWarnings("deprecation")
+	// public void run() {
+	// for(int i1 = 0;i1<16;i1++){
+	// for(int i2 = 0;i2<16;i2++){
+	// c.getBlock(i1, 100, i2).setTypeId(getid());
+	// }
+	// }
+	// }
+	// }).start();
+	// }
+	//
+	// private int getid(){
+	// for(int i = 0;i<Biome.values().length;i++)
+	// if(getBiome()==Biome.values()[i])
+	// return i+1;
+	// return 1;
+	// }
 }

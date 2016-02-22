@@ -23,11 +23,13 @@ public class MobListener implements Listener {
 		if (entity instanceof Player)
 			return;
 		RpgChunk rc = new RpgChunk(entity.getLocation().getChunk());
-		int levet = rc.getBasicLevel() + randm.nextInt(10) - 5;
-		CustomMob.getRangeMob(entity, levet);
-//		State state = State.getFrom(entity);
-//		Debuger.print("hp:"+state.getHp());
-//		Debuger.print("damage:"+state.getPhysicDamage());
-//		Debuger.print("def:"+state.getPhysicDefence());
+		int level = rc.getBasicLevel() + randm.nextInt(10) - 5;
+		if(level<1)
+			level = 1;
+		CustomMob.getRangeMob(entity, level);
+		// State state = State.getFrom(entity);
+		// Debuger.print("hp:"+state.getHp());
+		// Debuger.print("damage:"+state.getPhysicDamage());
+		// Debuger.print("def:"+state.getPhysicDefence());
 	}
 }

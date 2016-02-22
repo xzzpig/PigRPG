@@ -55,6 +55,7 @@ public class Power_Rumble extends Power implements PT_Damage, PT_RightClick {
 
 			private int count = 0;
 
+			@Override
 			@SuppressWarnings("deprecation")
 			public void run() {
 				Location above = location.clone().add(0, 1, 0);
@@ -92,9 +93,8 @@ public class Power_Rumble extends Power implements PT_Damage, PT_RightClick {
 						if (e != player)
 							e.setVelocity(new Vector(
 									random.nextGaussian() / 4d, 1d
-											+ random.nextDouble()
-											* (double) power, random
-											.nextGaussian() / 4d));
+											+ random.nextDouble() * power,
+									random.nextGaussian() / 4d));
 					}
 					cancel();
 					return;

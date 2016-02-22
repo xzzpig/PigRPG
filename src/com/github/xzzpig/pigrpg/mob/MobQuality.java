@@ -16,7 +16,7 @@ public class MobQuality {
 	public static List<String> ids = new ArrayList<String>();
 
 	public static final MobQuality Boss = new MobQuality("BOSS", "BOSS",
-			ChatColor.MAGIC, 5), Ghost = new MobQuality("Ghost", "通灵",
+			ChatColor.LIGHT_PURPLE, 5), Ghost = new MobQuality("Ghost", "通灵",
 			ChatColor.RED, 4), Damond = new MobQuality("Damond", "钻石",
 			ChatColor.BLUE, 3), Gold = new MobQuality("Gold", "黄金",
 			ChatColor.GOLD, 2), Cream = new MobQuality("Cream", "精英",
@@ -58,13 +58,12 @@ public class MobQuality {
 				"mobquality." + quality + ".powernumber", 1);
 		build();
 	}
-
 	public MobQuality(String quality, String name, ChatColor c, int num) {
 		this.id = quality;
 		this.name = TConfig.getConfigFile("PigRPG", "mob.yml").getString(
 				"mobquality." + quality + ".displayname", name);
 		this.c = ChatColor.valueOf(TConfig.getConfigFile("PigRPG", "mob.yml")
-				.getString("mobquality." + quality + ".color", c.toString()));
+				.getString("mobquality." + quality + ".color", c.name()));
 		this.powerNumber = TConfig.getConfigFile("PigRPG", "mob.yml").getInt(
 				"mobquality." + quality + ".powernumber", num);
 		build();

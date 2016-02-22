@@ -14,11 +14,11 @@ public class TString {
 	}
 
 	public static String Prefix(String prefix) {
-		return  ChatColor.GOLD+"[" + prefix + "]"+ChatColor.RESET;
+		return ChatColor.GOLD + "[" + prefix + "]" + ChatColor.RESET;
 	}
 
 	public static String Prefix(String prefix, int colorid) {
-		return ChatColor.GOLD+"[" + prefix + "]" + Color(colorid);
+		return ChatColor.GOLD + "[" + prefix + "]" + Color(colorid);
 	}
 
 	public static String Prefix(String prefix, String colorid) {

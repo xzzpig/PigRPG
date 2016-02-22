@@ -67,8 +67,8 @@ public class User {
 				.getString(player.getName() + ".prefix", "null");
 		this.exp = TConfig.getConfigFile("PigRPG", "userdata.yml").getInt(
 				player.getName() + ".exp", 0);
-		this.rpgclass = TConfig.getConfigFile("PigRPG", "userdata.yml").getString(
-				player.getName() + ".rpgclass","default");
+		this.rpgclass = TConfig.getConfigFile("PigRPG", "userdata.yml")
+				.getString(player.getName() + ".rpgclass", "default");
 		freshDisplayName();
 		loadEquis();
 		buildScore();
@@ -160,17 +160,17 @@ public class User {
 		return prefix;
 	}
 
-	public User setRpgClass(RpgClass rpgclass){
+	public User setRpgClass(RpgClass rpgclass) {
 		this.rpgclass = rpgclass.getName();
-		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName() + ".rpgclass",
-				this.rpgclass);
+		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName()
+				+ ".rpgclass", this.rpgclass);
 		return this;
 	}
-	
-	public RpgClass getRpgClass(){
+
+	public RpgClass getRpgClass() {
 		return RpgClass.valueOf(rpgclass);
 	}
-	
+
 	public Team getTeam() {
 		return Team.getFrom(this);
 	}
@@ -289,16 +289,18 @@ public class User {
 				+ player.getLocation().getBlockY() + ","
 				+ player.getLocation().getBlockZ());
 		info.add(TString.Color(2) + "游戏等级:"
-				+ ((float) player.getLevel() + player.getExp()));
-		info.add(TString.Color(2) + "职业:"
-				+ getRpgClass().getDisplayName());
+				+ (player.getLevel() + player.getExp()));
+		info.add(TString.Color(2) + "职业:" + getRpgClass().getDisplayName());
 		info.add(TString.Color(2)
 				+ "RPG经验:"
 				+ StringMatcher.buildStr("</rpgexp/>(</rpglevel/>)", player,
 						false));
 		info.add(TString.Color(2) + "游戏模式:"
 				+ StringMatcher.buildStr("</gamemode/>", player, false));
-		info.add(TString.Color(2) + "区域:"+StringMatcher.buildStr("</areaname/>(Lv:</arealevel/>)", player, false));
+		info.add(TString.Color(2)
+				+ "区域:"
+				+ StringMatcher.buildStr("</areaname/>(Lv:</arealevel/>)",
+						player, false));
 		if (player.isOp())
 			info.add(TString.Color(4) + "OP");
 		if (player.getAllowFlight())
@@ -431,9 +433,13 @@ public class User {
 			prefix = prefix + "_^^" + ChatColor.YELLOW
 					+ fromuser.getPlayer().getWorld().getName() + "^&3所在世界^";
 		}
-		if (RpgWorld.rpgworldlist.contains(fromuser.getPlayer().getWorld().getName())) {
-			RpgChunk rc = new RpgChunk(fromuser.getPlayer().getLocation().getChunk());
-			prefix = prefix + "_"+rc.getData("name")+ RpgChunk.chbiome.get(rc.getBiome())+"^&3区域等级:Lv"+rc.getBasicLevel()+"^";
+		if (RpgWorld.rpgworldlist.contains(fromuser.getPlayer().getWorld()
+				.getName())) {
+			RpgChunk rc = new RpgChunk(fromuser.getPlayer().getLocation()
+					.getChunk());
+			prefix = prefix + "_" + rc.getData("name")
+					+ RpgChunk.chbiome.get(rc.getBiome()) + "^&3区域等级:Lv"
+					+ rc.getBasicLevel() + "^";
 		}
 		if (fromuser.getChatchannel() == ChatChannel.Self) {
 			prefix = prefix + "_=>^^"
@@ -466,8 +472,11 @@ public class User {
 	}
 
 	public void sendPluginMessage(String message) {
-		FanMessage.getBy(TString.Prefix("PigRPG", 3)+ message.replaceAll("&", "§"), true).send(player);
-		//this.player.sendMessage(TString.Prefix("PigRPG", 3)+ message.replaceAll("&", "§"));
+		FanMessage.getBy(
+				TString.Prefix("PigRPG", 3) + message.replaceAll("&", "§"),
+				true).send(player);
+		// this.player.sendMessage(TString.Prefix("PigRPG", 3)+
+		// message.replaceAll("&", "§"));
 	}
 
 	public void teleport(Warp warp) {

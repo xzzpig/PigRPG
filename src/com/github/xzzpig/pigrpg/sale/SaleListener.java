@@ -77,7 +77,7 @@ public class SaleListener implements Listener {
 			user.getPlayer().closeInventory();
 			return;
 		}
-		if (!user.getEcoAPI().pay(seller, (double) price)) {
+		if (!user.getEcoAPI().pay(seller, price)) {
 			user.sendPluginMessage("&4你没有足够的钱");
 			return;
 		}

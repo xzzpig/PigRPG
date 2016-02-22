@@ -71,7 +71,8 @@ public class Equipment extends ItemStack {
 			equality = EquipQuality.Common;
 		this.setDisplayName(
 				this.getItemMeta().getDisplayName()
-						.replaceFirst(this.equality.toString(), "").replaceAll(equality.toString(), ""), equality);
+						.replaceFirst(this.equality.toString(), "")
+						.replaceAll(equality.toString(), ""), equality);
 		this.equality = equality;
 		return this;
 	}

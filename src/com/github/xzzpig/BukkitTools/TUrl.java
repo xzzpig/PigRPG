@@ -23,7 +23,6 @@ public class TUrl {
 			isr.close();
 			return html.toString(); // 返回此序列中数据的字符串表示形式。
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

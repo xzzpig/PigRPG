@@ -104,10 +104,12 @@ public class State {
 		this.powers.add(power);
 		return this;
 	}
+
 	public State addPowers(List<Power> powers) {
 		this.powers.addAll(powers);
 		return this;
 	}
+
 	public State delPower(Power power) {
 		this.powers.remove(power);
 		return this;

@@ -41,11 +41,11 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				try {
-					if (TUpdate.hasUpdate(plugin, "Aide"))
+					if (TUpdate.hasUpdate(plugin, "UpDating"))
 						getLogger().info(
 								"已检测到该插件有所更新,更新内容:"
 										+ TUpdate.getNewestMessgae(plugin,
-												"Updating").split("||")[1]);
+												"UpDating").split("||")[1]);
 				} catch (Exception e) {
 					getLogger().info("更新检测失败");
 				}
@@ -87,7 +87,8 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(
 					new RpgWorldListener(), this);
 		if (Vars.RpgMobSystem)
-		getServer().getPluginManager().registerEvents(new MobListener(),this);
+			getServer().getPluginManager().registerEvents(new MobListener(),
+					this);
 		getServer().getPluginManager().registerEvents(new RPGListener(), this);
 	}
 

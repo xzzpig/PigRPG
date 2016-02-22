@@ -30,8 +30,16 @@ public class StringMatcher {
 				.replaceAll("</type/>", entity.getType().toString())
 				.replaceAll("</online/>", Bukkit.getOnlinePlayers().length + "")
 				.replaceAll("</worldpvp/>", entity.getWorld().getPVP() + "")
-				.replaceAll("</areaname/>", new RpgChunk(entity.getLocation().getChunk()).getData("name")+ RpgChunk.chbiome.get(new RpgChunk(entity.getLocation().getChunk()).getBiome()))
-				.replaceAll("</arealevel/>", new RpgChunk(entity.getLocation().getChunk()).getBasicLevel()+"");
+				.replaceAll(
+						"</areaname/>",
+						new RpgChunk(entity.getLocation().getChunk())
+								.getData("name")
+								+ RpgChunk.chbiome.get(new RpgChunk(entity
+										.getLocation().getChunk()).getBiome()))
+				.replaceAll(
+						"</arealevel/>",
+						new RpgChunk(entity.getLocation().getChunk())
+								.getBasicLevel() + "");
 		if (entity instanceof Player) {
 			Player player = (Player) entity;
 			User user = User.getUser(player);
@@ -52,8 +60,9 @@ public class StringMatcher {
 					.replaceAll("</rpglevel/>", user.getLevel() + "")
 					.replaceAll("</hunger/>",
 							user.getPlayer().getFoodLevel() + "")
-					.replaceAll("</rpgclass/>",user.getRpgClass().getName())
-					.replaceAll("</rpgclassname/>",user.getRpgClass().getDisplayName());
+					.replaceAll("</rpgclass/>", user.getRpgClass().getName())
+					.replaceAll("</rpgclassname/>",
+							user.getRpgClass().getDisplayName());
 		}
 		if (isInt)
 			re = ((int) TCalculate.getResult(re)) + "";

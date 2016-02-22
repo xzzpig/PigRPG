@@ -120,8 +120,9 @@ public class PowerListener implements Listener {
 			}
 			user.buildScore();
 		}
-		double findamage = event.getDamage() + dstate.getPhysicDamage()- tstate.getPhysicDefence();
-		if(findamage<0)
+		double findamage = event.getDamage() + dstate.getPhysicDamage()
+				- tstate.getPhysicDefence();
+		if (findamage < 0)
 			findamage = 0;
 		event.setDamage(findamage);
 		dstate.setPhysicDamage(origindamage);
