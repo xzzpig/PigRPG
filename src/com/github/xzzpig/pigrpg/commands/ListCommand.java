@@ -5,6 +5,7 @@ import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -16,6 +17,7 @@ import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.equip.EquipQuality;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
+import com.github.xzzpig.pigrpg.mob.CustomMob;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
 public class ListCommand {
@@ -103,7 +105,28 @@ public class ListCommand {
 						.send((Player) sender);
 			}
 			return true;
+		} else if (getarg(args, 1).equalsIgnoreCase("entitytype")) {
+			sender.sendMessage(TString.Prefix("PigRPG", 3) + "生物类型列表:");
+			for (EntityType entitytype : EntityType.values()) {
+				Vars.nms.newFancyMessage(
+						ChatColor.BLUE + entitytype.toString() + "("
+								+ CustomMob.mobname.get(entitytype) + ")")
+						.tooltip(
+								ChatColor.GREEN
+										+ "可用于配置mob.yml-moblist|mobname")
+						.send((Player) sender);
+			}
+			return true;
+		} else if (getarg(args, 1).equalsIgnoreCase("color")) {
+			sender.sendMessage(TString.Prefix("PigRPG", 3) + "颜色列表:");
+			for (ChatColor color : ChatColor.values()) {
+				Vars.nms.newFancyMessage(
+						color + color.name() + ":" + color.getChar()).send(
+						(Player) sender);
+			}
+			return true;
 		}
+
 		Vars.nms.newFancyMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr list help")
 				.tooltip(

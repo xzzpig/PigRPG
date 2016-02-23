@@ -12,6 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigrpg.StringMatcher;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
 import com.github.xzzpig.pigrpg.power.Power;
@@ -38,20 +40,59 @@ public class EquipListener implements Listener {
 			user.getPlayer().removePotionEffect(p);
 		}
 		user.getState().potions.clear();
-		user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0).setMp(0)
-				.setPhysicDamage(1).setPhysicDefence(0);
+		user.getState().getPowers().clear();
+		TData levelinfo = user.getRpgClass().getLevelInfo(user.getLevel());
+		int HP = 20, MP = 0, PDamage = 1, MDamage = 0, PDefence = 0, MDefence = 0;
+		try {
+			HP = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("HP"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的HP计算公式错误");
+		}
+		try {
+			MP = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("MP"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的MP计算公式错误");
+		}
+		try {
+			PDamage = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("PDamage"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的PDamage计算公式错误");
+		}
+		try {
+			MDamage = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("MDamage"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的MDamage计算公式错误");
+		}
+		try {
+			PDefence = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("PDefence"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的PDefence计算公式错误");
+		}
+		try {
+			MDefence = Integer.valueOf(StringMatcher.buildStr(
+					levelinfo.getString("MDefence"), user.getPlayer(), true));
+		} catch (Exception e) {
+			System.out.println("职业" + user.getRpgClass().getDisplayName()
+					+ user.getLevel() + "的MDefence计算公式错误");
+		}
+		user.getState().setHp(HP).setMp(MP).setPhysicDamage(PDamage)
+				.setMagicDamage(MDamage).setPhysicDefence(PDefence)
+				.setMagicDefine(MDefence);
 		for (ItemStack item : user.getPlayer().getInventory()
 				.getArmorContents()) {
 			if (item == null)
 				continue;
 			Equipment equip = new Equipment(item, user.getPlayer());
-			for (PotionEffectType p : user.getState().potions) {
-				user.getPlayer().removePotionEffect(p);
-			}
-			user.getState().potions.clear();
-			user.getState().getPowers().clear();
-			user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0)
-					.setMp(0).setPhysicDamage(1).setPhysicDefence(0);
 			for (PowerLore pl : equip.getPowerLores()) {
 				user.getState().addPowers(pl.powers);
 				if (!pl.isRunTime(PowerRunTime.CloseEC))
@@ -70,6 +111,8 @@ public class EquipListener implements Listener {
 			}
 		}
 		for (EquipType et : EquipType.values()) {
+			if (!et.isShow())
+				return;
 			Equipment equip = user.getEquip(et);
 			for (PowerLore pl : equip.getPowerLores()) {
 				user.getState().addPowers(pl.powers);
@@ -159,4 +202,5 @@ public class EquipListener implements Listener {
 		user.sendPluginMessage("&2装备 &f" + equip.getItemMeta().getDisplayName()
 				+ " &2已装备");
 	}
+
 }

@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import com.github.xzzpig.BukkitTools.TCalculate;
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TPlayer;
+import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.User;
 
 public class RPGListener implements Listener {
@@ -30,6 +31,10 @@ public class RPGListener implements Listener {
 			.getString("level.team_share_exp", "</exp/>/10+1");
 	private static final int sharedistance = TConfig.getConfigFile("PigRPG",
 			"skillconfig.yml").getInt("level.team_share_max_distance", 30);
+	private static final int halflevel = TConfig.getConfigFile("PigRPG",
+			"skillconfig.yml").getInt("level.halflevel", 10);
+	private static final int nonelevel = TConfig.getConfigFile("PigRPG",
+			"skillconfig.yml").getInt("level.nonelevel", -1);
 
 	private static HashMap<EntityType, Integer> exps = new HashMap<EntityType, Integer>();
 	static {
@@ -48,6 +53,10 @@ public class RPGListener implements Listener {
 				shareexp);
 		TConfig.saveConfig("PigRPG", "skillconfig.yml",
 				"level.team_share_distance", sharedistance);
+		TConfig.saveConfig("PigRPG", "skillconfig.yml", "level.halflevel",
+				halflevel);
+		TConfig.saveConfig("PigRPG", "skillconfig.yml", "level.nonelevel",
+				nonelevel);
 
 		if (!exptype.equalsIgnoreCase("normal"))
 			for (EntityType et : EntityType.values()) {
@@ -71,6 +80,11 @@ public class RPGListener implements Listener {
 			exp = exps.get(event.getEntityType());
 		if (exp == -1)
 			exp = event.getDroppedExp();
+		State estate = new State(event.getEntity());
+		if (halflevel != -1 && user.getLevel() - estate.getLevel() >= halflevel)
+			exp = exp / 2;
+		if (nonelevel != -1 && user.getLevel() - estate.getLevel() >= nonelevel)
+			exp = 0;
 		user.addExp(exp);
 		user.sendPluginMessage(message.replaceAll("</exp/>", "" + exp));
 		user.buildScore();

@@ -8,6 +8,7 @@ import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.github.xzzpig.BukkitTools.TCalculate;
 import com.github.xzzpig.BukkitTools.TEntity;
 import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigrpg.mob.CustomMob;
 import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 
 public class StringMatcher {
@@ -39,7 +40,15 @@ public class StringMatcher {
 				.replaceAll(
 						"</arealevel/>",
 						new RpgChunk(entity.getLocation().getChunk())
-								.getBasicLevel() + "");
+								.getBasicLevel() + "")
+				.replaceAll("</level/>", state.getLevel() + "")
+				.replaceAll("</quality/>",
+						new CustomMob(entity).getMobQuality() + "")
+				.replaceAll("</pdamage/>", state.getPhysicDamage() + "")
+				.replaceAll("</mdamage/>", state.getMagicDamage() + "")
+				.replaceAll("</pdefence/>", state.getPhysicDefence() + "")
+				.replaceAll("</mdefence/>", state.getMagicDefine() + "")
+				.replaceAll("</mp/>", state.getMp() + "");
 		if (entity instanceof Player) {
 			Player player = (Player) entity;
 			User user = User.getUser(player);
@@ -48,7 +57,6 @@ public class StringMatcher {
 							SetExpFix.getTotalExperience(player) + "")
 					.replaceAll("</handid/>",
 							player.getItemInHand().getTypeId() + "")
-					.replaceAll("</level/>", player.getLevel() + "")
 					.replaceAll("</gamemode/>", player.getGameMode().name())
 					.replaceAll("</chatchannel/>",
 							user.getChatchannel().getName())
@@ -66,6 +74,7 @@ public class StringMatcher {
 		}
 		if (isInt)
 			re = ((int) TCalculate.getResult(re)) + "";
+		re = solve(re);
 		return re;
 	}
 }

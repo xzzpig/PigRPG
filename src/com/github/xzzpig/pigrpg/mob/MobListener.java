@@ -17,28 +17,30 @@ import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 import com.github.xzzpig.pigrpg.rpgworld.RpgWorld;
 
-@SuppressWarnings("deprecation")
 public class MobListener implements Listener {
 	private static Random randm = new Random();
-	private static FileConfiguration mobconfig = TConfig.getConfigFile("PigRPG", "mob.yml");
+	private static FileConfiguration mobconfig = TConfig.getConfigFile(
+			"PigRPG", "mob.yml");
 	private static List<String> smoblist = mobconfig.getStringList("moblist");
 	private static List<EntityType> moblist = new ArrayList<EntityType>();
-	static{
-		if(smoblist == null||smoblist.size() == 0){
-			for(EntityType et:EntityType.values()){
-				smoblist.add(et.getName());
+	static {
+		if (smoblist == null || smoblist.size() == 0) {
+			for (EntityType et : EntityType.values()) {
+				smoblist.add(et.toString());
 			}
 			moblist.addAll(Arrays.asList(EntityType.values()));
-			mobconfig.set("moblist",smoblist);
-			TConfig.saveConfig("PigRPG",mobconfig,"mob.yml");
-		}
-		else{
-			for(String type:smoblist){
-				moblist.add(EntityType.valueOf(type));
+			mobconfig.set("moblist", smoblist);
+			TConfig.saveConfig("PigRPG", mobconfig, "mob.yml");
+		} else {
+			for (String type : smoblist) {
+				try {
+					moblist.add(EntityType.valueOf(type));
+				} catch (Exception e) {
+					System.out.println("[PigRPG]未找到生物类型" + type);
+				}
 			}
 		}
 	}
-	
 
 	@EventHandler
 	public void onChangeEntityToRpg(CreatureSpawnEvent event) {
@@ -48,11 +50,11 @@ public class MobListener implements Listener {
 		LivingEntity entity = event.getEntity();
 		if (entity instanceof Player)
 			return;
-		if(!moblist.contains(entity.getType()))
+		if (!moblist.contains(entity.getType()))
 			return;
 		RpgChunk rc = new RpgChunk(entity.getLocation().getChunk());
 		int level = rc.getBasicLevel() + randm.nextInt(10) - 5;
-		if(level<1)
+		if (level < 1)
 			level = 1;
 		CustomMob.getRangeMob(entity, level);
 	}

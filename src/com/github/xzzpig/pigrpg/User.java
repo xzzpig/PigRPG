@@ -20,6 +20,7 @@ import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.BukkitTools.scoreboard.ScoreboardUtil;
 import com.github.xzzpig.pigrpg.chat.Chat;
 import com.github.xzzpig.pigrpg.chat.ChatChannel;
+import com.github.xzzpig.pigrpg.chests.EquipChest;
 import com.github.xzzpig.pigrpg.commands.Help;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.Equipment;
@@ -72,6 +73,9 @@ public class User {
 		freshDisplayName();
 		loadEquis();
 		buildScore();
+
+		player.openInventory(EquipChest.getInventory(this));
+		player.closeInventory();
 	}
 
 	public void buildScore() {
@@ -123,9 +127,14 @@ public class User {
 	}
 
 	public void setExp(int exp) {
+		int level = this.getLevel();
 		this.exp = exp;
 		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName() + ".exp",
 				exp);
+		if (this.getLevel() != level) {
+			this.getPlayer().openInventory(EquipChest.getInventory(this));
+			this.getPlayer().closeInventory();
+		}
 	}
 
 	public int getExp() {
@@ -281,9 +290,18 @@ public class User {
 		List<String> info = new ArrayList<String>();
 		info.add(TString.Color(2) + "昵名:" + player.getDisplayName());
 		info.add(TString.Color(2)
-				+ "生命:"
+				+ "HP:"
 				+ StringMatcher.buildStr("</currenthealth/>/</maxhealth/>",
 						player, false));
+		info.add(TString.Color(2) + "MP:" + state.getMp());
+		info.add(TString.Color(2)
+				+ "攻击:"
+				+ StringMatcher.buildStr("</pdamage/>|</mdamage/>", player,
+						false));
+		info.add(TString.Color(2)
+				+ "防御:"
+				+ StringMatcher.buildStr("</pdefence/>|</mdefence/>", player,
+						false));
 		info.add(TString.Color(2) + "位置:" + player.getWorld().getName() + ","
 				+ player.getLocation().getBlockX() + ","
 				+ player.getLocation().getBlockY() + ","

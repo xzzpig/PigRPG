@@ -51,19 +51,22 @@ public class MobQuality {
 		this.id = quality;
 		this.name = TConfig.getConfigFile("PigRPG", "mob.yml").getString(
 				"mobquality." + quality + ".displayname", "普通");
-		this.c = ChatColor.valueOf(TConfig.getConfigFile("PigRPG", "mob.yml")
+		this.c = ChatColor.getByChar(TConfig.getConfigFile("PigRPG", "mob.yml")
 				.getString("mobquality." + quality + ".color",
-						ChatColor.GREEN.toString()));
+						ChatColor.GREEN.getChar() + ""));
 		this.powerNumber = TConfig.getConfigFile("PigRPG", "mob.yml").getInt(
 				"mobquality." + quality + ".powernumber", 1);
 		build();
 	}
+
 	public MobQuality(String quality, String name, ChatColor c, int num) {
 		this.id = quality;
 		this.name = TConfig.getConfigFile("PigRPG", "mob.yml").getString(
 				"mobquality." + quality + ".displayname", name);
-		this.c = ChatColor.valueOf(TConfig.getConfigFile("PigRPG", "mob.yml")
-				.getString("mobquality." + quality + ".color", c.name()));
+		this.c = ChatColor
+				.getByChar(TConfig.getConfigFile("PigRPG", "mob.yml")
+						.getString("mobquality." + quality + ".color",
+								c.getChar() + ""));
 		this.powerNumber = TConfig.getConfigFile("PigRPG", "mob.yml").getInt(
 				"mobquality." + quality + ".powernumber", num);
 		build();
@@ -88,13 +91,17 @@ public class MobQuality {
 	}
 
 	public void save() {
-		TConfig.saveConfig("PigRPG", "mob.yml,", "mobquality." + id + ".name",
+		TConfig.saveConfig("PigRPG", "mob.yml", "mobquality." + id + ".name",
 				name);
-		TConfig.saveConfig("PigRPG", "mob.yml,", "mobquality." + id + ".color",
-				c.toString());
-		TConfig.saveConfig("PigRPG", "mob.yml,", "mobquality." + id
+		TConfig.saveConfig("PigRPG", "mob.yml", "mobquality." + id + ".color",
+				c.getChar());
+		TConfig.saveConfig("PigRPG", "mob.yml", "mobquality." + id
 				+ ".powernumber", powerNumber);
+	}
 
+	@Override
+	public String toString() {
+		return c + name;
 	}
 }
 

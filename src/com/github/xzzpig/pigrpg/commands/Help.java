@@ -87,5 +87,7 @@ public class Help {
 		pr_list.addSubCommandHelp("potion", "列出所有药水效果", "", "");
 		pr_list.addSubCommandHelp("effect", "列出所有粒子效果", "", "");
 		pr_list.addSubCommandHelp("sound", "列出所有音效", "", "");
+		pr_list.addSubCommandHelp("entitytype", "列出所有生物类型", "", "");
+		pr_list.addSubCommandHelp("color", "列出所有颜色", "", "");
 	}
 }
