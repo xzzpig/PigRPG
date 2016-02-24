@@ -53,9 +53,16 @@ public class CommandHelp {
 	}
 
 	public static CommandHelp valueOf(CommandHelp basichelp, String command) {
-		for (CommandHelp ch : basichelp.getAllSubs())
-			if (ch.toString().equalsIgnoreCase(command))
-				return ch;
+		String[] cmds = command.split(" ");
+		for(int i=cmds.length-1;i>=0;i--){
+			String cmd = cmds[0];
+			for(int i2=1;i2<=i;i2++){
+				cmd = cmd + " "+cmds[i2];
+			}
+			for (CommandHelp ch : basichelp.getAllSubs())
+				if (ch.toString().equalsIgnoreCase(cmd))
+					return ch;
+		}
 		return basichelp;
 	}
 

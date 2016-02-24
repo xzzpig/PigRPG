@@ -27,6 +27,7 @@ public class EquipListener implements Listener {
 		if (!event.getInventory().getTitle().contains("装备栏"))
 			return;
 		User user = User.getUser((Player) event.getPlayer());
+		user.sendPluginMessage("你的属性已加载");
 		Inventory inv = event.getInventory();
 		for (ItemStack is : inv.getContents()) {
 			if (is == null)

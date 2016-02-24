@@ -1,8 +1,12 @@
 package com.github.xzzpig.pigrpg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,6 +14,7 @@ import com.earth2me.essentials.Essentials;
 import com.github.xzzpig.BukkitTools.TUpdate;
 import com.github.xzzpig.pigrpg.chat.ChatListener;
 import com.github.xzzpig.pigrpg.commands.Commands;
+import com.github.xzzpig.pigrpg.commands.Help;
 import com.github.xzzpig.pigrpg.equip.EquipListener;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.exlist.RCChestListener;
@@ -186,5 +191,34 @@ public class Main extends JavaPlugin {
 			return;
 		}
 		Vars.nms = nmsManager;
+	}
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command,
+			String alias, String[] args) {
+		//Debuger.print(command.getName()+"|"+alias+"|"+Arrays.toString(args));
+		List<String> tab = new ArrayList<String>();
+		String cmd = command.getName();
+		for(String arg:args){
+			cmd = cmd +" " + arg;
+		}
+		if(cmd.endsWith(" "))
+			cmd = cmd.substring(0,cmd.length()-1);
+		for(CommandHelp help:CommandHelp.valueOf(Help.PIGRPG,cmd).getSubCommandHelps()){
+			tab.add(help.toStrings()[help.toStrings().length-1]);
+		}
+		List<String> tab2 = new ArrayList<String>();
+		for(String str:tab){
+			if(str.contains(args[args.length-1])){
+				tab2.add(str);
+			}
+		}
+		if(!tab2.isEmpty())
+			tab = tab2;
+		for(String str:tab)
+			CommandHelp.valueOf(Help.PIGRPG,cmd).getSubCommandHelp(str).getHelpMessage().send((Player)sender);
+		if(tab.isEmpty())
+			tab.add(CommandHelp.valueOf(Help.PIGRPG,cmd).getVar());
+		return tab;
 	}
 }

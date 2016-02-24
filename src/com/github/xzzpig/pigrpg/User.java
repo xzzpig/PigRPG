@@ -9,7 +9,12 @@ import java.util.Map.Entry;
 import me.confuser.barapi.BarAPI;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.xzzpig.BukkitTools.TConfig;
@@ -22,6 +27,7 @@ import com.github.xzzpig.pigrpg.chat.Chat;
 import com.github.xzzpig.pigrpg.chat.ChatChannel;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
 import com.github.xzzpig.pigrpg.commands.Help;
+import com.github.xzzpig.pigrpg.equip.EquipListener;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.Equipment;
 import com.github.xzzpig.pigrpg.friend.Friend;
@@ -74,8 +80,30 @@ public class User {
 		loadEquis();
 		buildScore();
 
-		player.openInventory(EquipChest.getInventory(this));
-		player.closeInventory();
+		//player.openInventory(EquipChest.getInventory(this));
+		//player.closeInventory();
+		new EquipListener().onCloseInv(new InventoryCloseEvent(new InventoryView() {
+			Inventory inv = EquipChest.getInventory(User.this);
+			@Override
+			public InventoryType getType() {
+				return inv.getType();
+			}
+			
+			@Override
+			public Inventory getTopInventory() {
+				return inv;
+			}
+			
+			@Override
+			public HumanEntity getPlayer() {
+				return User.this.getPlayer();
+			}
+			
+			@Override
+			public Inventory getBottomInventory() {
+				return this.getPlayer().getInventory();
+			}
+		}));
 	}
 
 	public void buildScore() {

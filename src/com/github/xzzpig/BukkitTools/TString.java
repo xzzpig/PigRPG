@@ -22,15 +22,15 @@ public class TString {
 	}
 
 	public static String Prefix(String prefix, String colorid) {
-		return "§6[" + prefix + "]" + Color(colorid);
+		return Color(6)+"[" + prefix + "]" + Color(colorid);
 	}
 
 	public static String Color(int colorid) {
-		return "§" + colorid;
+		return ChatColor.getByChar(colorid+"")+"";
 	}
 
 	public static String Color(String colorid) {
-		return "§" + colorid;
+		return ChatColor.getByChar(colorid)+"";
 	}
 
 	public static void Print(String message) {
