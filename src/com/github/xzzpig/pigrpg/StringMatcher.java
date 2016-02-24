@@ -48,7 +48,8 @@ public class StringMatcher {
 				.replaceAll("</mdamage/>", state.getMagicDamage() + "")
 				.replaceAll("</pdefence/>", state.getPhysicDefence() + "")
 				.replaceAll("</mdefence/>", state.getMagicDefine() + "")
-				.replaceAll("</mp/>", state.getMp() + "");
+				.replaceAll("</mp/>", state.getMp() + "")
+				.replaceAll("</lastdamage/>",state.getLastDamage()+"");
 		if (entity instanceof Player) {
 			Player player = (Player) entity;
 			User user = User.getUser(player);

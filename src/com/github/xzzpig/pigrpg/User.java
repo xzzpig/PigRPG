@@ -324,11 +324,11 @@ public class User {
 		info.add(TString.Color(2) + "MP:" + state.getMp());
 		info.add(TString.Color(2)
 				+ "攻击:"
-				+ StringMatcher.buildStr("</pdamage/>|</mdamage/>", player,
+				+ StringMatcher.buildStr("</pdamage/>(物)|</mdamage/>(魔)|</lastdamage/>(最近)", player,
 						false));
 		info.add(TString.Color(2)
 				+ "防御:"
-				+ StringMatcher.buildStr("</pdefence/>|</mdefence/>", player,
+				+ StringMatcher.buildStr("</pdefence/>(物)|</mdefence/>(魔)", player,
 						false));
 		info.add(TString.Color(2) + "位置:" + player.getWorld().getName() + ","
 				+ player.getLocation().getBlockX() + ","

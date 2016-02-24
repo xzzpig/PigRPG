@@ -135,6 +135,7 @@ public class PowerListener implements Listener {
 		if (findamage < 0)
 			findamage = 0;
 		event.setDamage(findamage);
+		dstate.setLastDamage((int)findamage);
 		dstate.setPhysicDamage(origindamage);
 	}
 

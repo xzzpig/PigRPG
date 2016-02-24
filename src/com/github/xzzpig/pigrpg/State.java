@@ -16,7 +16,7 @@ import com.github.xzzpig.pigrpg.power.Power;
 public class State {
 	private User user;
 	private LivingEntity entity;
-	private int hp = 20, mp, pda, mda, pde, mde, level = 1;
+	private int hp = 20, mp, pda, mda, pde, mde, level = 1,lastdamage;
 	private List<Power> powers = new ArrayList<Power>();
 	public List<PotionEffectType> potions = new ArrayList<PotionEffectType>();
 	public TData data = new TData();
@@ -71,6 +71,14 @@ public class State {
 
 	public int getMp() {
 		return mp;
+	}
+
+	public int getLastDamage() {
+		return lastdamage;
+	}
+
+	public void setLastDamage(int lastdamage) {
+		this.lastdamage = lastdamage;
 	}
 
 	public State setLevel(int level) {
