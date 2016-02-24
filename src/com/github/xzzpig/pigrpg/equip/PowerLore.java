@@ -145,7 +145,7 @@ public class PowerLore implements Comparable<PowerLore> {
 				continue;
 			}
 			powers.add((Power.valueOf(solved).reBuild(
-					path.getConfigurationSection("power." + powername), this)));
+					path.getConfigurationSection("power." + powername), this).setRunTimes(runtime)));
 		}
 		return this;
 	}

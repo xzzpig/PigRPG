@@ -113,7 +113,7 @@ public class EquipListener implements Listener {
 		}
 		for (EquipType et : EquipType.values()) {
 			if (!et.isShow())
-				return;
+				continue;
 			Equipment equip = user.getEquip(et);
 			for (PowerLore pl : equip.getPowerLores()) {
 				user.getState().addPowers(pl.powers);
@@ -180,7 +180,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	//@EventHandler
 	public void onRightClick(PlayerInteractEvent event) {
 		if (event.getAction() != Action.RIGHT_CLICK_AIR
 				&& event.getAction() != Action.RIGHT_CLICK_BLOCK)
@@ -203,5 +203,4 @@ public class EquipListener implements Listener {
 		user.sendPluginMessage("&2装备 &f" + equip.getItemMeta().getDisplayName()
 				+ " &2已装备");
 	}
-
 }

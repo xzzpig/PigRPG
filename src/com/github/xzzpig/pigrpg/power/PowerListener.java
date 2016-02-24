@@ -41,6 +41,16 @@ public class PowerListener implements Listener {
 		for (Power p : dstate.getPowers()) {
 			if (!(p instanceof PT_Damage))
 				continue;
+			if (!(p.isRunTime(PowerRunTime.Damage)))
+				continue;
+			((PT_Damage) p).rebulidDamage(event);
+			p.run();
+		}
+		for (Power p : tstate.getPowers()) {
+			if (!(p instanceof PT_BeDamage))
+				continue;
+			if (!(p.isRunTime(PowerRunTime.BeDamage)))
+				continue;
 			((PT_Damage) p).rebulidDamage(event);
 			p.run();
 		}

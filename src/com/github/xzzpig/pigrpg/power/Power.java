@@ -31,6 +31,8 @@ public abstract class Power {
 				Power_Sound.class, Power_Teleport.class, Power_Test.class });
 	}
 
+	private PowerRunTime[] runtime;
+
 	public Power() {
 	};
 
@@ -43,6 +45,17 @@ public abstract class Power {
 	public abstract Power reBuild(ConfigurationSection path, PowerLore pl);
 
 	public abstract void run();
+	
+	public boolean isRunTime(PowerRunTime rt) {
+		for (PowerRunTime prt : runtime)
+			if (rt == prt)
+				return true;
+		return false;
+	}
+	public Power setRunTimes(PowerRunTime[] rt) {
+		this.runtime = rt;
+		return this;
+	}
 
 	public static Power[] values() {
 		List<Power> powers = new ArrayList<Power>();
