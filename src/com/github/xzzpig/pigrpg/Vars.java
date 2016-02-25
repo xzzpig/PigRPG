@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.earth2me.essentials.Essentials;
 import com.github.xzzpig.BukkitTools.TConfig;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.NMSManager;
 
 public class Vars {
 	public static FileConfiguration configs;
@@ -19,8 +18,6 @@ public class Vars {
 	public static Essentials ess;
 
 	public static boolean hasEss;
-
-	public static NMSManager nms;
 
 	public static FileConfiguration switchconfig = TConfig.getConfigFile(
 			"PigRPG", "switch.yml");

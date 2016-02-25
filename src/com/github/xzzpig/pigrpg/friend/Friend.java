@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.Vars;
 
 public class Friend {
 	public static HashMap<String, List<String>> friendlist = new HashMap<String, List<String>>();
@@ -53,7 +53,7 @@ public class Friend {
 	public static void addFriendQue(Player player, final Player friend) {
 		friend.sendMessage(TString.Prefix("PigRPG", 5) + player.getName()
 				+ TString.Color(3) + "请求加你好友");
-		Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 3) + "输入/pr friend ")
+		new TMessage(TString.Prefix("PigRPG", 3) + "输入/pr friend ")
 				.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 						+ "accept")
 				.tooltip("同意\n/pr friend accept")
@@ -88,7 +88,7 @@ public class Friend {
 		final Player pfriend = TEntity.toPlayer(friend);
 		pfriend.sendMessage(TString.Prefix("PigRPG", 5) + player.getName()
 				+ TString.Color(3) + "请求与你断绝好友关系");
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 3) + "输入/pr friend del ")
 				.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 						+ "accept")

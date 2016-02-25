@@ -6,11 +6,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.FriendListChest;
 import com.github.xzzpig.pigrpg.friend.Friend;
 
@@ -77,7 +77,7 @@ public class FriendCommand {
 					ch.getHelpMessage().send((Player) sender);
 				return true;
 			}
-			Vars.nms.newFancyMessage(
+			new TMessage(
 					TString.Prefix("PigRPG", 4) + "输入/pr friend del help")
 					.tooltip(
 							CommandHelp.valueOf(Help.PIGRPG,
@@ -87,7 +87,7 @@ public class FriendCommand {
 					.send((Player) sender);
 			return false;
 		}
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr friend help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg friend")

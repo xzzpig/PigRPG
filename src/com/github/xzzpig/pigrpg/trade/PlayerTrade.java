@@ -9,8 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.PlayerTradeChest;
 
 public class PlayerTrade {
@@ -49,7 +49,7 @@ public class PlayerTrade {
 	private void startTradeQue(Player p1, Player p2) {
 		p2.sendMessage(TString.Prefix("PigRPG", 5) + p1.getName()
 				+ TString.Color(3) + "请求与你交易");
-		Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 3) + "输入/pr trade ")
+		new TMessage(TString.Prefix("PigRPG", 3) + "输入/pr trade ")
 				.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 						+ "accept")
 				.tooltip("同意\n/pr trade accept")

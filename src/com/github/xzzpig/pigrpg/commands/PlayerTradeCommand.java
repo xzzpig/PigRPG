@@ -1,9 +1,11 @@
 package com.github.xzzpig.pigrpg.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.Premissions;
@@ -44,7 +46,14 @@ public class PlayerTradeCommand {
 				sender.sendMessage(TString.Prefix("PigRPG", 4) + "你没有交易请求");
 			return true;
 		}
-		return false;
+		new TMessage(
+				TString.Prefix("PigRPG", 4) + "输入/pr trade help")
+				.tooltip(
+						CommandHelp.valueOf(Help.PIGRPG, "pigrpg trade")
+								.getDescribe())
+				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
+				.suggest("/pr trade help").tooltip("").send((Player) sender);
+		return true;
 	}
 
 	public static String getarg(String[] args, int num) {

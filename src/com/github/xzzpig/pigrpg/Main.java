@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.earth2me.essentials.Essentials;
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TUpdate;
 import com.github.xzzpig.pigrpg.chat.ChatListener;
 import com.github.xzzpig.pigrpg.commands.Commands;
@@ -29,8 +30,6 @@ import com.github.xzzpig.pigrpg.sale.SaleListener;
 import com.github.xzzpig.pigrpg.teleport.TelListener;
 import com.github.xzzpig.pigrpg.teleport.Warp;
 import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.NMSManager;
-import com.gmail.filoghost.holographicdisplays.util.VersionUtils;
 
 public class Main extends JavaPlugin {
 	@Override
@@ -40,7 +39,11 @@ public class Main extends JavaPlugin {
 		Vars.configs = this.getConfig();
 		Vars.hasEss = setupEss();
 		Voids.loadBanWords();
-		loadNms();
+		try {
+			TMessage.class.newInstance();
+		} catch (InstantiationException | IllegalAccessException e1) {
+			e1.printStackTrace();
+		}
 		final Plugin plugin = this;
 		new Thread(new Runnable() {
 			@Override
@@ -115,82 +118,6 @@ public class Main extends JavaPlugin {
 					"Essentials");
 		}
 		return (Vars.ess != null);
-	}
-
-	public void loadNms() {
-		String version = VersionUtils.getBukkitVersion();
-
-		if (version == null) {
-			// Caused by MCPC+ / Cauldron renaming packages, extract the version
-			// from Bukkit.getVersion().
-			version = VersionUtils.getMinecraftVersion();
-
-			if ("1.6.4".equals(version)) {
-				version = "v1_6_R3";
-			} else if ("1.7.2".equals(version)) {
-				version = "v1_7_R1";
-			} else if ("1.7.5".equals(version)) {
-				version = "v1_7_R2";
-			} else if ("1.7.8".equals(version)) {
-				version = "v1_7_R3";
-			} else if ("1.7.10".equals(version)) {
-				version = "v1_7_R4";
-			} else if ("1.8".equals(version)) {
-				version = "v1_8_R1";
-			} else if ("1.8.3".equals(version)) {
-				version = "v1_8_R2";
-			} else {
-				// Cannot definitely get the version. This will cause the plugin
-				// to disable itself.
-				version = null;
-			}
-		}
-		NMSManager nmsManager;
-		// It's simple, we don't need reflection.
-		if ("v1_6_R3".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_6_R3.NmsManagerImpl();
-		} else if ("v1_7_R1".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_7_R1.NmsManagerImpl();
-		} else if ("v1_7_R2".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_7_R2.NmsManagerImpl();
-		} else if ("v1_7_R3".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_7_R3.NmsManagerImpl();
-		} else if ("v1_7_R4".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_7_R4.NmsManagerImpl();
-		} else if ("v1_8_R1".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_8_R1.NmsManagerImpl();
-		} else if ("v1_8_R2".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_8_R2.NmsManagerImpl();
-		} else if ("v1_8_R3".equals(version)) {
-			nmsManager = new com.gmail.filoghost.holographicdisplays.nms.v1_8_R3.NmsManagerImpl();
-		} else {
-			System.out
-					.println("******************************************************\n"
-							+ "     This version of PIGRPG can\n"
-							+ "     only work on these server versions:\n"
-							+ "     from 1.6.4 to 1.8.8.\n"
-							+ "     The plugin will be disabled.\n"
-							+ "******************************************************");
-			return;
-		}
-
-		try {
-			if (VersionUtils.isMCPCOrCauldron()) {
-				getLogger().info("Trying to enable Cauldron/MCPC+ support...");
-			}
-
-			nmsManager.setup();
-
-			if (VersionUtils.isMCPCOrCauldron()) {
-				getLogger().info(
-						"Successfully added support for Cauldron/MCPC+!");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
-		Vars.nms = nmsManager;
 	}
 	
 	@Override

@@ -5,10 +5,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.team.Team;
 import com.github.xzzpig.pigrpg.team.TeamQue;
 
@@ -66,7 +66,7 @@ public class TeamCommand extends Commands {
 			return true;
 		}
 
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr team help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg team")

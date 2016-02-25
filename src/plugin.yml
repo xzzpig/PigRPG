@@ -2,7 +2,7 @@ name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
 version: V0.1[bate-RPGMob]
 author: xzzpig
-depend: [Essentials, BarAPI, HolographicDisplays] 
+depend: [Essentials, BarAPI] 
 commands:
   pigrpg:
     description: 幻猪的RPG插件的命令帮助

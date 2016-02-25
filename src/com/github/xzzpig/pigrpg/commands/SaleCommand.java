@@ -11,9 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.xzzpig.BukkitTools.TArgsSolver;
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.SaleChest;
 import com.github.xzzpig.pigrpg.sale.Sale;
 
@@ -70,7 +70,7 @@ public class SaleCommand {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "拍卖成功");
 			return true;
 		}
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr sale help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg sale")

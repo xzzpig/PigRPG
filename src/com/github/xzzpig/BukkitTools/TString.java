@@ -3,8 +3,8 @@ package com.github.xzzpig.BukkitTools;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Random;
-import org.bukkit.ChatColor;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class TString {

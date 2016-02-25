@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class CommandHelp {
 	private String command, describe, useage, var;
@@ -73,8 +73,8 @@ public class CommandHelp {
 		return ch;
 	}
 
-	public FancyMessage getHelpMessage() {
-		FancyMessage help = Vars.nms.newFancyMessage(TString
+	public TMessage getHelpMessage() {
+		TMessage help = new TMessage(TString
 				.Prefix("PigRPG", 3) + "/");
 		String parts[] = this.toStrings();
 		String com = "";
@@ -91,7 +91,7 @@ public class CommandHelp {
 		}
 		help.then(ChatColor.BLUE + " -" + describe)
 				.tooltip(ChatColor.GRAY + useage)
-				.then("\n" + ChatColor.GREEN + "" + ChatColor.UNDERLINE + "点我")
+				.then("  " + ChatColor.GREEN + "" + ChatColor.UNDERLINE + "点我")
 				.suggest("/" + command + " " + var)
 				.tooltip("快速匹配命令\n" + "/" + command + " " + var);
 		return help;

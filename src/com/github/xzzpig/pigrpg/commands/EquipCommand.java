@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
 import com.github.xzzpig.pigrpg.equip.EquipQuality;
 import com.github.xzzpig.pigrpg.equip.EquipType;
@@ -44,7 +44,7 @@ public class EquipCommand {
 			}
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for (PowerLore p : PowerLore.powerlores) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						"" + ChatColor.GREEN + ChatColor.UNDERLINE + p.name)
 						.tooltip(
 								ChatColor.YELLOW + "用法:" + p.getUsage()
@@ -139,7 +139,7 @@ public class EquipCommand {
 			}
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "装备品质列表:");
 			for (EquipQuality quality : EquipQuality.values()) {
-				Vars.nms.newFancyMessage(quality + quality.getName())
+				new TMessage(quality + quality.getName())
 						.tooltip(ChatColor.GREEN + quality.name())
 						.suggest("/pr equip setquality " + quality.getName())
 						.send((Player) sender);
@@ -170,7 +170,7 @@ public class EquipCommand {
 			if (quality == null) {
 				sender.sendMessage(TString.Prefix("PigRPG", 4)
 						+ "错误:未知的装备品质，已默认设为 普通");
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						TString.Prefix("PigRPG", 4) + "输入/pr equip qualitylist")
 						.tooltip(
 								CommandHelp.valueOf(Help.PIGRPG,
@@ -194,7 +194,7 @@ public class EquipCommand {
 			}
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "装备类型列表:");
 			for (EquipType type : EquipType.values()) {
-				Vars.nms.newFancyMessage(ChatColor.BLUE + type.toString())
+				new TMessage(ChatColor.BLUE + type.toString())
 						.tooltip(ChatColor.GREEN + "在装备栏中显示:" + type.isShow())
 						.suggest("/pr equip settype " + type)
 						.send((Player) sender);
@@ -221,7 +221,7 @@ public class EquipCommand {
 			if (type == null) {
 				sender.sendMessage(TString.Prefix("PigRPG", 4)
 						+ "错误:未知的装备类型，已默认设为 无");
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						TString.Prefix("PigRPG", 4) + "输入/pr equip typelist")
 						.tooltip(
 								CommandHelp.valueOf(Help.PIGRPG,
@@ -243,7 +243,7 @@ public class EquipCommand {
 				return true;
 			}
 			if (getarg(args, 2).equalsIgnoreCase("")) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						TString.Prefix("PigRPG", 4) + "用法错误,输入/pr equip help")
 						.tooltip(
 								CommandHelp
@@ -294,7 +294,7 @@ public class EquipCommand {
 				return true;
 			}
 			if (getarg(args, 2).equalsIgnoreCase("")) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						TString.Prefix("PigRPG", 4) + "用法错误,输入/pr equip help")
 						.tooltip(
 								CommandHelp
@@ -339,7 +339,7 @@ public class EquipCommand {
 			sender.sendMessage((TString.Prefix("PigRPG", 4) + "lore已删除"));
 			return true;
 		}
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr equip help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg equip")

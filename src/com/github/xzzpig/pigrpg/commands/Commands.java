@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TPlayer;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
@@ -15,7 +16,6 @@ import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class Commands {
 	@SuppressWarnings("deprecation")
@@ -35,7 +35,7 @@ public class Commands {
 							"pigrpg").getSubCommandHelps())
 						ch.getHelpMessage().send((Player) sender);
 					FanMessage.helpweb().send((Player) sender);
-					Vars.nms.newFancyMessage(
+					new TMessage(
 							ChatColor.GREEN + "" + ChatColor.UNDERLINE
 									+ "点我显示所有命令").tooltip("")
 							.command("/pr helpall").send((Player) sender);
@@ -163,7 +163,7 @@ public class Commands {
 						User.getUser(player).sendPluginMessage("&4无法展示 空气");
 						return true;
 					}
-					FancyMessage fm = FanMessage.getBy(player.getItemInHand())
+					TMessage fm = FanMessage.getBy(player.getItemInHand())
 							.then(ChatColor.BLUE + "由玩家" + player.getName()
 									+ "展示");
 					if (target.equalsIgnoreCase("")) {
@@ -185,7 +185,7 @@ public class Commands {
 				return true;
 			}
 		}
-		Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 4) + "输入/pr help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg")
 								.getDescribe())

@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.Premissions;
@@ -72,7 +73,7 @@ public class ChatCommand {
 				user.getChatManager().mute(false);
 				user.sendPluginMessage("&4你已解除禁言");
 			} else {
-				Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 4) + "请设置")
+				new TMessage(TString.Prefix("PigRPG", 4) + "请设置")
 						.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 								+ "true")
 						.tooltip("/pr chat mute " + splayer + " true")
@@ -98,7 +99,7 @@ public class ChatCommand {
 			else if (sboolean.equalsIgnoreCase("false"))
 				Chat.setMuteAll(false);
 			else {
-				Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 4) + "请设置")
+				new TMessage(TString.Prefix("PigRPG", 4) + "请设置")
 						.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 								+ "true")
 						.tooltip("/pr chat muteall true")
@@ -128,7 +129,7 @@ public class ChatCommand {
 			return true;
 		}
 
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr chat help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat")

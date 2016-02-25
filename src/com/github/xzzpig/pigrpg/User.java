@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.github.xzzpig.BukkitTools.TConfig;
 import com.github.xzzpig.BukkitTools.TData;
 import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TPremission;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.BukkitTools.scoreboard.ScoreboardUtil;
@@ -400,7 +401,7 @@ public class User {
 		target.willChat = this;
 		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
 				+ target.getPlayer().getName() + "才能看到");
-		Vars.nms.newFancyMessage("输入/pr chat change")
+		new TMessage("输入/pr chat change")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat change")
 								.getDescribe())
@@ -409,7 +410,7 @@ public class User {
 				.send(this.getPlayer());
 		// this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
 		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
-		Vars.nms.newFancyMessage("输入/pr chat self")
+		new TMessage("输入/pr chat self")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat self")
 								.getDescribe())
@@ -518,9 +519,8 @@ public class User {
 	}
 
 	public void sendPluginMessage(String message) {
-		FanMessage.getBy(
-				TString.Prefix("PigRPG", 3) + message.replaceAll("&", "§"),
-				true).send(player);
+		for(String mes:(TString.Prefix("PigRPG", 3) + message.replaceAll("&", "§")).split("\n"))
+		FanMessage.getBy(mes,true).send(player);
 		// this.player.sendMessage(TString.Prefix("PigRPG", 3)+
 		// message.replaceAll("&", "§"));
 	}

@@ -9,11 +9,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.equip.EquipQuality;
 import com.github.xzzpig.pigrpg.equip.EquipType;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
@@ -38,7 +38,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("lore")) {
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for (PowerLore p : PowerLore.powerlores) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						"" + ChatColor.GREEN + ChatColor.UNDERLINE + p.name)
 						.tooltip(
 								ChatColor.YELLOW + "用法:" + p.getUsage()
@@ -52,7 +52,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("runtime")) {
 			user.sendPluginMessage("&3Lore触发时间参数:");
 			for (PowerRunTime p : PowerRunTime.values()) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						"" + ChatColor.GREEN + ChatColor.UNDERLINE
 								+ p.toString()).send(player);
 			}
@@ -60,7 +60,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("quality")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "装备品质列表:");
 			for (EquipQuality quality : EquipQuality.values()) {
-				Vars.nms.newFancyMessage(quality + quality.getName())
+				new TMessage(quality + quality.getName())
 						.tooltip(ChatColor.GREEN + quality.name())
 						.suggest("/pr equip setquality " + quality.getName())
 						.send((Player) sender);
@@ -69,7 +69,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("type")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "装备类型列表:");
 			for (EquipType type : EquipType.values()) {
-				Vars.nms.newFancyMessage(ChatColor.BLUE + type.toString())
+				new TMessage(ChatColor.BLUE + type.toString())
 						.tooltip(ChatColor.GREEN + "在装备栏中显示:" + type.isShow())
 						.suggest("/pr equip settype " + type)
 						.send((Player) sender);
@@ -78,7 +78,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("effect")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "粒子效果列表:");
 			for (Effect effect : Effect.values()) {
-				Vars.nms.newFancyMessage(ChatColor.BLUE + effect.toString())
+				new TMessage(ChatColor.BLUE + effect.toString())
 						.tooltip(
 								ChatColor.GREEN + "点击可匹配命令:"
 										+ "/pr equip addlore -Effect:" + effect)
@@ -89,7 +89,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("sound")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "音效列表:");
 			for (Sound sound : Sound.values()) {
-				Vars.nms.newFancyMessage(ChatColor.BLUE + sound.toString())
+				new TMessage(ChatColor.BLUE + sound.toString())
 						.tooltip(
 								ChatColor.GREEN + "点击可匹配命令:"
 										+ "/pr equip addlore -Sound:" + sound)
@@ -100,7 +100,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("potion")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "药水效果列表:");
 			for (PotionEffectType potion : PotionEffectType.values()) {
-				Vars.nms.newFancyMessage(ChatColor.BLUE + potion.toString())
+				new TMessage(ChatColor.BLUE + potion.toString())
 						.tooltip(ChatColor.RED + "该lore过于复杂,无法匹配")
 						.send((Player) sender);
 			}
@@ -108,7 +108,7 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("entitytype")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "生物类型列表:");
 			for (EntityType entitytype : EntityType.values()) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						ChatColor.BLUE + entitytype.toString() + "("
 								+ CustomMob.mobname.get(entitytype) + ")")
 						.tooltip(
@@ -120,14 +120,14 @@ public class ListCommand {
 		} else if (getarg(args, 1).equalsIgnoreCase("color")) {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "颜色列表:");
 			for (ChatColor color : ChatColor.values()) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						color + color.name() + ":" + color.getChar()).send(
 						(Player) sender);
 			}
 			return true;
 		}
 
-		Vars.nms.newFancyMessage(
+		new TMessage(
 				TString.Prefix("PigRPG", 4) + "输入/pr list help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg list")

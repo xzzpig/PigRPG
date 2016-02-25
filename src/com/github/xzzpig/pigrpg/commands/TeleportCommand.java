@@ -5,10 +5,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
 import com.github.xzzpig.pigrpg.CommandHelp;
 import com.github.xzzpig.pigrpg.User;
-import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.chests.WarpChest;
 import com.github.xzzpig.pigrpg.teleport.Warp;
 
@@ -26,7 +26,7 @@ public class TeleportCommand {
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("setwarp")) {
 			if (getarg(args, 2).equalsIgnoreCase("")) {
-				Vars.nms.newFancyMessage(
+				new TMessage(
 						TString.Prefix("PigRPG", 4) + "用法错误，输入/pr tel help")
 						.tooltip(
 								CommandHelp.valueOf(Help.PIGRPG,
@@ -38,7 +38,7 @@ public class TeleportCommand {
 			}
 			new Warp(getarg(args, 2), player.getLocation()).save();
 		}
-		Vars.nms.newFancyMessage(TString.Prefix("PigRPG", 4) + "输入/pr tel help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr tel help")
 				.tooltip(
 						CommandHelp.valueOf(Help.PIGRPG, "pigrpg tel")
 								.getDescribe())

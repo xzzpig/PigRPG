@@ -8,13 +8,13 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.github.xzzpig.BukkitTools.TMessage;
 import com.github.xzzpig.BukkitTools.TString;
-import com.gmail.filoghost.holographicdisplays.nms.interfaces.FancyMessage;
 
 public class FanMessage {
 	@SuppressWarnings("deprecation")
-	public static FancyMessage getBy(ItemStack is) {
-		FancyMessage fm = Vars.nms.newFancyMessage(ChatColor.GOLD + "  "
+	public static TMessage getBy(ItemStack is) {
+		TMessage fm = new TMessage(ChatColor.GOLD + "  "
 				+ is.getItemMeta().getDisplayName());
 		ItemMeta im = is.getItemMeta();
 		String tip = ChatColor.RESET + "  物品名称:" + im.getDisplayName() + "\n"
@@ -40,11 +40,11 @@ public class FanMessage {
 		return fm;
 	}
 
-	public static FancyMessage getBy(String str, boolean highlight) {
-		return getBy(Vars.nms.newFancyMessage(""), str, highlight);
+	public static TMessage getBy(String str, boolean highlight) {
+		return getBy(new TMessage(""), str, highlight);
 	}
 
-	public static FancyMessage getBy(FancyMessage fm, String str,
+	public static TMessage getBy(TMessage fm, String str,
 			boolean highlight) {
 		str = str.replaceAll("&", TString.s).replace('^', '醃');
 		String[] strs = str.split("醃");
@@ -81,17 +81,17 @@ public class FanMessage {
 		return fm;
 	}
 
-	public static FancyMessage commandhelp(String command, String describe) {
+	public static TMessage commandhelp(String command, String describe) {
 		String help = TString.Prefix("PigRPG", 3) + "/" + command + " -"
 				+ describe;
-		FancyMessage fm = Vars.nms.newFancyMessage(help);
+		TMessage fm = new TMessage(help);
 		fm.suggest("/" + command);
 		return fm;
 	}
 
-	public static FancyMessage helpweb() {
+	public static TMessage helpweb() {
 		String help = "https://github.com/xzzpig/PigRPG/wiki/HelpIndx";
-		FancyMessage fm = Vars.nms.newFancyMessage("点击打开帮助网页");
+		TMessage fm = new TMessage("点击打开帮助网页");
 		fm.tooltip(ChatColor.UNDERLINE + help).link(help);
 		return fm;
 	}
