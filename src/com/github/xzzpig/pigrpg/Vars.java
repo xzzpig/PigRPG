@@ -19,4 +19,6 @@ public class Vars {
 	public static String playerinfotype;
 
 	public static List<String> playerinfo;
+
+	public static boolean debuger;
 }

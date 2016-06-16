@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
+import com.github.xzzpig.pigapi.Debuger;
 import com.github.xzzpig.pigapi.PigData;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigapi.bukkit.TStringMatcher;
 
@@ -16,6 +18,7 @@ public class User {
 	private static final File dataDir = new File(Main.self.getDataFolder(),"userdata");
 	
 	static{
+		Debuger.setIsDebug(User.class,Vars.debuger);
 		dataDir.mkdirs();
 		new Thread(new Runnable() {
 			@Override
@@ -37,11 +40,21 @@ public class User {
 		}
 		return new User(player);
 	}
+	
+	public static User getUser(String name) {
+		for (User user : users) {
+			if (user.name == name)
+				return user;
+		}
+		return new User(TEntity.toPlayer(name));
+	}
 
 	public static void removeOffline(){
 		for (User user : users) {
-			if(!user.player.isOnline())
-				users.remove(user.saveData());//保存并移除User
+			if(!user.player.isOnline()){
+				Debuger.print(user.player.getName()+"已移除");				
+				users.remove(user);//移除User
+			}
 		}
 	}
 
@@ -54,10 +67,14 @@ public class User {
 	private Player player;
 	private File dataFile;
 	private PigData data = new PigData();
+	private String name;
 
 	private User(Player player) {
+		if(player==null)
+			throw new NullPointerException("Player不可为null");
 		users.add(this);
 		this.player = player;
+		this.name = player.getName();
 		dataFile = new File(dataDir,player.getName()+".pigdata");
 		try {
 			dataFile.createNewFile();
@@ -116,7 +133,11 @@ public class User {
 	
 	public User saveData(){
 		data.saveToFile(dataFile);
-		Main.self.getLogger().info(getPlayer().getName()+"的数据已保存");
+		Debuger.print(getPlayer().getName()+"的数据已保存");
 		return this;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

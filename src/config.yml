@@ -1,4 +1,5 @@
 pigrpg:
+  debuger: false
   enable:
     RCList: true
     Friend: true

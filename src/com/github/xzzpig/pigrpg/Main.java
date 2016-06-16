@@ -33,6 +33,7 @@ public class Main extends JavaPlugin {
 		getLogger().info(getName() + getDescription().getVersion() + "插件已被加载");
 		saveDefaultConfig();// 初始化
 		Vars.config = TConfig.getConfigFile("PigRPG", "config.yml");// 加载配置
+		Vars.debuger = Vars.config.getBoolean("pigrpg.debuger",false);
 		Vars.pdata = new PigData();
 		Vars.playerinfotype = Vars.config.getString("pigrpg.playerinfo.type");
 		Vars.playerinfo = Vars.config.getStringList("pigrpg.playerinfo.custom");
@@ -42,6 +43,8 @@ public class Main extends JavaPlugin {
 				.getKeys(false))
 			Vars.enables.put(key,
 					Vars.config.getBoolean("pigrpg.enable." + key, true));// 读取所有系统开关
+		this.getServer().getPluginManager()
+		.registerEvents(BaseListener.self, this);
 		if (Vars.enables.containsKey("RCList") && Vars.enables.get("RCList")) {// 加载右键菜单系统
 			Vars.pdata.set("config.rclist.cancel",
 					Vars.config.getBoolean("pigrpg.rclist.cancel", true));
