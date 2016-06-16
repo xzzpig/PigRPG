@@ -1,1 +1,13 @@
-# 该插件由 幻猪(Mg_P) 制作
+pigrpg:
+  enable:
+    RCList: true
+  rclist: 
+    cancel: true
+  playerinfo:
+    type: auto
+    custom:
+    - 名称:</id/>
+    - 位置:</world/>(</x/>,</y/>,</z/>)
+    - 等级:</level/>
+    - OP:</op/>
+    - 允许飞行:</fly/>
