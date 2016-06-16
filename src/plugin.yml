@@ -2,9 +2,36 @@ name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
 version: V2.0
 author: xzzpig
-depend: [Essentials, BarAPI,PigAPI] 
+depend:
+- Essentials
+- BarAPI
+- PigAPI
 commands:
   pigrpg:
     description: 幻猪的RPG插件的命令帮助
     usage: §6[PigRPG]§2查看幻猪的RPG插件帮助:/pr help
-    aliases: [pr]
+    aliases:
+    - pr
+permissions:
+  pigrpg.*:
+    description: PigRPG的所有权限
+    default: op
+    children:
+      pigrpg.command.*: true
+  pigrpg.command.*:
+    description: PigRPG的所有命令权限
+    default: op
+    children:
+      pigrpg.command.friend.*: true
+  pigrpg.command.friend.*:
+    description: PigRPG的好友系统所有命令权限
+    default: op
+    children:
+      pigrpg.command.friend.list: true
+      pigrpg.command.friend.other: true
+  pigrpg.command.friend.list:
+    description: pr friend list命令权限
+    default: op
+  pigrpg.command.friend.other:
+    description: pr friend 其他子命令权限
+    default: op

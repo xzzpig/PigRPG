@@ -22,7 +22,7 @@ public class User {
 			public void run() {
 				removeOffline();
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -45,6 +45,12 @@ public class User {
 		}
 	}
 
+	public static void saveAllData(){
+		for (User user : users) {
+			user.saveData();
+		}
+	}
+	
 	private Player player;
 	private File dataFile;
 	private PigData data = new PigData();
@@ -107,9 +113,10 @@ public class User {
 	public PigData getData() {
 		return data;
 	}
-
+	
 	public User saveData(){
 		data.saveToFile(dataFile);
+		Main.self.getLogger().info(getPlayer().getName()+"的数据已保存");
 		return this;
 	}
 }

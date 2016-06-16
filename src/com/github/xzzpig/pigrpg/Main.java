@@ -1,11 +1,17 @@
 package com.github.xzzpig.pigrpg;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.xzzpig.pigapi.PigData;
 import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigrpg.command.Help;
+import com.github.xzzpig.pigrpg.command.PigCommand;
+import com.github.xzzpig.pigrpg.friend.FriendListener;
 import com.github.xzzpig.pigrpg.rclist.RCListListener;
 
 public class Main extends JavaPlugin {
@@ -42,5 +48,20 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginManager()
 					.registerEvents(RCListListener.self, this);
 		}
+		if (Vars.enables.containsKey("Friend") && Vars.enables.get("Friend")) {// 加载好友系统
+			this.getServer().getPluginManager()
+					.registerEvents(FriendListener.self, this);
+		}
+	}
+	@Override
+	public boolean onCommand(CommandSender sender, Command command,
+			String label, String[] args) {
+		return PigCommand.onCommand(sender, command, label, args);
+	}
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command,
+			String alias, String[] args) {
+		return Help.PIGRPG.getTabComplete(getName(), sender, command, alias, args);
 	}
 }

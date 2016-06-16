@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
+import com.github.xzzpig.pigrpg.Vars;
 
 public class RCChest {
 	public static Inventory getInventory(Player player, Player opener) {
@@ -22,7 +23,10 @@ public class RCChest {
 		imuserinfo.setLore(user.getInfos());
 		iuserinfo.setItemMeta(imuserinfo);
 		inv.addItem(iuserinfo);
-		
+		if (Vars.enables.containsKey("Friend") && Vars.enables.get("Friend")) {
+			inv.addItem(ItemForChest.AddFriend(opener.getName(),
+					player.getName()));
+		}
 		return inv;
 	}
 }

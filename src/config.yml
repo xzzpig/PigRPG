@@ -1,6 +1,7 @@
 pigrpg:
   enable:
     RCList: true
+    Friend: true
   rclist: 
     cancel: true
   playerinfo:
