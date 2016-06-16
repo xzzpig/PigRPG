@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.github.xzzpig.BukkitTools.TPremission;
+import com.github.xzzpig.pigapi.bukkit.TPremission;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.equip.EquipType;
@@ -28,6 +28,65 @@ import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class PowerListener implements Listener {
+	@EventHandler
+	public void onArrowHit(ProjectileHitEvent event) {
+		if (!(event.getEntity() instanceof Arrow))
+			return;
+		if (Power_Arrow.arrows.contains(event.getEntity()))
+			event.getEntity().remove();
+	}
+
+	@EventHandler
+	public void onCloseInv(InventoryCloseEvent event) {
+		Player player = (Player) event.getPlayer();
+		User user = User.getUser(player);
+		if (event.getInventory() != player.getInventory())
+			return;
+		for (ItemStack item : player.getInventory().getArmorContents()) {
+			if (item == null)
+				continue;
+			Equipment equip = new Equipment(item, player);
+			for (PotionEffectType p : user.getState().potions)
+				user.getPlayer().removePotionEffect(p);
+			user.getState().potions.clear();
+			user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0)
+					.setMp(0).setPhysicDamage(1).setPhysicDefence(0);
+			pls: for (PowerLore pl : equip.getPowerLores()) {
+				if (!pl.isRunTime(PowerRunTime.CloseEC))
+					continue pls;
+				ps: for (Power p : pl.powers) {
+					if (p instanceof PT_Limit)
+						if (!((PT_Limit) p).can()) {
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if (!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip) p).rebuildEquip(event);
+					p.run();
+				}
+			}
+		}
+		for (EquipType et : EquipType.values()) {
+			Equipment equip = user.getEquip(et);
+			pls: for (PowerLore pl : equip.getPowerLores()) {
+				if (!pl.isRunTime(PowerRunTime.CloseEC))
+					continue pls;
+				ps: for (Power p : pl.powers) {
+					if (p instanceof PT_Limit)
+						if (!((PT_Limit) p).can()) {
+							user.sendPluginMessage(((PT_Limit) p).cantMessage());
+							break ps;
+						}
+					if (!(p instanceof PT_Equip))
+						continue;
+					((PT_Equip) p).rebuildEquip(event);
+					p.run();
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof LivingEntity))
@@ -135,116 +194,8 @@ public class PowerListener implements Listener {
 		if (findamage < 0)
 			findamage = 0;
 		event.setDamage(findamage);
-		dstate.setLastDamage((int)findamage);
+		dstate.setLastDamage((int) findamage);
 		dstate.setPhysicDamage(origindamage);
-	}
-
-	@EventHandler
-	public void onRightClick(PlayerInteractEvent event) {
-		if (event.getAction() != Action.RIGHT_CLICK_AIR
-				&& event.getAction() != Action.RIGHT_CLICK_BLOCK)
-			return;
-		User user = User.getUser(event.getPlayer());
-		State state = user.getState();
-		int origindamage = state.getPhysicDamage();
-		Equipment equip = user.getHandEquip();
-		if (event.getMaterial().isBlock()
-				&& equip.getEquiptype() != EquipType.Default)
-			event.setCancelled(true);
-		if (equip.getEquiptype() == EquipType.Core)
-			equip = user.getEquip(EquipType.Core);
-		else if (EquipType.Weapon.getInherit().hasChild(
-				TPremission.valueOf(equip.getEquiptype().toString()))) {
-			if (EquipType
-					.getFrom(
-							equip.getEquiptype().toString()
-									.replaceAll("核心", ""))
-					.getInherit()
-					.hasChild(
-							TPremission
-									.valueOf(equip.getEquiptype().toString()))) {
-				equip = user.getEquip(EquipType.Core);
-			} else {
-				user.sendPluginMessage("&4由于武器类型不符，你无法使用该武器");
-				return;
-			}
-		}
-		pls: for (PowerLore pl : equip.getPowerLores()) {
-			if (!pl.isRunTime(PowerRunTime.RightClick))
-				continue pls;
-			ps: for (Power p : pl.powers) {
-				if (p instanceof PT_Limit)
-					if (!((PT_Limit) p).can()) {
-						user.sendPluginMessage(((PT_Limit) p).cantMessage());
-						break ps;
-					}
-				if (!(p instanceof PT_RightClick))
-					continue;
-				((PT_RightClick) p).rebuildRC(event);
-				p.run();
-			}
-		}
-		state.setPhysicDamage(origindamage);
-		user.buildScore();
-	}
-
-	@EventHandler
-	public void onArrowHit(ProjectileHitEvent event) {
-		if (!(event.getEntity() instanceof Arrow))
-			return;
-		if (Power_Arrow.arrows.contains(event.getEntity()))
-			event.getEntity().remove();
-	}
-
-	@EventHandler
-	public void onCloseInv(InventoryCloseEvent event) {
-		Player player = (Player) event.getPlayer();
-		User user = User.getUser(player);
-		if (event.getInventory() != player.getInventory())
-			return;
-		for (ItemStack item : player.getInventory().getArmorContents()) {
-			if (item == null)
-				continue;
-			Equipment equip = new Equipment(item, player);
-			for (PotionEffectType p : user.getState().potions)
-				user.getPlayer().removePotionEffect(p);
-			user.getState().potions.clear();
-			user.getState().setHp(20).setMagicDamage(0).setMagicDefine(0)
-					.setMp(0).setPhysicDamage(1).setPhysicDefence(0);
-			pls: for (PowerLore pl : equip.getPowerLores()) {
-				if (!pl.isRunTime(PowerRunTime.CloseEC))
-					continue pls;
-				ps: for (Power p : pl.powers) {
-					if (p instanceof PT_Limit)
-						if (!((PT_Limit) p).can()) {
-							user.sendPluginMessage(((PT_Limit) p).cantMessage());
-							break ps;
-						}
-					if (!(p instanceof PT_Equip))
-						continue;
-					((PT_Equip) p).rebuildEquip(event);
-					p.run();
-				}
-			}
-		}
-		for (EquipType et : EquipType.values()) {
-			Equipment equip = user.getEquip(et);
-			pls: for (PowerLore pl : equip.getPowerLores()) {
-				if (!pl.isRunTime(PowerRunTime.CloseEC))
-					continue pls;
-				ps: for (Power p : pl.powers) {
-					if (p instanceof PT_Limit)
-						if (!((PT_Limit) p).can()) {
-							user.sendPluginMessage(((PT_Limit) p).cantMessage());
-							break ps;
-						}
-					if (!(p instanceof PT_Equip))
-						continue;
-					((PT_Equip) p).rebuildEquip(event);
-					p.run();
-				}
-			}
-		}
 	}
 
 	@EventHandler
@@ -312,5 +263,54 @@ public class PowerListener implements Listener {
 				}
 			}
 		}
+	}
+
+	@EventHandler
+	public void onRightClick(PlayerInteractEvent event) {
+		if (event.getAction() != Action.RIGHT_CLICK_AIR
+				&& event.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
+		User user = User.getUser(event.getPlayer());
+		State state = user.getState();
+		int origindamage = state.getPhysicDamage();
+		Equipment equip = user.getHandEquip();
+		if (event.getMaterial().isBlock()
+				&& equip.getEquiptype() != EquipType.Default)
+			event.setCancelled(true);
+		if (equip.getEquiptype() == EquipType.Core)
+			equip = user.getEquip(EquipType.Core);
+		else if (EquipType.Weapon.getInherit().hasChild(
+				TPremission.valueOf(equip.getEquiptype().toString()))) {
+			if (EquipType
+					.getFrom(
+							equip.getEquiptype().toString()
+									.replaceAll("核心", ""))
+					.getInherit()
+					.hasChild(
+							TPremission
+									.valueOf(equip.getEquiptype().toString()))) {
+				equip = user.getEquip(EquipType.Core);
+			} else {
+				user.sendPluginMessage("&4由于武器类型不符，你无法使用该武器");
+				return;
+			}
+		}
+		pls: for (PowerLore pl : equip.getPowerLores()) {
+			if (!pl.isRunTime(PowerRunTime.RightClick))
+				continue pls;
+			ps: for (Power p : pl.powers) {
+				if (p instanceof PT_Limit)
+					if (!((PT_Limit) p).can()) {
+						user.sendPluginMessage(((PT_Limit) p).cantMessage());
+						break ps;
+					}
+				if (!(p instanceof PT_RightClick))
+					continue;
+				((PT_RightClick) p).rebuildRC(event);
+				p.run();
+			}
+		}
+		state.setPhysicDamage(origindamage);
+		user.buildScore();
 	}
 }

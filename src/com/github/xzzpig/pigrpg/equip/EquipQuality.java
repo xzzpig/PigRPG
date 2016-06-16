@@ -8,14 +8,13 @@ public enum EquipQuality {
 	 */
 	private static final char c = '§';
 
-	private String name;
-	private char color;
-
-	EquipQuality(String name, char color) {
-		this.name = name;
-		this.color = color;
+	public static EquipQuality fromColor(String color) {
+		for (EquipQuality eq : values()) {
+			if (color.startsWith(eq.toString()))
+				return eq;
+		}
+		return null;
 	}
-
 	public static EquipQuality fromName(String name) {
 		for (EquipQuality eq : values()) {
 			if (eq.name.equalsIgnoreCase(name))
@@ -24,12 +23,13 @@ public enum EquipQuality {
 		return null;
 	}
 
-	public static EquipQuality fromColor(String color) {
-		for (EquipQuality eq : values()) {
-			if (color.startsWith(eq.toString()))
-				return eq;
-		}
-		return null;
+	private String name;
+
+	private char color;
+
+	EquipQuality(String name, char color) {
+		this.name = name;
+		this.color = color;
 	}
 
 	public String getName() {

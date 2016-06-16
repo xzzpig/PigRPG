@@ -2,7 +2,7 @@ package com.github.xzzpig.pigrpg.mob;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class Equation {
 	public static String Hp = TConfig.getConfigFile("PigRPG", "mob.yml")

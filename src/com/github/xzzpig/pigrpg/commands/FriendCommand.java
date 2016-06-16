@@ -5,10 +5,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.FriendListChest;
@@ -23,9 +23,9 @@ public class FriendCommand {
 			return true;
 		}
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg friend").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("list")) {
 			((Player) sender).openInventory(FriendListChest
@@ -72,25 +72,23 @@ public class FriendCommand {
 							+ "你没有删除好友请求");
 				return true;
 			} else if (getarg(args, 2).equalsIgnoreCase("help")) {
-				for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+				for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 						"pigrpg friend del").getSubCommandHelps())
-					ch.getHelpMessage().send((Player) sender);
+					ch.getHelpMessage("PigRPG").send((Player) sender);
 				return true;
 			}
-			new TMessage(
-					TString.Prefix("PigRPG", 4) + "输入/pr friend del help")
+			new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr friend del help")
 					.tooltip(
-							CommandHelp.valueOf(Help.PIGRPG,
+							TCommandHelp.valueOf(Help.PIGRPG,
 									"pigrpg friend del").getDescribe())
 					.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 					.suggest("/pr friend del help").tooltip("")
 					.send((Player) sender);
 			return false;
 		}
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr friend help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr friend help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg friend")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg friend")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr friend help").tooltip("").send((Player) sender);

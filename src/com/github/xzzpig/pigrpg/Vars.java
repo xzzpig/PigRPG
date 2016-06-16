@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.earth2me.essentials.Essentials;
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class Vars {
 	public static FileConfiguration configs;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chat.ChatChannel;
 

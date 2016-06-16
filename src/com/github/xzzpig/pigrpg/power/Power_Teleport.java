@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.BlockIterator;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
@@ -47,6 +47,34 @@ public class Power_Teleport extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		if (target.equalsIgnoreCase("self")) {
+			entity = event.getPlayer();
+			if (type.equalsIgnoreCase("entity"))
+				loc = TEntity.getTarget(event.getPlayer(), distance)
+						.getLocation();
+		} else {
+			entity = TEntity.getTarget(event.getPlayer(), distance);
+			if (type.equalsIgnoreCase("entity"))
+				loc = event.getPlayer().getLocation();
+		}
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("self")) {
+			if (event.getDamager() instanceof LivingEntity)
+				entity = (LivingEntity) event.getDamager();
+			if (type.equalsIgnoreCase("entity"))
+				loc = event.getEntity().getLocation();
+		} else if (event.getEntity() instanceof LivingEntity) {
+			entity = (LivingEntity) event.getEntity();
+			if (type.equalsIgnoreCase("entity"))
+				loc = event.getDamager().getLocation();
+		}
+	}
+
+	@Override
 	public void run() {
 		if (loc == null) {
 			LivingEntity player = entity;
@@ -74,34 +102,6 @@ public class Power_Teleport extends Power implements PT_Damage, PT_RightClick {
 			entity.teleport(loc);
 			Power_Effect.playEffect(loc, Effect.ENDER_SIGNAL, 0);
 			loc.getWorld().playSound(loc, Sound.ENDERMAN_TELEPORT, 1.0f, 0.3f);
-		}
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("self")) {
-			if (event.getDamager() instanceof LivingEntity)
-				entity = (LivingEntity) event.getDamager();
-			if (type.equalsIgnoreCase("entity"))
-				loc = event.getEntity().getLocation();
-		} else if (event.getEntity() instanceof LivingEntity) {
-			entity = (LivingEntity) event.getEntity();
-			if (type.equalsIgnoreCase("entity"))
-				loc = event.getDamager().getLocation();
-		}
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		if (target.equalsIgnoreCase("self")) {
-			entity = event.getPlayer();
-			if (type.equalsIgnoreCase("entity"))
-				loc = TEntity.getTarget(event.getPlayer(), distance)
-						.getLocation();
-		} else {
-			entity = TEntity.getTarget(event.getPlayer(), distance);
-			if (type.equalsIgnoreCase("entity"))
-				loc = event.getPlayer().getLocation();
 		}
 	}
 }

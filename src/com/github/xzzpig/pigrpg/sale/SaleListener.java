@@ -11,41 +11,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TArgsSolver;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TArgsSolver;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.SaleChest;
 
 public class SaleListener implements Listener {
-	@EventHandler
-	public void onChangePage(InventoryClickEvent event) {
-		if (!event.getInventory().getTitle().contains("拍卖行"))
-			return;
-		event.setCancelled(true);
-		if (!event.isLeftClick())
-			return;
-		Inventory inv = event.getInventory();
-		int iitem = event.getRawSlot();
-		int page = 1;
-		try {
-			page = Integer.valueOf(TString.sub(inv.getName(), "(第", "页)"));
-		} catch (NumberFormatException e) {
-			event.getWhoClicked().closeInventory();
-			return;
-		}
-		switch (iitem) {
-		case 52:
-			event.getWhoClicked().openInventory(
-					SaleChest.getInventory(page - 1));
-			break;
-		case 53:
-			event.getWhoClicked().openInventory(
-					SaleChest.getInventory(page + 1));
-			break;
-		}
-	}
-
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBuyClick(InventoryClickEvent event) {
@@ -94,5 +66,33 @@ public class SaleListener implements Listener {
 		user.getPlayer().updateInventory();
 		user.sendPluginMessage("&3已购买了物品:");
 		FanMessage.getBy(is).send(user.getPlayer());
+	}
+
+	@EventHandler
+	public void onChangePage(InventoryClickEvent event) {
+		if (!event.getInventory().getTitle().contains("拍卖行"))
+			return;
+		event.setCancelled(true);
+		if (!event.isLeftClick())
+			return;
+		Inventory inv = event.getInventory();
+		int iitem = event.getRawSlot();
+		int page = 1;
+		try {
+			page = Integer.valueOf(TString.sub(inv.getName(), "(第", "页)"));
+		} catch (NumberFormatException e) {
+			event.getWhoClicked().closeInventory();
+			return;
+		}
+		switch (iitem) {
+		case 52:
+			event.getWhoClicked().openInventory(
+					SaleChest.getInventory(page - 1));
+			break;
+		case 53:
+			event.getWhoClicked().openInventory(
+					SaleChest.getInventory(page + 1));
+			break;
+		}
 	}
 }

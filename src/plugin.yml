@@ -2,7 +2,7 @@ name: PigRPG
 main: com.github.xzzpig.pigrpg.Main
 version: V0.1[bate-RPGMob]
 author: xzzpig
-depend: [Essentials, BarAPI] 
+depend: [Essentials, BarAPI,PigAPI] 
 commands:
   pigrpg:
     description: 幻猪的RPG插件的命令帮助
@@ -130,16 +130,16 @@ premission:
     children:
       pigrpg.equip.admin: true
       pigrpg.equip.default: true
-pigrpg.equip.default:
+  pigrpg.equip.default:
     description: 装备系统基础权限
     default: op
     children:
       pigrpg.command.equip.default: true
       pigrpg.equip.use.*: true
-pigrpg.equip.use.*:
+  pigrpg.equip.use.*:
     description: 使用所有装备类型
     default: op
-pigrpg.equip.admin:
+  pigrpg.equip.admin:
     description: 装备系统管理员权限
     default: op
     chilren:

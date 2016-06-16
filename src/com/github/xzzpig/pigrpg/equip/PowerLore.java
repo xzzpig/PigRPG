@@ -9,9 +9,9 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TData;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.TData;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.power.Power;
 import com.github.xzzpig.pigrpg.power.PowerRunTime;
 
@@ -22,23 +22,8 @@ public class PowerLore implements Comparable<PowerLore> {
 		loadpower();
 	}
 
-	public static void loadpower() {
-		FileConfiguration config = TConfig.getConfigFile("PigRPG",
-				"customlore.yml");
-		try {
-			for (String lorename : TConfig.getConfigPath("PigRPG",
-					"customlore.yml", "customlore")) {
-				PowerLore pl = new PowerLore(
-						config.getConfigurationSection("customlore." + lorename));
-				powerlores.remove(getFromName(pl.name));
-				powerlores.add(pl);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static final PowerLore consume = new PowerLore();
+
 	static {
 		consume.name = "consume";
 		consume.matchkey = "用于装备类型 消耗品";
@@ -62,12 +47,27 @@ public class PowerLore implements Comparable<PowerLore> {
 		prefix.powers.add(pprefix);
 		powerlores.add(prefix);
 	}
-
 	public static PowerLore getFromName(String name) {
 		for (PowerLore pl : powerlores)
 			if (pl.name.equalsIgnoreCase(name))
 				return pl;
 		return null;
+	}
+
+	public static void loadpower() {
+		FileConfiguration config = TConfig.getConfigFile("PigRPG",
+				"customlore.yml");
+		try {
+			for (String lorename : TConfig.getConfigPath("PigRPG",
+					"customlore.yml", "customlore")) {
+				PowerLore pl = new PowerLore(
+						config.getConfigurationSection("customlore." + lorename));
+				powerlores.remove(getFromName(pl.name));
+				powerlores.add(pl);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String name;
@@ -120,17 +120,34 @@ public class PowerLore implements Comparable<PowerLore> {
 		return level - p1.level;
 	}
 
+	public Equipment getEquip() {
+		return equip;
+	}
+
 	public String getKey() {
 		return matchkey;
 	}
 
-	public PowerLore setEquip(Equipment equip) {
-		this.equip = equip;
-		return this;
+	public String getLore() {
+		return this.getReplaced(show);
 	}
 
-	public Equipment getEquip() {
-		return equip;
+	public String getReplaced(String old) {
+		for (Entry<String, String> set : data.getStrings().entrySet())
+			old = old.replaceAll("</" + set.getKey() + "/>", set.getValue());
+		return old.replaceAll("&", TString.s);
+
+	}
+
+	public String getUsage() {
+		return this.form;
+	}
+
+	public boolean isRunTime(PowerRunTime rt) {
+		for (PowerRunTime prt : runtime)
+			if (rt == prt)
+				return true;
+		return false;
 	}
 
 	public PowerLore loadPowers() {
@@ -145,7 +162,8 @@ public class PowerLore implements Comparable<PowerLore> {
 				continue;
 			}
 			powers.add((Power.valueOf(solved).reBuild(
-					path.getConfigurationSection("power." + powername), this).setRunTimes(runtime)));
+					path.getConfigurationSection("power." + powername), this)
+					.setRunTimes(runtime)));
 		}
 		return this;
 	}
@@ -176,26 +194,9 @@ public class PowerLore implements Comparable<PowerLore> {
 		return this;
 	}
 
-	public String getUsage() {
-		return this.form;
-	}
-
-	public String getReplaced(String old) {
-		for (Entry<String, String> set : data.getStrings().entrySet())
-			old = old.replaceAll("</" + set.getKey() + "/>", set.getValue());
-		return old.replaceAll("&", TString.s);
-
-	}
-
-	public String getLore() {
-		return this.getReplaced(show);
-	}
-
-	public boolean isRunTime(PowerRunTime rt) {
-		for (PowerRunTime prt : runtime)
-			if (rt == prt)
-				return true;
-		return false;
+	public PowerLore setEquip(Equipment equip) {
+		this.equip = equip;
+		return this;
 	}
 
 }

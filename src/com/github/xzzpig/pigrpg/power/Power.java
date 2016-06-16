@@ -11,14 +11,6 @@ import com.github.xzzpig.pigrpg.equip.PowerLore;
 public abstract class Power {
 	private static List<Class<?>> powerclasss = new ArrayList<Class<?>>();
 
-	public static void regrestPowerClass(Class<?> powerclass) {
-		powerclasss.add(powerclass);
-	}
-
-	public static void regrestPowerClass(Class<?>[] powerclass) {
-		powerclasss.addAll(Arrays.asList(powerclass));
-	}
-
 	static {
 		regrestPowerClass(new Class<?>[] { Power_Arrow.class,
 				Power_Chance.class, Power_Command.class, Power_Condition.class,
@@ -31,30 +23,20 @@ public abstract class Power {
 				Power_Sound.class, Power_Teleport.class, Power_Test.class });
 	}
 
-	private PowerRunTime[] runtime;
-
-	public Power() {
-	};
-
-	public abstract String getPowerName();
-
-	public String[] getAnotherName() {
-		return new String[] {};
-	};
-
-	public abstract Power reBuild(ConfigurationSection path, PowerLore pl);
-
-	public abstract void run();
-	
-	public boolean isRunTime(PowerRunTime rt) {
-		for (PowerRunTime prt : runtime)
-			if (rt == prt)
-				return true;
-		return false;
+	public static void regrestPowerClass(Class<?> powerclass) {
+		powerclasss.add(powerclass);
 	}
-	public Power setRunTimes(PowerRunTime[] rt) {
-		this.runtime = rt;
-		return this;
+
+	public static void regrestPowerClass(Class<?>[] powerclass) {
+		powerclasss.addAll(Arrays.asList(powerclass));
+	}
+
+	public static Power valueOf(String name) {
+		for (Power p : values()) {
+			if (p.getPowerName().equalsIgnoreCase(name))
+				return p;
+		}
+		return null;
 	}
 
 	public static Power[] values() {
@@ -76,13 +58,32 @@ public abstract class Power {
 			powers.add(p);
 		}
 		return powers.toArray(new Power[0]);
+	};
+
+	private PowerRunTime[] runtime;
+
+	public Power() {
+	};
+
+	public String[] getAnotherName() {
+		return new String[] {};
 	}
 
-	public static Power valueOf(String name) {
-		for (Power p : values()) {
-			if (p.getPowerName().equalsIgnoreCase(name))
-				return p;
-		}
-		return null;
+	public abstract String getPowerName();
+
+	public boolean isRunTime(PowerRunTime rt) {
+		for (PowerRunTime prt : runtime)
+			if (rt == prt)
+				return true;
+		return false;
+	}
+
+	public abstract Power reBuild(ConfigurationSection path, PowerLore pl);
+
+	public abstract void run();
+
+	public Power setRunTimes(PowerRunTime[] rt) {
+		this.runtime = rt;
+		return this;
 	}
 }

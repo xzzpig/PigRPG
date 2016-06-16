@@ -29,13 +29,10 @@ public class Team {
 		this.setLeader(leader);
 	}
 
-	public User getLeader() {
-		return leader;
-	}
-
-	public Team setLeader(User member) {
-		leader = member;
+	public Team addMember(User member) {
 		users.add(member);
+		broadMessage(ChatColor.BLUE + member.getPlayer().getName() + "&3加入了队伍",
+				true);
 		return this;
 	}
 
@@ -49,11 +46,13 @@ public class Team {
 		return this;
 	}
 
-	public Team addMember(User member) {
-		users.add(member);
-		broadMessage(ChatColor.BLUE + member.getPlayer().getName() + "&3加入了队伍",
-				true);
-		return this;
+	public void finish() {
+		broadMessage("&3队伍将解散", true);
+		teams.remove(this);
+	}
+
+	public User getLeader() {
+		return leader;
 	}
 
 	public User[] getMembers() {
@@ -78,8 +77,9 @@ public class Team {
 		return this;
 	}
 
-	public void finish() {
-		broadMessage("&3队伍将解散", true);
-		teams.remove(this);
+	public Team setLeader(User member) {
+		leader = member;
+		users.add(member);
+		return this;
 	}
 }

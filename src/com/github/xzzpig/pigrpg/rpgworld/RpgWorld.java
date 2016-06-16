@@ -3,7 +3,7 @@ package com.github.xzzpig.pigrpg.rpgworld;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class RpgWorld {
 	public static List<String> rpgworldlist = TConfig.getConfigFile("PigRPG",

@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
+import com.github.xzzpig.pigapi.TCalculate;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
@@ -25,6 +25,23 @@ public class Power_Money extends Power implements PT_Damage, PT_RightClick,
 	User user;
 
 	@Override
+	public boolean can() {
+		if (entity == null)
+			return false;
+		user = User.getUser(entity);
+		amount = (int) TCalculate.getResult(samount.replaceAll("</money/>", ""
+				+ (int) user.getEcoAPI().getMoney()));
+		if (type.equalsIgnoreCase("take") || type.equalsIgnoreCase("has"))
+			return user.getEcoAPI().hasMoney(amount);
+		return true;
+	}
+
+	@Override
+	public String cantMessage() {
+		return message;
+	}
+
+	@Override
 	public String getPowerName() {
 		return "Money";
 	}
@@ -36,6 +53,38 @@ public class Power_Money extends Power implements PT_Damage, PT_RightClick,
 		target = pl.getReplaced(path.getString("target", "self"));
 		message = pl.getReplaced(path.getString("message"));
 		return this;
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		entity = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("self")) {
+			if (event.getEntity() instanceof Player)
+				entity = (Player) event.getEntity();
+		} else if (event.getDamager() instanceof LivingEntity)
+			entity = (Player) event.getDamager();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("other")) {
+			if (event.getEntity() instanceof Player)
+				entity = (Player) event.getEntity();
+		} else if (event.getDamager() instanceof Player)
+			entity = (Player) event.getDamager();
+	}
+
+	@Override
+	public void rebulidKilled(EntityDeathEvent event) {
+		if (target.equalsIgnoreCase("self")) {
+			if (event.getEntity() instanceof LivingEntity)
+				entity = (Player) event.getEntity();
+		} else if (event.getEntity().getKiller() instanceof LivingEntity)
+			entity = event.getEntity().getKiller();
 	}
 
 	@Override
@@ -57,55 +106,6 @@ public class Power_Money extends Power implements PT_Damage, PT_RightClick,
 				user.getEcoAPI().setMoney(user.getEcoAPI().getMoney() - amount);
 			break;
 		}
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("other")) {
-			if (event.getEntity() instanceof Player)
-				entity = (Player) event.getEntity();
-		} else if (event.getDamager() instanceof Player)
-			entity = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		entity = event.getPlayer();
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("self")) {
-			if (event.getEntity() instanceof Player)
-				entity = (Player) event.getEntity();
-		} else if (event.getDamager() instanceof LivingEntity)
-			entity = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebulidKilled(EntityDeathEvent event) {
-		if (target.equalsIgnoreCase("self")) {
-			if (event.getEntity() instanceof LivingEntity)
-				entity = (Player) event.getEntity();
-		} else if (event.getEntity().getKiller() instanceof LivingEntity)
-			entity = event.getEntity().getKiller();
-	}
-
-	@Override
-	public boolean can() {
-		if (entity == null)
-			return false;
-		user = User.getUser(entity);
-		amount = (int) TCalculate.getResult(samount.replaceAll("</money/>", ""
-				+ (int) user.getEcoAPI().getMoney()));
-		if (type.equalsIgnoreCase("take") || type.equalsIgnoreCase("has"))
-			return user.getEcoAPI().hasMoney(amount);
-		return true;
-	}
-
-	@Override
-	public String cantMessage() {
-		return message;
 	}
 
 }

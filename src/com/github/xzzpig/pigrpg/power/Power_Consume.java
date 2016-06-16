@@ -27,6 +27,28 @@ public class Power_Consume extends Power implements PT_Damage, PT_RightClick,
 		return this;
 	}
 
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		user = User.getUser(event.getPlayer());
+		equip = User.getUser(event.getPlayer()).getHandEquip();
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (event.getEntity() instanceof Player) {
+			user = User.getUser((Player) event.getEntity());
+			equip = User.getUser((Player) event.getEntity()).getHandEquip();
+		}
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player) {
+			user = User.getUser((Player) event.getDamager());
+			equip = User.getUser((Player) event.getDamager()).getHandEquip();
+		}
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
@@ -43,28 +65,6 @@ public class Power_Consume extends Power implements PT_Damage, PT_RightClick,
 		if (hand)
 			user.getPlayer().setItemInHand(equip);
 		user.getPlayer().updateInventory();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		user = User.getUser(event.getPlayer());
-		equip = User.getUser(event.getPlayer()).getHandEquip();
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player) {
-			user = User.getUser((Player) event.getDamager());
-			equip = User.getUser((Player) event.getDamager()).getHandEquip();
-		}
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (event.getEntity() instanceof Player) {
-			user = User.getUser((Player) event.getEntity());
-			equip = User.getUser((Player) event.getEntity()).getHandEquip();
-		}
 	}
 
 }

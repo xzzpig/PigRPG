@@ -6,8 +6,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.TCalculate;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
@@ -39,6 +39,34 @@ public class Power_Damage extends Power implements PT_Damage, PT_RightClick,
 		return this;
 	}
 
+	@Override
+	public void rebuildEquip(InventoryCloseEvent event) {
+		entity = event.getPlayer();
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		entity = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (!(event.getDamager() instanceof LivingEntity))
+			return;
+		target = (LivingEntity) event.getDamager();
+		if (event.getEntity() instanceof LivingEntity)
+			entity = (LivingEntity) event.getEntity();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (!(event.getDamager() instanceof LivingEntity))
+			return;
+		entity = (LivingEntity) event.getDamager();
+		if (event.getEntity() instanceof LivingEntity)
+			target = (LivingEntity) event.getEntity();
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
@@ -61,33 +89,5 @@ public class Power_Damage extends Power implements PT_Damage, PT_RightClick,
 				target.damage(damage);
 		}
 
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (!(event.getDamager() instanceof LivingEntity))
-			return;
-		entity = (LivingEntity) event.getDamager();
-		if (event.getEntity() instanceof LivingEntity)
-			target = (LivingEntity) event.getEntity();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		entity = event.getPlayer();
-	}
-
-	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
-		entity = event.getPlayer();
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (!(event.getDamager() instanceof LivingEntity))
-			return;
-		target = (LivingEntity) event.getDamager();
-		if (event.getEntity() instanceof LivingEntity)
-			entity = (LivingEntity) event.getEntity();
 	}
 }

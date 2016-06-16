@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
@@ -35,14 +35,9 @@ public class Power_Knockup extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
-	public void run() {
-		if (launcher == null || target == null)
-			return;
-		if (chance > 100)
-			chance = 100;
-		if (rand.nextInt(100) <= chance)
-			target.setVelocity(launcher.getLocation().getDirection()
-					.setY(power));
+	public void rebuildRC(PlayerInteractEvent event) {
+		launcher = event.getPlayer();
+		target = TEntity.getTarget(launcher, distance);
 	}
 
 	@Override
@@ -54,8 +49,13 @@ public class Power_Knockup extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		launcher = event.getPlayer();
-		target = TEntity.getTarget(launcher, distance);
+	public void run() {
+		if (launcher == null || target == null)
+			return;
+		if (chance > 100)
+			chance = 100;
+		if (rand.nextInt(100) <= chance)
+			target.setVelocity(launcher.getLocation().getDirection()
+					.setY(power));
 	}
 }

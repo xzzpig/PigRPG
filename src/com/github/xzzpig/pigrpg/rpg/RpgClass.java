@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigapi.TData;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class RpgClass {
 	private static HashMap<String, RpgClass> classlist = new HashMap<String, RpgClass>();
@@ -17,7 +17,30 @@ public class RpgClass {
 	private static final FileConfiguration classconfig = TConfig.getConfigFile(
 			"PigRPG", "class.yml");
 
-	private HashMap<Integer, TData> levelinfos = new HashMap<Integer, TData>();
+	public static RpgClass defaultclass;
+
+	static {
+		defaultclass = new RpgClass();
+		defaultclass.name = "default";
+		defaultclass.displayname = "无";
+		defaultclass.preclass = "default";
+		defaultclass.maxlevel = -1;
+		TData data = new TData();
+		data.setString("HP", "20+</rpglevel/>");
+		data.setString("MP", "0");
+		data.setString("PDamage", "</rpglevel/>");
+		data.setString("MDamage", "0");
+		data.setString("PDefence", "0");
+		data.setString("Mdefence", "0");
+		defaultclass.levelinfos.put(1, data);
+		try {
+			load();
+		} finally {
+			save();
+		}
+		if (classlist.get("default") != null)
+			defaultclass = classlist.get("default");
+	}
 
 	private static void load() {
 		try {
@@ -76,30 +99,7 @@ public class RpgClass {
 			return classlist.get(rpgclass);
 		return defaultclass;
 	}
-
-	public static RpgClass defaultclass;
-	static {
-		defaultclass = new RpgClass();
-		defaultclass.name = "default";
-		defaultclass.displayname = "无";
-		defaultclass.preclass = "default";
-		defaultclass.maxlevel = -1;
-		TData data = new TData();
-		data.setString("HP", "20+</rpglevel/>");
-		data.setString("MP", "0");
-		data.setString("PDamage", "</rpglevel/>");
-		data.setString("MDamage", "0");
-		data.setString("PDefence", "0");
-		data.setString("Mdefence", "0");
-		defaultclass.levelinfos.put(1, data);
-		try {
-			load();
-		} finally {
-			save();
-		}
-		if (classlist.get("default") != null)
-			defaultclass = classlist.get("default");
-	}
+	private HashMap<Integer, TData> levelinfos = new HashMap<Integer, TData>();
 
 	private String name, displayname, preclass;
 	private int maxlevel;
@@ -136,20 +136,8 @@ public class RpgClass {
 		classlist.put(this.name, this);
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public String getDisplayName() {
 		return displayname;
-	}
-
-	public int getMaxLevel() {
-		return maxlevel;
-	}
-
-	public RpgClass getPreClass() {
-		return classlist.get(preclass);
 	}
 
 	public TData getLevelInfo(int level) {
@@ -159,5 +147,17 @@ public class RpgClass {
 				return defaultclass.levelinfos.get(1);
 		}
 		return levelinfos.get(level);
+	}
+
+	public int getMaxLevel() {
+		return maxlevel;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public RpgClass getPreClass() {
+		return classlist.get(preclass);
 	}
 }

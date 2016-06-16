@@ -8,8 +8,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.TCalculate;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.StringMatcher;
 
@@ -64,12 +64,12 @@ public class CustomMob {
 		this.entity = entity;
 	}
 
+	public MobQuality getMobQuality() {
+		return (MobQuality) State.getFrom(entity).data.getObject("Quality");
+	}
+
 	public CustomMob setMobQuality(MobQuality q) {
 		State.getFrom(entity).data.setObject("Quality", q);
 		return this;
-	}
-
-	public MobQuality getMobQuality() {
-		return (MobQuality) State.getFrom(entity).data.getObject("Quality");
 	}
 }

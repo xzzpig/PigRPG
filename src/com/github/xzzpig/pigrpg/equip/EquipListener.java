@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.github.xzzpig.BukkitTools.TData;
+import com.github.xzzpig.pigapi.TData;
 import com.github.xzzpig.pigrpg.StringMatcher;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
@@ -22,6 +22,19 @@ import com.github.xzzpig.pigrpg.power.type.PT_Equip;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
 public class EquipListener implements Listener {
+	@EventHandler
+	public void onClickBanItem(InventoryClickEvent event) {
+		Inventory inv = event.getInventory();
+		int iitem = event.getRawSlot();
+		if (!event.getInventory().getTitle().contains("装备栏"))
+			return;
+		if (iitem >= inv.getSize())
+			return;
+		int line = iitem / 9;
+		if ((line % 2) == 0)
+			event.setCancelled(true);
+	}
+
 	@EventHandler
 	public void onCloseInv(InventoryCloseEvent event) {
 		if (!event.getInventory().getTitle().contains("装备栏"))
@@ -135,19 +148,6 @@ public class EquipListener implements Listener {
 	}
 
 	@EventHandler
-	public void onClickBanItem(InventoryClickEvent event) {
-		Inventory inv = event.getInventory();
-		int iitem = event.getRawSlot();
-		if (!event.getInventory().getTitle().contains("装备栏"))
-			return;
-		if (iitem >= inv.getSize())
-			return;
-		int line = iitem / 9;
-		if ((line % 2) == 0)
-			event.setCancelled(true);
-	}
-
-	@EventHandler
 	public void onPutItem(InventoryClickEvent event) {
 		Inventory inv = event.getInventory();
 		if (!event.getInventory().getTitle().contains("装备栏"))
@@ -180,7 +180,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	//@EventHandler
+	// @EventHandler
 	public void onRightClick(PlayerInteractEvent event) {
 		if (event.getAction() != Action.RIGHT_CLICK_AIR
 				&& event.getAction() != Action.RIGHT_CLICK_BLOCK)

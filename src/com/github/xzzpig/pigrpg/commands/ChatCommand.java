@@ -8,9 +8,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.Vars;
@@ -27,9 +27,9 @@ public class ChatCommand {
 			return true;
 		}
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg chat").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("setaccept")) {
 			((Player) sender).openInventory(ChatChannelChest
@@ -56,8 +56,8 @@ public class ChatCommand {
 			String splayer = getarg(args, 2), sboolean = getarg(args, 3);
 			if (splayer.equalsIgnoreCase("")) {
 				sender.sendMessage(TString.Prefix("PigRPG", 4) + "玩家不可为空");
-				CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat mute")
-						.getHelpMessage().send((Player) sender);
+				TCommandHelp.valueOf(Help.PIGRPG, "pigrpg chat mute")
+						.getHelpMessage("PigRPG").send((Player) sender);
 				return true;
 			}
 			@SuppressWarnings("deprecation")
@@ -129,10 +129,9 @@ public class ChatCommand {
 			return true;
 		}
 
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr chat help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr chat help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg chat")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr chat help").tooltip("").send((Player) sender);

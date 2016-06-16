@@ -7,24 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.FriendListChest;
 
 public class FriendEvent implements Listener {
-	@SuppressWarnings("deprecation")
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		Friend.loadFriend(event.getPlayer().getName());
-		User user = User.getUser(event.getPlayer());
-		user.sendPluginMessage("&3你的好友列表已加载");
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (Friend.hasFriend(user.getPlayer().getName(), player.getName()))
-				User.getUser(player).sendPluginMessage(
-						"&3你的好友&2" + user.getPlayer().getName() + "&3已上线");
-		}
-	}
-
 	@EventHandler
 	public void onFriendInvClick(InventoryClickEvent event) {
 		if (event.getInventory().getTitle().contains("好友列表"))
@@ -37,6 +24,19 @@ public class FriendEvent implements Listener {
 					.replaceAll(TString.Color(3), "");
 			Player player = (Player) event.getWhoClicked();
 			player.openInventory(FriendListChest.getFriendSubInventory(friend));
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Friend.loadFriend(event.getPlayer().getName());
+		User user = User.getUser(event.getPlayer());
+		user.sendPluginMessage("&3你的好友列表已加载");
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (Friend.hasFriend(user.getPlayer().getName(), player.getName()))
+				User.getUser(player).sendPluginMessage(
+						"&3你的好友&2" + user.getPlayer().getName() + "&3已上线");
 		}
 	}
 

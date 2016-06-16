@@ -8,8 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
 
 public class FanMessage {
 	@SuppressWarnings("deprecation")
@@ -44,9 +43,8 @@ public class FanMessage {
 		return getBy(new TMessage(""), str, highlight);
 	}
 
-	public static TMessage getBy(TMessage fm, String str,
-			boolean highlight) {
-		str = str.replaceAll("&", TString.s).replace('^', '醃');
+	public static TMessage getBy(TMessage fm, String str, boolean highlight) {
+		str = str.replaceAll("&", "§").replace('^', '醃');
 		String[] strs = str.split("醃");
 		if (strs.length == 1) {
 			return fm.then(str);
@@ -78,14 +76,6 @@ public class FanMessage {
 				i++;
 			}
 		}
-		return fm;
-	}
-
-	public static TMessage commandhelp(String command, String describe) {
-		String help = TString.Prefix("PigRPG", 3) + "/" + command + " -"
-				+ describe;
-		TMessage fm = new TMessage(help);
-		fm.suggest("/" + command);
 		return fm;
 	}
 

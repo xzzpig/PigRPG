@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class CustomScore {
 	public static final FileConfiguration config = TConfig.getConfigFile(

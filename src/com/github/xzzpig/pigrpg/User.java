@@ -17,13 +17,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TData;
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TPremission;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.BukkitTools.scoreboard.ScoreboardUtil;
+import com.github.xzzpig.pigapi.TData;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TPremission;
+import com.github.xzzpig.pigapi.bukkit.TString;
+import com.github.xzzpig.pigapi.bukkit.scoreboard.ScoreboardUtil;
 import com.github.xzzpig.pigrpg.chat.Chat;
 import com.github.xzzpig.pigrpg.chat.ChatChannel;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
@@ -43,6 +44,11 @@ import com.github.xzzpig.pigrpg.teleport.Warp;
 public class User {
 	private static HashMap<Player, User> userlist = new HashMap<Player, User>();
 
+	public static User getUser(Player player) {
+		if (!userlist.containsKey(player))
+			return new User(player);
+		return userlist.get(player);
+	}
 	private Player player;
 	private User chatTarget, willChat;
 	private ChatChannel chatchannel;
@@ -58,6 +64,7 @@ public class User {
 	private int exp;
 	private HashMap<String, Object> scorelist = new HashMap<String, Object>();
 	public boolean chatHighLight = true;
+
 	private String rpgclass;
 
 	public User(Player player) {
@@ -81,30 +88,57 @@ public class User {
 		loadEquis();
 		buildScore();
 
-		//player.openInventory(EquipChest.getInventory(this));
-		//player.closeInventory();
-		new EquipListener().onCloseInv(new InventoryCloseEvent(new InventoryView() {
-			Inventory inv = EquipChest.getInventory(User.this);
+		// player.openInventory(EquipChest.getInventory(this));
+		// player.closeInventory();
+		new EquipListener().onCloseInv(new InventoryCloseEvent(
+				new InventoryView() {
+					Inventory inv = EquipChest.getInventory(User.this);
+
+					@Override
+					public Inventory getBottomInventory() {
+						return this.getPlayer().getInventory();
+					}
+
+					@Override
+					public HumanEntity getPlayer() {
+						return User.this.getPlayer();
+					}
+
+					@Override
+					public Inventory getTopInventory() {
+						return inv;
+					}
+
+					@Override
+					public InventoryType getType() {
+						return inv.getType();
+					}
+				}));
+	}
+
+	public void addAcceptChatChannel(ChatChannel c) {
+		if (!this.isAcceptChatChannel(c))
+			acceptchannel.add(c);
+	}
+
+	public void addExp(int exp) {
+		this.setExp(this.exp + exp);
+	}
+
+	private void autoRemove() {
+		new Thread(new Runnable() {
 			@Override
-			public InventoryType getType() {
-				return inv.getType();
+			public void run() {
+				while (userlist.containsKey(player) && player.isOnline()) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+					User.this.buildScore();
+				}
+				userlist.remove(player);
 			}
-			
-			@Override
-			public Inventory getTopInventory() {
-				return inv;
-			}
-			
-			@Override
-			public HumanEntity getPlayer() {
-				return User.this.getPlayer();
-			}
-			
-			@Override
-			public Inventory getBottomInventory() {
-				return this.getPlayer().getInventory();
-			}
-		}));
+		}).start();
 	}
 
 	public void buildScore() {
@@ -151,23 +185,9 @@ public class User {
 				list.toArray(new String[0]));
 	}
 
-	public void addExp(int exp) {
-		this.setExp(this.exp + exp);
-	}
-
-	public void setExp(int exp) {
-		int level = this.getLevel();
-		this.exp = exp;
-		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName() + ".exp",
-				exp);
-		if (this.getLevel() != level) {
-			this.getPlayer().openInventory(EquipChest.getInventory(this));
-			this.getPlayer().closeInventory();
-		}
-	}
-
-	public int getExp() {
-		return exp;
+	public void delAcceptChatChannel(ChatChannel c) {
+		if (this.isAcceptChatChannel(c))
+			acceptchannel.remove(c);
 	}
 
 	public User freshDisplayName() {
@@ -177,111 +197,30 @@ public class User {
 		return this;
 	}
 
-	public void setJustsay(String justsay) {
-		this.justsay = justsay;
-	}
-
-	public String getJustsay() {
-		return justsay;
-	}
-
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-		if (prefix.contains("STONE") || prefix.contains("称号"))
-			this.prefix = "null";
-		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName()
-				+ ".prefix", this.prefix);
-		freshDisplayName();
-	}
-
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public User setRpgClass(RpgClass rpgclass) {
-		this.rpgclass = rpgclass.getName();
-		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName()
-				+ ".rpgclass", this.rpgclass);
-		return this;
-	}
-
-	public RpgClass getRpgClass() {
-		return RpgClass.valueOf(rpgclass);
-	}
-
-	public Team getTeam() {
-		return Team.getFrom(this);
-	}
-
-	public boolean hasTeam() {
-		return (getTeam() != null);
-	}
-
-	public static User getUser(Player player) {
-		if (!userlist.containsKey(player))
-			return new User(player);
-		return userlist.get(player);
-	}
-
-	private void autoRemove() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (userlist.containsKey(player) && player.isOnline()) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-					}
-					User.this.buildScore();
-				}
-				userlist.remove(player);
-			}
-		}).start();
-	}
-
-	public boolean isAcceptChatChannel(ChatChannel c) {
-		return acceptchannel.contains(c);
-	}
-
-	public void addAcceptChatChannel(ChatChannel c) {
-		if (!this.isAcceptChatChannel(c))
-			acceptchannel.add(c);
-	}
-
-	public void delAcceptChatChannel(ChatChannel c) {
-		if (this.isAcceptChatChannel(c))
-			acceptchannel.remove(c);
-	}
-
-	public void setChatchannel(ChatChannel chatchannel) {
-		this.chatchannel = chatchannel;
-	}
-
 	public ChatChannel getChatchannel() {
 		return chatchannel;
 	}
 
-	private void loadEquis() {
-		for (EquipType type : EquipType.values()) {
-			ItemStack iequip = TConfig.getConfigFile("PigRPG",
-					"equip" + "_" + type + ".yml").getItemStack(
-					"equip." + player.getName());
-			if (iequip == null)
-				continue;
-			setEquip(new Equipment(iequip, player));
-		}
+	public Chat getChatManager() {
+		return this.chat;
 	}
 
-	public void setEquip(Equipment equip) {
-		equiplist.put(equip.getEquiptype().getFinalParent(), equip);
-		TConfig.saveConfig("PigRPG", "equip" + "_" + equip.getEquiptype()
-				+ ".yml", "equip." + player.getName(), new ItemStack(equip));
+	public TData getDatas() {
+		return this.data;
+	}
+
+	public Eco getEcoAPI() {
+		return this.eco;
 	}
 
 	public Equipment getEquip(EquipType type) {
 		if (equiplist.containsKey(type))
 			return equiplist.get(type);
 		return new Equipment(1).setEquiptype(type);
+	}
+
+	public int getExp() {
+		return exp;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -299,22 +238,6 @@ public class User {
 		return equip;
 	}
 
-	public boolean hasFriend(String friend) {
-		return Friend.hasFriend(player.getName(), friend);
-	}
-
-	public Chat getChatManager() {
-		return this.chat;
-	}
-
-	public TData getDatas() {
-		return this.data;
-	}
-
-	public Eco getEcoAPI() {
-		return this.eco;
-	}
-
 	public List<String> getInfo() {
 		List<String> info = new ArrayList<String>();
 		info.add(TString.Color(2) + "昵名:" + player.getDisplayName());
@@ -325,12 +248,13 @@ public class User {
 		info.add(TString.Color(2) + "MP:" + state.getMp());
 		info.add(TString.Color(2)
 				+ "攻击:"
-				+ StringMatcher.buildStr("</pdamage/>(物)|</mdamage/>(魔)|</lastdamage/>(最近)", player,
-						false));
+				+ StringMatcher.buildStr(
+						"</pdamage/>(物)|</mdamage/>(魔)|</lastdamage/>(最近)",
+						player, false));
 		info.add(TString.Color(2)
 				+ "防御:"
-				+ StringMatcher.buildStr("</pdefence/>(物)|</mdefence/>(魔)", player,
-						false));
+				+ StringMatcher.buildStr("</pdefence/>(物)|</mdefence/>(魔)",
+						player, false));
 		info.add(TString.Color(2) + "位置:" + player.getWorld().getName() + ","
 				+ player.getLocation().getBlockX() + ","
 				+ player.getLocation().getBlockY() + ","
@@ -358,32 +282,45 @@ public class User {
 
 	}
 
-	public void setJustSay(String justsay) {
-		this.justsay = justsay;
+	public String getJustsay() {
+		return justsay;
 	}
 
 	public String getJustSay() {
 		return justsay.replaceAll("&", TString.s);
 	}
 
+	public int getLevel() {
+		return RPGListener.getLevel(getExp());
+	}
+
 	public Player getPlayer() {
 		return this.player;
 	}
 
-	public int getLevel() {
-		return RPGListener.getLevel(getExp());
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public RpgClass getRpgClass() {
+		return RpgClass.valueOf(rpgclass);
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public Team getTeam() {
+		return Team.getFrom(this);
+	}
+
+	public boolean hasFriend(String friend) {
+		return Friend.hasFriend(player.getName(), friend);
 	}
 
 	public boolean hasPremission(String prmission) {
 		if (player.hasPermission(prmission))
 			return true;
-		TPremission pre = TPremission.valueOf(prmission);
-		if (pre == null)
-			return false;
-		for (TPremission p : pre.getAllParents()) {
-			if (player.hasPermission(p.getName()))
-				return true;
-		}
 		return false;
 	}
 
@@ -391,49 +328,23 @@ public class User {
 		return this.hasPremission(prmission.getName());
 	}
 
-	public State getState() {
-		return state;
+	public boolean hasTeam() {
+		return (getTeam() != null);
 	}
 
-	public void setSelfChat(User target) {
-		this.setChatchannel(ChatChannel.Self);
-		this.chatTarget = target;
-		target.willChat = this;
-		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
-				+ target.getPlayer().getName() + "才能看到");
-		new TMessage("输入/pr chat change")
-				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat change")
-								.getDescribe())
-				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
-				.suggest("/pr chat change").tooltip("更换聊天频道")
-				.send(this.getPlayer());
-		// this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
-		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
-		new TMessage("输入/pr chat self")
-				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg chat self")
-								.getDescribe())
-				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
-				.suggest("/pr chat self").tooltip("更换聊天频道")
-				.send(target.getPlayer());
-		// target.sendPluginMessage("&7输入/pr chat self 进入私聊频道");
+	public boolean isAcceptChatChannel(ChatChannel c) {
+		return acceptchannel.contains(c);
 	}
 
-	public void setSelfChat() {
-		this.setChatchannel(ChatChannel.Self);
-		this.chatTarget = this.willChat;
-		User target = this.willChat;
-		this.willChat = this;
-		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
-				+ target.getPlayer().getName() + "才能看到");
-		this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
-		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
-	}
-
-	public void setScore(String key, Object value) {
-		this.scorelist.put(key, value);
-		this.buildScore();
+	private void loadEquis() {
+		for (EquipType type : EquipType.values()) {
+			ItemStack iequip = TConfig.getConfigFile("PigRPG",
+					"equip" + "_" + type + ".yml").getItemStack(
+					"equip." + player.getName());
+			if (iequip == null)
+				continue;
+			setEquip(new Equipment(iequip, player));
+		}
 	}
 
 	public void sendBroadMessage(String message, int second) {
@@ -519,10 +430,97 @@ public class User {
 	}
 
 	public void sendPluginMessage(String message) {
-		for(String mes:(TString.Prefix("PigRPG", 3) + message.replaceAll("&", "§")).split("\n"))
-		FanMessage.getBy(mes,true).send(player);
+		for (String mes : (TString.Prefix("PigRPG", 3) + message.replaceAll(
+				"&", "§")).split("\n"))
+			FanMessage.getBy(mes, true).send(player);
 		// this.player.sendMessage(TString.Prefix("PigRPG", 3)+
 		// message.replaceAll("&", "§"));
+	}
+
+	public void setChatchannel(ChatChannel chatchannel) {
+		this.chatchannel = chatchannel;
+	}
+
+	public void setEquip(Equipment equip) {
+		equiplist.put(equip.getEquiptype().getFinalParent(), equip);
+		TConfig.saveConfig("PigRPG", "equip" + "_" + equip.getEquiptype()
+				+ ".yml", "equip." + player.getName(), new ItemStack(equip));
+	}
+
+	public void setExp(int exp) {
+		int level = this.getLevel();
+		this.exp = exp;
+		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName() + ".exp",
+				exp);
+		if (this.getLevel() != level) {
+			this.getPlayer().openInventory(EquipChest.getInventory(this));
+			this.getPlayer().closeInventory();
+		}
+	}
+
+	public void setJustsay(String justsay) {
+		this.justsay = justsay;
+	}
+
+	public void setJustSay(String justsay) {
+		this.justsay = justsay;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+		if (prefix.contains("STONE") || prefix.contains("称号"))
+			this.prefix = "null";
+		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName()
+				+ ".prefix", this.prefix);
+		freshDisplayName();
+	}
+
+	public User setRpgClass(RpgClass rpgclass) {
+		this.rpgclass = rpgclass.getName();
+		TConfig.saveConfig("PigRPG", "userdata.yml", player.getName()
+				+ ".rpgclass", this.rpgclass);
+		return this;
+	}
+
+	public void setScore(String key, Object value) {
+		this.scorelist.put(key, value);
+		this.buildScore();
+	}
+
+	public void setSelfChat() {
+		this.setChatchannel(ChatChannel.Self);
+		this.chatTarget = this.willChat;
+		User target = this.willChat;
+		this.willChat = this;
+		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
+				+ target.getPlayer().getName() + "才能看到");
+		this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
+		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
+	}
+
+	public void setSelfChat(User target) {
+		this.setChatchannel(ChatChannel.Self);
+		this.chatTarget = target;
+		target.willChat = this;
+		this.sendPluginMessage("&2你进入了私聊频道，你之后的每句话将只有"
+				+ target.getPlayer().getName() + "才能看到");
+		new TMessage("输入/pr chat change")
+				.tooltip(
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg chat change")
+								.getDescribe())
+				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
+				.suggest("/pr chat change").tooltip("更换聊天频道")
+				.send(this.getPlayer());
+		// this.sendPluginMessage("&7输入/pr chat change 更换聊天频道");
+		target.sendPluginMessage(this.getPlayer().getName() + "与你发起了私聊");
+		new TMessage("输入/pr chat self")
+				.tooltip(
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg chat self")
+								.getDescribe())
+				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + " 更换聊天频道")
+				.suggest("/pr chat self").tooltip("更换聊天频道")
+				.send(target.getPlayer());
+		// target.sendPluginMessage("&7输入/pr chat self 进入私聊频道");
 	}
 
 	public void teleport(Warp warp) {

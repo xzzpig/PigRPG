@@ -1,34 +1,34 @@
 package com.github.xzzpig.pigrpg.commands;
 
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
 
 public class Help {
-	public static final CommandHelp PIGRPG = new CommandHelp("pigrpg",
+	public static final TCommandHelp PIGRPG = new TCommandHelp("pigrpg",
 			"PigRPG的主命令", "输入/pr help 查看帮助");
 
 	static {
-		CommandHelp pr_friend = PIGRPG.addSubCommandHelp("friend",
+		TCommandHelp pr_friend = PIGRPG.addSubCommandHelp("friend",
 				"获取 好友系统 的帮助", "输入/pr friend help 查看帮助", "");
-		CommandHelp pr_trade = PIGRPG.addSubCommandHelp("trade",
+		TCommandHelp pr_trade = PIGRPG.addSubCommandHelp("trade",
 				" 获取 交易系统 的帮助", "输入/pr trade help 查看帮助", "");
-		CommandHelp pr_chat = PIGRPG.addSubCommandHelp("chat", "  获取 聊天系统 的帮助",
-				"输入/pr chat help 查看帮助", "");
-		CommandHelp pr_tel = PIGRPG.addSubCommandHelp("tel", "   获取 传送系统 的帮助",
+		TCommandHelp pr_chat = PIGRPG.addSubCommandHelp("chat",
+				"  获取 聊天系统 的帮助", "输入/pr chat help 查看帮助", "");
+		TCommandHelp pr_tel = PIGRPG.addSubCommandHelp("tel", "   获取 传送系统 的帮助",
 				"输入/pr tel help 查看帮助", "");
-		CommandHelp pr_sale = PIGRPG.addSubCommandHelp("sale", "  获取 拍卖系统 的帮助",
-				"输入/pr sale help 查看帮助", "");
-		CommandHelp pr_equip = PIGRPG.addSubCommandHelp("equip",
+		TCommandHelp pr_sale = PIGRPG.addSubCommandHelp("sale",
+				"  获取 拍卖系统 的帮助", "输入/pr sale help 查看帮助", "");
+		TCommandHelp pr_equip = PIGRPG.addSubCommandHelp("equip",
 				" 获取 装备系统 的帮助", "输入/pr equip help 查看帮助", "");
-		CommandHelp pr_team = PIGRPG.addSubCommandHelp("team", "  获取 组队系统 的帮助",
-				"输入/pr team help 查看帮助", "");
-		CommandHelp pr_list = PIGRPG.addSubCommandHelp("list", "  获取 所有列表",
+		TCommandHelp pr_team = PIGRPG.addSubCommandHelp("team",
+				"  获取 组队系统 的帮助", "输入/pr team help 查看帮助", "");
+		TCommandHelp pr_list = PIGRPG.addSubCommandHelp("list", "  获取 所有列表",
 				"输入/pr list help 查看帮助", "");
 		PIGRPG.addSubCommandHelp("showhand", "展示手中物品", "输入/pr help 查看帮助",
 				"<展示玩家>(不填为全部)");
-		// PIGRPG.addSubCommandHelp("reload", "重载插件", "", "");
+		// PIGRPG.addSubTCommandHelp("reload", "重载插件", "", "");
 
 		pr_friend.addSubCommandHelp("list", "  打开好友列表", "", "");
-		CommandHelp pr_friend_del = pr_friend.addSubCommandHelp("del",
+		TCommandHelp pr_friend_del = pr_friend.addSubCommandHelp("del",
 				"   处理好友删除请求", "", "");
 		pr_friend.addSubCommandHelp("accept", "接受好友请求", "", "");
 		pr_friend.addSubCommandHelp("deny", "  拒绝好友请求", "", "");

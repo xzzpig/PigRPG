@@ -7,7 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
 import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
@@ -36,11 +36,11 @@ public class Power_Lightning extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
-	public void run() {
-		if (loc == null)
-			return;
-		if (rand.nextInt(100) <= chance)
-			loc.getWorld().strikeLightning(loc);
+	public void rebuildRC(PlayerInteractEvent event) {
+		if (target.equalsIgnoreCase("point"))
+			loc = TEntity.getTarget(event.getPlayer(), distance).getLocation();
+		else
+			loc = event.getPlayer().getLocation();
 	}
 
 	@Override
@@ -52,10 +52,10 @@ public class Power_Lightning extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		if (target.equalsIgnoreCase("point"))
-			loc = TEntity.getTarget(event.getPlayer(), distance).getLocation();
-		else
-			loc = event.getPlayer().getLocation();
+	public void run() {
+		if (loc == null)
+			return;
+		if (rand.nextInt(100) <= chance)
+			loc.getWorld().strikeLightning(loc);
 	}
 }

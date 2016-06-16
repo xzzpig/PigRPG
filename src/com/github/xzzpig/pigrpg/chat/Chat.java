@@ -5,23 +5,19 @@ import com.github.xzzpig.pigrpg.User;
 public class Chat {
 	static boolean muteall = false;
 
-	User user;
-	boolean mute = false;
-
-	public Chat(User user) {
-		this.user = user;
+	public static boolean isMuteAll() {
+		return muteall;
 	}
-
 	public static void setMuteAll(boolean b) {
 		muteall = b;
 	}
 
-	public static boolean isMuteAll() {
-		return muteall;
-	}
+	User user;
 
-	public boolean isAcceptChatChannel(ChatChannel c) {
-		return user.isAcceptChatChannel(c);
+	boolean mute = false;
+
+	public Chat(User user) {
+		this.user = user;
 	}
 
 	public void addAcceptChatChannel(ChatChannel c) {
@@ -30,6 +26,22 @@ public class Chat {
 
 	public void delAcceptChatChannel(ChatChannel c) {
 		user.delAcceptChatChannel(c);
+	}
+
+	public ChatChannel getChatchannel() {
+		return user.getChatchannel();
+	}
+
+	public String getJustSay() {
+		return user.getJustSay();
+	}
+
+	public boolean isAcceptChatChannel(ChatChannel c) {
+		return user.isAcceptChatChannel(c);
+	}
+
+	public boolean ismute() {
+		return (this.mute || muteall);
 	}
 
 	public void mute() {
@@ -45,36 +57,24 @@ public class Chat {
 			this.setChatchannel(ChatChannel.All);
 	}
 
-	public boolean ismute() {
-		return (this.mute || muteall);
+	public void sendChatMessage(User fromuser) {
+		user.sendChatMessage(fromuser);
 	}
 
 	public void setChatchannel(ChatChannel chatchannel) {
 		user.setChatchannel(chatchannel);
 	}
 
-	public ChatChannel getChatchannel() {
-		return user.getChatchannel();
-	}
-
 	public void setJustSay(String justsay) {
 		user.setJustSay(justsay);
-	}
-
-	public String getJustSay() {
-		return user.getJustSay();
-	}
-
-	public void setSelfChat(User target) {
-		user.setSelfChat(target);
 	}
 
 	public void setSelfChat() {
 		user.setSelfChat();
 	}
 
-	public void sendChatMessage(User fromuser) {
-		user.sendChatMessage(fromuser);
+	public void setSelfChat(User target) {
+		user.setSelfChat(target);
 	}
 
 }

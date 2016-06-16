@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class Voids {
 	public static void loadBanWords() {

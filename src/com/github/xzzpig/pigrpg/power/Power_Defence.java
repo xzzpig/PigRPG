@@ -5,8 +5,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.TCalculate;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
@@ -33,6 +33,23 @@ public class Power_Defence extends Power implements PT_BeDamage, PT_RightClick {
 				"10")));
 		time = Integer.valueOf(pl.getReplaced(path.getString("time")));
 		return this;
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		if (target.equalsIgnoreCase("self"))
+			entity = event.getPlayer();
+		else
+			entity = TEntity.getTarget(entity, distance);
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("self")) {
+			if (event.getEntity() instanceof LivingEntity)
+				entity = (LivingEntity) event.getEntity();
+		} else if (event.getDamager() instanceof LivingEntity)
+			entity = (LivingEntity) event.getDamager();
 	}
 
 	@Override
@@ -77,22 +94,5 @@ public class Power_Defence extends Power implements PT_BeDamage, PT_RightClick {
 				}
 			}).start();
 		}
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		if (target.equalsIgnoreCase("self"))
-			entity = event.getPlayer();
-		else
-			entity = TEntity.getTarget(entity, distance);
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("self")) {
-			if (event.getEntity() instanceof LivingEntity)
-				entity = (LivingEntity) event.getEntity();
-		} else if (event.getDamager() instanceof LivingEntity)
-			entity = (LivingEntity) event.getDamager();
 	}
 }

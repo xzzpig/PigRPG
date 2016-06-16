@@ -6,10 +6,15 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 
 public class Sale {
 	public static List<ItemStack> items = new ArrayList<ItemStack>();
+
+	public static void addItem(ItemStack item) {
+		items.add(item);
+		saveItems();
+	}
 
 	public static void loadItems() {
 		List<ItemStack> newitems = new ArrayList<ItemStack>();
@@ -27,6 +32,11 @@ public class Sale {
 		items = newitems;
 	}
 
+	public static void removeItem(ItemStack item) {
+		items.remove(item);
+		saveItems();
+	}
+
 	public static void saveItems() {
 		int i = 0;
 		TConfig.delConfigFile("PigRPG", "saleiyems.yml");
@@ -36,15 +46,5 @@ public class Sale {
 			config.set("" + i, items.get(i));
 		}
 		TConfig.saveConfig("PigRPG", config, "saleitems.yml");
-	}
-
-	public static void addItem(ItemStack item) {
-		items.add(item);
-		saveItems();
-	}
-
-	public static void removeItem(ItemStack item) {
-		items.remove(item);
-		saveItems();
 	}
 }

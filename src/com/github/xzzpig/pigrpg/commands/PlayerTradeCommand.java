@@ -5,9 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.trade.PlayerTrade;
@@ -22,9 +22,9 @@ public class PlayerTradeCommand {
 		}
 		Player player = (Player) sender;
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg trade").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("accept")) {
 			PlayerTrade trade = PlayerTrade.getTrade(player);
@@ -46,10 +46,9 @@ public class PlayerTradeCommand {
 				sender.sendMessage(TString.Prefix("PigRPG", 4) + "你没有交易请求");
 			return true;
 		}
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr trade help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr trade help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg trade")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg trade")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr trade help").tooltip("").send((Player) sender);

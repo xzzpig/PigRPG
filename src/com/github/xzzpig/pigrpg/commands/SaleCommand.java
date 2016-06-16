@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TArgsSolver;
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TArgsSolver;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.chests.SaleChest;
 import com.github.xzzpig.pigrpg.sale.Sale;
 
@@ -22,9 +22,9 @@ public class SaleCommand {
 			String label, String[] args) {
 		Player player = (Player) sender;
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg sale").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("list")) {
 			player.openInventory(SaleChest.getInventory(1));
@@ -70,10 +70,9 @@ public class SaleCommand {
 			sender.sendMessage(TString.Prefix("PigRPG", 3) + "拍卖成功");
 			return true;
 		}
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr sale help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr sale help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg sale")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg sale")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr sale help").tooltip("").send((Player) sender);

@@ -1,6 +1,6 @@
 package com.github.xzzpig.pigrpg;
 
-import com.github.xzzpig.BukkitTools.TPremission;
+import com.github.xzzpig.pigapi.bukkit.TPremission;
 
 public class Premissions {
 	public static final TPremission pigrpg_ = new TPremission("pigrpg.*", null);

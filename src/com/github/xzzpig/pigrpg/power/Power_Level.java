@@ -3,7 +3,7 @@ package com.github.xzzpig.pigrpg.power;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
+import com.github.xzzpig.pigapi.TCalculate;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Limit;
 
@@ -12,6 +12,20 @@ public class Power_Level extends Power implements PT_Limit {
 	int level;
 
 	Player player;
+
+	@Override
+	public boolean can() {
+		if (type.equalsIgnoreCase("less"))
+			return player.getLevel() < level;
+		else if (type.equalsIgnoreCase("more"))
+			return player.getLevel() > level;
+		return player.getLevel() == level;
+	}
+
+	@Override
+	public String cantMessage() {
+		return "等级不足,无法使用";
+	}
 
 	@Override
 	public String getPowerName() {
@@ -30,20 +44,6 @@ public class Power_Level extends Power implements PT_Limit {
 
 	@Override
 	public void run() {
-	}
-
-	@Override
-	public boolean can() {
-		if (type.equalsIgnoreCase("less"))
-			return player.getLevel() < level;
-		else if (type.equalsIgnoreCase("more"))
-			return player.getLevel() > level;
-		return player.getLevel() == level;
-	}
-
-	@Override
-	public String cantMessage() {
-		return "等级不足,无法使用";
 	}
 
 }

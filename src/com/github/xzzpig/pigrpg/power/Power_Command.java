@@ -34,6 +34,28 @@ public class Power_Command extends Power implements PT_RightClick, PT_Damage,
 	}
 
 	@Override
+	public void rebuildEquip(InventoryCloseEvent event) {
+		player = (Player) event.getPlayer();
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		player = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
+	}
+
+	@Override
 	public void run() {
 		if (player == null)
 			return;
@@ -44,28 +66,6 @@ public class Power_Command extends Power implements PT_RightClick, PT_Damage,
 				temppremission, true, 10);
 		player.chat("/" + command.replaceAll("</player/>", player.getName()));
 		player.setOp(originop);
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player)
-			player = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		player = event.getPlayer();
-	}
-
-	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
-		player = (Player) event.getPlayer();
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player)
-			player = (Player) event.getDamager();
 	}
 
 }

@@ -2,8 +2,8 @@ package com.github.xzzpig.pigrpg.team;
 
 import org.bukkit.ChatColor;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 
 public class TeamQue {
@@ -36,8 +36,7 @@ public class TeamQue {
 			target.sendPluginMessage(ChatColor.BLUE
 					+ launcher.getPlayer().getName() + ChatColor.GREEN
 					+ "邀请你加入他的队伍");
-			new TMessage(
-					TString.Prefix("PigRPG", 3) + "输入/pr team ")
+			new TMessage(TString.Prefix("PigRPG", 3) + "输入/pr team ")
 					.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 							+ "accept")
 					.tooltip("同意\n/pr team accept")
@@ -53,8 +52,7 @@ public class TeamQue {
 			target.sendPluginMessage(ChatColor.BLUE
 					+ launcher.getPlayer().getName() + ChatColor.GREEN
 					+ "申请加入你的队伍");
-			new TMessage(
-					TString.Prefix("PigRPG", 3) + "输入/pr list ")
+			new TMessage(TString.Prefix("PigRPG", 3) + "输入/pr list ")
 					.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 							+ "accept")
 					.tooltip("同意\n/pr team accept")

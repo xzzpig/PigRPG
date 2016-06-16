@@ -8,10 +8,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TPlayer;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TPlayer;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.FanMessage;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.Vars;
@@ -31,23 +31,22 @@ public class Commands {
 			}
 			if (getarg(args, 0).equalsIgnoreCase("help")) {
 				if (sender instanceof Player) {
-					for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+					for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 							"pigrpg").getSubCommandHelps())
-						ch.getHelpMessage().send((Player) sender);
+						ch.getHelpMessage("PigRPG").send((Player) sender);
 					FanMessage.helpweb().send((Player) sender);
-					new TMessage(
-							ChatColor.GREEN + "" + ChatColor.UNDERLINE
-									+ "点我显示所有命令").tooltip("")
-							.command("/pr helpall").send((Player) sender);
+					new TMessage(ChatColor.GREEN + "" + ChatColor.UNDERLINE
+							+ "点我显示所有命令").tooltip("").command("/pr helpall")
+							.send((Player) sender);
 					return true;
 				}
 				sender.sendMessage(TString.Prefix("PigRPG", 4) + "该命令只能由玩家使用");
 				return true;
 			} else if (getarg(args, 0).equalsIgnoreCase("helpall")) {
 				if (sender instanceof Player)
-					for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+					for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 							"pigrpg").getAllSubs())
-						ch.getHelpMessage().send((Player) sender);
+						ch.getHelpMessage("PigRPG").send((Player) sender);
 				else {
 					sender.sendMessage(TString.Prefix("PigRPG", 4)
 							+ "该命令只能由玩家使用");
@@ -187,7 +186,7 @@ public class Commands {
 		}
 		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr help").tooltip("").send((Player) sender);

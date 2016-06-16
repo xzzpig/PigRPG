@@ -16,8 +16,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TString;
 
 public class RpgChunk {
 	private static final Random random = new Random();
@@ -64,22 +64,16 @@ public class RpgChunk {
 		return this;
 	}
 
+	public int getBasicLevel() {
+		Block block = this.chunk.getBlock(0, 0, 0);
+		Location spawn = block.getWorld().getSpawnLocation();
+		double distance = spawn.distance(block.getLocation());
+		int level = (int) distance / RpgWorld.part;
+		return level;
+	}
+
 	public Biome getBiome() {
 		return chunk.getBlock(0, 100, 0).getBiome();
-	}
-
-	public boolean isChanged() {
-		Block block = this.chunk.getBlock(0, 0, 0);
-		if (block.getType() == Material.CHEST)
-			return true;
-		return false;
-	}
-
-	public Inventory getDatas() {
-		Block block = this.chunk.getBlock(0, 0, 0);
-		if (block.getState() instanceof Chest)
-			return ((Chest) block.getState()).getBlockInventory();
-		return null;
 	}
 
 	public String getData(String key) {
@@ -103,6 +97,30 @@ public class RpgChunk {
 		return item.getItemMeta().getLore().get(0);
 	}
 
+	public Inventory getDatas() {
+		Block block = this.chunk.getBlock(0, 0, 0);
+		if (block.getState() instanceof Chest)
+			return ((Chest) block.getState()).getBlockInventory();
+		return null;
+	}
+
+	public Chunk[] getNextChunks() {
+		Chunk[] cs = new Chunk[4];
+		Location loc = chunk.getBlock(5, 5, 5).getLocation();
+		cs[0] = loc.clone().add(16, 0, 0).getChunk();
+		cs[1] = loc.clone().add(-16, 0, 0).getChunk();
+		cs[2] = loc.clone().add(0, 0, 16).getChunk();
+		cs[3] = loc.clone().add(0, 0, -16).getChunk();
+		return cs;
+	}
+
+	public boolean isChanged() {
+		Block block = this.chunk.getBlock(0, 0, 0);
+		if (block.getType() == Material.CHEST)
+			return true;
+		return false;
+	}
+
 	public RpgChunk setData(String key, String value) {
 		for (ItemStack is : getDatas().getContents()) {
 			if (is == null)
@@ -122,24 +140,6 @@ public class RpgChunk {
 		item.setItemMeta(im);
 		getDatas().addItem(item);
 		return this;
-	}
-
-	public int getBasicLevel() {
-		Block block = this.chunk.getBlock(0, 0, 0);
-		Location spawn = block.getWorld().getSpawnLocation();
-		double distance = spawn.distance(block.getLocation());
-		int level = (int) distance / RpgWorld.part;
-		return level;
-	}
-
-	public Chunk[] getNextChunks() {
-		Chunk[] cs = new Chunk[4];
-		Location loc = chunk.getBlock(5, 5, 5).getLocation();
-		cs[0] = loc.clone().add(16, 0, 0).getChunk();
-		cs[1] = loc.clone().add(-16, 0, 0).getChunk();
-		cs[2] = loc.clone().add(0, 0, 16).getChunk();
-		cs[3] = loc.clone().add(0, 0, -16).getChunk();
-		return cs;
 	}
 
 	// private void change(final Chunk c) throws Exception {

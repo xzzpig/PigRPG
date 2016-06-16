@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
@@ -41,22 +41,19 @@ public class Power_Flame extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void run() {
-		if (entity == null)
-			return;
-		if (chance > 100)
-			chance = 100;
-		if (rand.nextInt(100) <= chance)
-			entity.setFireTicks(time);
+	public void rebuildEquip(InventoryCloseEvent event) {
+		if (target.equalsIgnoreCase("point"))
+			entity = TEntity.getTarget(event.getPlayer(), distance);
+		else
+			entity = event.getPlayer();
 	}
 
 	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("point")) {
-			if (event.getEntity() instanceof LivingEntity)
-				entity = (LivingEntity) event.getEntity();
-		} else if (event.getDamager() instanceof LivingEntity)
-			entity = (LivingEntity) event.getDamager();
+	public void rebuildRC(PlayerInteractEvent event) {
+		if (target.equalsIgnoreCase("point"))
+			entity = TEntity.getTarget(event.getPlayer(), distance);
+		else
+			entity = event.getPlayer();
 	}
 
 	@Override
@@ -69,19 +66,22 @@ public class Power_Flame extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		if (target.equalsIgnoreCase("point"))
-			entity = TEntity.getTarget(event.getPlayer(), distance);
-		else
-			entity = event.getPlayer();
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("point")) {
+			if (event.getEntity() instanceof LivingEntity)
+				entity = (LivingEntity) event.getEntity();
+		} else if (event.getDamager() instanceof LivingEntity)
+			entity = (LivingEntity) event.getDamager();
 	}
 
 	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
-		if (target.equalsIgnoreCase("point"))
-			entity = TEntity.getTarget(event.getPlayer(), distance);
-		else
-			entity = event.getPlayer();
+	public void run() {
+		if (entity == null)
+			return;
+		if (chance > 100)
+			chance = 100;
+		if (rand.nextInt(100) <= chance)
+			entity.setFireTicks(time);
 	}
 
 }

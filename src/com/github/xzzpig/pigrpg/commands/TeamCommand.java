@@ -5,9 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.team.Team;
 import com.github.xzzpig.pigrpg.team.TeamQue;
@@ -17,9 +17,9 @@ public class TeamCommand extends Commands {
 			String label, String[] args) {
 		User user = User.getUser((Player) sender);
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg team").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("accept")) {
 			TeamQue tq = (TeamQue) user.getDatas().getObject("teamque");
@@ -66,10 +66,9 @@ public class TeamCommand extends Commands {
 			return true;
 		}
 
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr team help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr team help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg team")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg team")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr team help").tooltip("").send((Player) sender);

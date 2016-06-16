@@ -12,6 +12,16 @@ public class Power_Premission extends Power implements PT_Limit {
 	Player player;
 
 	@Override
+	public boolean can() {
+		return player.hasPermission(premission);
+	}
+
+	@Override
+	public String cantMessage() {
+		return "权限不足,无法使用";
+	}
+
+	@Override
 	public String getPowerName() {
 		return "Premission";
 	}
@@ -25,16 +35,6 @@ public class Power_Premission extends Power implements PT_Limit {
 
 	@Override
 	public void run() {
-	}
-
-	@Override
-	public boolean can() {
-		return player.hasPermission(premission);
-	}
-
-	@Override
-	public String cantMessage() {
-		return "权限不足,无法使用";
 	}
 
 }

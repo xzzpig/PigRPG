@@ -19,23 +19,6 @@ public class Power_Hungery extends Power implements PT_RightClick, PT_Damage,
 	Player player;
 
 	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (event.getEntity() instanceof LivingEntity)
-			player = (Player) event.getEntity();
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player)
-			player = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		player = event.getPlayer();
-	}
-
-	@Override
 	public String getPowerName() {
 		return "Hungery";
 	}
@@ -45,6 +28,23 @@ public class Power_Hungery extends Power implements PT_RightClick, PT_Damage,
 		amount = Integer.valueOf(pl.getReplaced(path.getString("amount")));
 		type = pl.getReplaced(path.getString("type", "add"));
 		return this;
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		player = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (event.getEntity() instanceof LivingEntity)
+			player = (Player) event.getEntity();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
 	}
 
 	@Override

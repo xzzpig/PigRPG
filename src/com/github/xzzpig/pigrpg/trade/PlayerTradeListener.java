@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.chests.ItemForChest;
 
 public class PlayerTradeListener implements Listener {
@@ -86,22 +86,6 @@ public class PlayerTradeListener implements Listener {
 	}
 
 	@EventHandler
-	public void onCloseInv(InventoryCloseEvent event) {
-		if (!event.getInventory().getTitle().contains("玩家交易界面"))
-			return;
-		Inventory inv = event.getInventory();
-		final PlayerTrade trade = PlayerTrade.getTrade(inv);
-		if (trade == null)
-			return;
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				trade.returnItems();
-			}
-		}).start();
-	}
-
-	@EventHandler
 	public void onClickItem(InventoryClickEvent event) {
 		Inventory inv = event.getInventory();
 		Player clicker = (Player) event.getWhoClicked();
@@ -141,5 +125,21 @@ public class PlayerTradeListener implements Listener {
 			trade.delItem(type, event);
 		} catch (Exception e) {
 		}
+	}
+
+	@EventHandler
+	public void onCloseInv(InventoryCloseEvent event) {
+		if (!event.getInventory().getTitle().contains("玩家交易界面"))
+			return;
+		Inventory inv = event.getInventory();
+		final PlayerTrade trade = PlayerTrade.getTrade(inv);
+		if (trade == null)
+			return;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				trade.returnItems();
+			}
+		}).start();
 	}
 }

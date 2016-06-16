@@ -3,7 +3,7 @@ package com.github.xzzpig.pigrpg.chests;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.sale.Sale;
 
 public class SaleChest {

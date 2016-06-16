@@ -10,12 +10,26 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.friend.Friend;
 import com.github.xzzpig.pigrpg.teleport.Warp;
 
 public class ItemForChest {
+	protected static ItemStack AddFriend(String player, String target) {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(154);
+		ItemMeta im = is.getItemMeta();
+		if (Friend.hasFriend(player, target))
+			im.setDisplayName(TString.Color(3) + "对方已是你的好友");
+		else
+			im.setDisplayName(TString.Color(3) + "添加好友");
+		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+
 	@SuppressWarnings("deprecation")
 	public static ItemStack customItem(String displayname, int type,
 			List<String> lore) {
@@ -24,20 +38,6 @@ public class ItemForChest {
 		im.setDisplayName(TString.Color(3) + displayname);
 		if (lore != null)
 			im.setLore(lore);
-		is.setItemMeta(im);
-		return is;
-	}
-
-	@SuppressWarnings("deprecation")
-	protected static ItemStack playerInform(Player player) {
-		ItemStack is = new ItemStack(397);
-		MaterialData data = is.getData();
-		data.setData((byte) 3);
-		is.setData(data);
-		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(TString.Color(3) + "玩家信息");
-		List<String> lore = User.getUser(player).getInfo();
-		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
 	}
@@ -70,39 +70,15 @@ public class ItemForChest {
 		return is;
 	}
 
-	protected static ItemStack AddFriend(String player, String target) {
-		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(154);
+	@SuppressWarnings("deprecation")
+	protected static ItemStack playerInform(Player player) {
+		ItemStack is = new ItemStack(397);
+		MaterialData data = is.getData();
+		data.setData((byte) 3);
+		is.setData(data);
 		ItemMeta im = is.getItemMeta();
-		if (Friend.hasFriend(player, target))
-			im.setDisplayName(TString.Color(3) + "对方已是你的好友");
-		else
-			im.setDisplayName(TString.Color(3) + "添加好友");
-		List<String> lore = new ArrayList<String>();
-		im.setLore(lore);
-		is.setItemMeta(im);
-		return is;
-	}
-
-	protected static ItemStack tradeQue() {
-		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(399);
-		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(TString.Color(3) + "申请交易");
-		List<String> lore = new ArrayList<String>();
-		im.setLore(lore);
-		is.setItemMeta(im);
-		return is;
-	}
-
-	protected static ItemStack warpInfo(Warp warp) {
-		@SuppressWarnings("deprecation")
-		ItemStack is = new ItemStack(368);
-		ItemMeta im = is.getItemMeta();
-		im.setDisplayName(TString.Color(3) + warp.getName());
-		List<String> lore = new ArrayList<String>();
-		lore.add(TString.Color(7) + "所在世界:"
-				+ warp.getLocation().getWorld().getName());
+		im.setDisplayName(TString.Color(3) + "玩家信息");
+		List<String> lore = User.getUser(player).getInfo();
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
@@ -135,6 +111,30 @@ public class ItemForChest {
 				lore.add(TString.Color(2) + "创建并邀请对方加入队伍");
 		}
 
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+
+	protected static ItemStack tradeQue() {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(399);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3) + "申请交易");
+		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+
+	protected static ItemStack warpInfo(Warp warp) {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(368);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3) + warp.getName());
+		List<String> lore = new ArrayList<String>();
+		lore.add(TString.Color(7) + "所在世界:"
+				+ warp.getLocation().getWorld().getName());
 		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;

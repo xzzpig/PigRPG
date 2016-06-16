@@ -6,7 +6,11 @@ import java.util.List;
 public enum PowerRunTime {
 	Never, RightClick, Damage, CloseEC, BeDamage, Killed;
 
-	private PowerRunTime() {
+	public static PowerRunTime[] form(List<String> runtimes) {
+		List<PowerRunTime> prs = new ArrayList<PowerRunTime>();
+		for (String s : runtimes)
+			prs.add(form(s));
+		return prs.toArray(new PowerRunTime[0]);
 	}
 
 	public static PowerRunTime form(String name) {
@@ -16,10 +20,6 @@ public enum PowerRunTime {
 		return Never;
 	}
 
-	public static PowerRunTime[] form(List<String> runtimes) {
-		List<PowerRunTime> prs = new ArrayList<PowerRunTime>();
-		for (String s : runtimes)
-			prs.add(form(s));
-		return prs.toArray(new PowerRunTime[0]);
+	private PowerRunTime() {
 	}
 }

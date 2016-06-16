@@ -8,9 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import com.github.xzzpig.BukkitTools.TCalculate;
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TPlayer;
+import com.github.xzzpig.pigapi.TCalculate;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TPlayer;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.User;
 
@@ -68,6 +68,13 @@ public class RPGListener implements Listener {
 			}
 	}
 
+	public static int getLevel(int exp) {
+		if (leveltype.equalsIgnoreCase("normal"))
+			return TPlayer.ExpToLevel(exp);
+		return (int) TCalculate.getResult(RPGListener.level.replaceAll(
+				"</exp/>", exp + ""));
+	}
+
 	@EventHandler
 	public void onKillEntity(EntityDeathEvent event) {
 		Player player = event.getEntity().getKiller();
@@ -106,12 +113,5 @@ public class RPGListener implements Listener {
 				member.buildScore();
 			}
 		}
-	}
-
-	public static int getLevel(int exp) {
-		if (leveltype.equalsIgnoreCase("normal"))
-			return TPlayer.ExpToLevel(exp);
-		return (int) TCalculate.getResult(RPGListener.level.replaceAll(
-				"</exp/>", exp + ""));
 	}
 }

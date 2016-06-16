@@ -9,14 +9,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TArgsSolver;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TArgsSolver;
+import com.github.xzzpig.pigapi.bukkit.TString;
 
 public class Equipment extends ItemStack {
-	private EquipType etype = EquipType.Default;;
+	public static boolean isEquipItem(ItemStack is) {
+		if (is instanceof Equipment)
+			return true;
+		ItemMeta im = is.getItemMeta();
+		List<String> lore = im.getLore();
+		if (lore == null)
+			return false;
+		if (EquipType.hasType(lore.get(0).replaceAll(" ", "")))
+			return true;
+		return false;
+	};
+	private EquipType etype = EquipType.Default;
 	private EquipQuality equality = EquipQuality.Common;
 	private ItemMeta im;
 	private List<PowerLore> powerlores = new ArrayList<PowerLore>();
+
 	private Player owner;
 
 	@SuppressWarnings("deprecation")
@@ -36,78 +48,12 @@ public class Equipment extends ItemStack {
 		loadEnums();
 	}
 
-	public void setOwner(Player owner) {
-		this.owner = owner;
-	}
-
-	public Player getOwner() {
-		return owner;
-	}
-
-	public static boolean isEquipItem(ItemStack is) {
-		if (is instanceof Equipment)
-			return true;
-		ItemMeta im = is.getItemMeta();
-		List<String> lore = im.getLore();
-		if (lore == null)
-			return false;
-		if (EquipType.hasType(lore.get(0).replaceAll(" ", "")))
-			return true;
-		return false;
-	}
-
-	public Equipment setDisplayName(String name) {
-		return this.setDisplayName(name, this.equality);
-	}
-
-	public Equipment setDisplayName(String name, EquipQuality eq) {
-		this.getItemMeta().setDisplayName(eq + name);
-		this.saveItemMeta();
-		return this;
-	}
-
-	public Equipment setEquipQuality(EquipQuality equality) {
-		if (equality == null)
-			equality = EquipQuality.Common;
-		this.setDisplayName(
-				this.getItemMeta().getDisplayName()
-						.replaceFirst(this.equality.toString(), "")
-						.replaceAll(equality.toString(), ""), equality);
-		this.equality = equality;
-		return this;
-	}
-
 	public EquipQuality getEquipQuality() {
 		return equality;
 	}
 
-	public Equipment setEquiptype(EquipType etype) {
-		this.etype = etype;
-		if (this.hasLoreType()) {
-			ItemMeta im = this.getItemMeta();
-			List<String> lore = im.getLore();
-			lore.set(0, "        " + etype.toString());
-			im.setLore(lore);
-			this.setItemMeta(im);
-		} else {
-			ItemMeta im = this.getItemMeta();
-			List<String> lore = im.getLore();
-			if (lore == null)
-				lore = new ArrayList<String>();
-			lore.add(0, "        " + etype.toString());
-			im.setLore(lore);
-			this.setItemMeta(im);
-		}
-		return this;
-	}
-
 	public EquipType getEquiptype() {
 		return etype;
-	}
-
-	public Equipment saveItemMeta() {
-		super.setItemMeta(this.im);
-		return this;
 	}
 
 	@Override
@@ -121,6 +67,14 @@ public class Equipment extends ItemStack {
 				.get(key);
 	}
 
+	public Player getOwner() {
+		return owner;
+	}
+
+	public PowerLore[] getPowerLores() {
+		return powerlores.toArray(new PowerLore[0]);
+	}
+
 	public boolean hasLoreType() {
 		ItemMeta im = this.getItemMeta();
 		List<String> lore = im.getLore();
@@ -129,10 +83,6 @@ public class Equipment extends ItemStack {
 		if (EquipType.hasType(lore.get(0).replaceAll(" ", "")))
 			return true;
 		return false;
-	}
-
-	public PowerLore[] getPowerLores() {
-		return powerlores.toArray(new PowerLore[0]);
 	}
 
 	public Equipment loadEnums() {
@@ -205,5 +155,55 @@ public class Equipment extends ItemStack {
 		this.getItemMeta().setLore(lore);
 		this.saveItemMeta();
 		return this;
+	}
+
+	public Equipment saveItemMeta() {
+		super.setItemMeta(this.im);
+		return this;
+	}
+
+	public Equipment setDisplayName(String name) {
+		return this.setDisplayName(name, this.equality);
+	}
+
+	public Equipment setDisplayName(String name, EquipQuality eq) {
+		this.getItemMeta().setDisplayName(eq + name);
+		this.saveItemMeta();
+		return this;
+	}
+
+	public Equipment setEquipQuality(EquipQuality equality) {
+		if (equality == null)
+			equality = EquipQuality.Common;
+		this.setDisplayName(
+				this.getItemMeta().getDisplayName()
+						.replaceFirst(this.equality.toString(), "")
+						.replaceAll(equality.toString(), ""), equality);
+		this.equality = equality;
+		return this;
+	}
+
+	public Equipment setEquiptype(EquipType etype) {
+		this.etype = etype;
+		if (this.hasLoreType()) {
+			ItemMeta im = this.getItemMeta();
+			List<String> lore = im.getLore();
+			lore.set(0, "        " + etype.toString());
+			im.setLore(lore);
+			this.setItemMeta(im);
+		} else {
+			ItemMeta im = this.getItemMeta();
+			List<String> lore = im.getLore();
+			if (lore == null)
+				lore = new ArrayList<String>();
+			lore.add(0, "        " + etype.toString());
+			im.setLore(lore);
+			this.setItemMeta(im);
+		}
+		return this;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 }

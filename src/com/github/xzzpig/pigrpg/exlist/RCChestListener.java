@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.RCChest;
 import com.github.xzzpig.pigrpg.friend.Friend;
@@ -16,18 +16,6 @@ import com.github.xzzpig.pigrpg.team.TeamQue;
 import com.github.xzzpig.pigrpg.trade.PlayerTrade;
 
 public class RCChestListener implements Listener {
-	@EventHandler
-	public void onInteraction(PlayerInteractEntityEvent event) {
-		Player player = event.getPlayer();
-		if (!player.isSneaking())
-			return;
-		if (event.getRightClicked().getType() != EntityType.PLAYER)
-			return;
-		Player target = (Player) event.getRightClicked();
-		player.openInventory(RCChest.getInventory(target, event.getPlayer()));
-		event.setCancelled(true);
-	}
-
 	@EventHandler
 	public void onBanClick(InventoryClickEvent event) {
 		if (event.getInventory().getTitle().contains("的右键菜单"))
@@ -59,5 +47,17 @@ public class RCChestListener implements Listener {
 				new TeamQue(clicker, target);
 			event.getWhoClicked().closeInventory();
 		}
+	}
+
+	@EventHandler
+	public void onInteraction(PlayerInteractEntityEvent event) {
+		Player player = event.getPlayer();
+		if (!player.isSneaking())
+			return;
+		if (event.getRightClicked().getType() != EntityType.PLAYER)
+			return;
+		Player target = (Player) event.getRightClicked();
+		player.openInventory(RCChest.getInventory(target, event.getPlayer()));
+		event.setCancelled(true);
 	}
 }

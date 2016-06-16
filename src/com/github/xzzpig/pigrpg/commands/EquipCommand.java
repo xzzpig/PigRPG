@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
-import com.github.xzzpig.pigrpg.CommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TCommandHelp;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.Premissions;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.chests.EquipChest;
@@ -32,9 +32,9 @@ public class EquipCommand {
 			return true;
 		}
 		if (getarg(args, 1).equalsIgnoreCase("help")) {
-			for (CommandHelp ch : CommandHelp.valueOf(Help.PIGRPG,
+			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg equip").getSubCommandHelps())
-				ch.getHelpMessage().send((Player) sender);
+				ch.getHelpMessage("PigRPG").send((Player) sender);
 			return true;
 		} else if (getarg(args, 1).equalsIgnoreCase("list")) {
 			if (!User.getUser((Player) sender).hasPremission(
@@ -44,8 +44,8 @@ public class EquipCommand {
 			}
 			user.sendPluginMessage("&3特殊Lore列表:");
 			for (PowerLore p : PowerLore.powerlores) {
-				new TMessage(
-						"" + ChatColor.GREEN + ChatColor.UNDERLINE + p.name)
+				new TMessage("" + ChatColor.GREEN + ChatColor.UNDERLINE
+						+ p.name)
 						.tooltip(
 								ChatColor.YELLOW + "用法:" + p.getUsage()
 										+ "\n点击匹配")
@@ -170,10 +170,10 @@ public class EquipCommand {
 			if (quality == null) {
 				sender.sendMessage(TString.Prefix("PigRPG", 4)
 						+ "错误:未知的装备品质，已默认设为 普通");
-				new TMessage(
-						TString.Prefix("PigRPG", 4) + "输入/pr equip qualitylist")
+				new TMessage(TString.Prefix("PigRPG", 4)
+						+ "输入/pr equip qualitylist")
 						.tooltip(
-								CommandHelp.valueOf(Help.PIGRPG,
+								TCommandHelp.valueOf(Help.PIGRPG,
 										"pigrpg equip qualitylist")
 										.getDescribe())
 						.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE
@@ -221,10 +221,10 @@ public class EquipCommand {
 			if (type == null) {
 				sender.sendMessage(TString.Prefix("PigRPG", 4)
 						+ "错误:未知的装备类型，已默认设为 无");
-				new TMessage(
-						TString.Prefix("PigRPG", 4) + "输入/pr equip typelist")
+				new TMessage(TString.Prefix("PigRPG", 4)
+						+ "输入/pr equip typelist")
 						.tooltip(
-								CommandHelp.valueOf(Help.PIGRPG,
+								TCommandHelp.valueOf(Help.PIGRPG,
 										"pigrpg equip typelist").getDescribe())
 						.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE
 								+ "获取装备类型列表").suggest("/pr equip typelist")
@@ -243,12 +243,11 @@ public class EquipCommand {
 				return true;
 			}
 			if (getarg(args, 2).equalsIgnoreCase("")) {
-				new TMessage(
-						TString.Prefix("PigRPG", 4) + "用法错误,输入/pr equip help")
+				new TMessage(TString.Prefix("PigRPG", 4)
+						+ "用法错误,输入/pr equip help")
 						.tooltip(
-								CommandHelp
-										.valueOf(Help.PIGRPG, "pigrpg equip")
-										.getDescribe())
+								TCommandHelp.valueOf(Help.PIGRPG,
+										"pigrpg equip").getDescribe())
 						.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE
 								+ "获取帮助").suggest("/pr equip help").tooltip("")
 						.send((Player) sender);
@@ -294,12 +293,11 @@ public class EquipCommand {
 				return true;
 			}
 			if (getarg(args, 2).equalsIgnoreCase("")) {
-				new TMessage(
-						TString.Prefix("PigRPG", 4) + "用法错误,输入/pr equip help")
+				new TMessage(TString.Prefix("PigRPG", 4)
+						+ "用法错误,输入/pr equip help")
 						.tooltip(
-								CommandHelp
-										.valueOf(Help.PIGRPG, "pigrpg equip")
-										.getDescribe())
+								TCommandHelp.valueOf(Help.PIGRPG,
+										"pigrpg equip").getDescribe())
 						.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE
 								+ "获取帮助").suggest("/pr equip help").tooltip("")
 						.send((Player) sender);
@@ -339,10 +337,9 @@ public class EquipCommand {
 			sender.sendMessage((TString.Prefix("PigRPG", 4) + "lore已删除"));
 			return true;
 		}
-		new TMessage(
-				TString.Prefix("PigRPG", 4) + "输入/pr equip help")
+		new TMessage(TString.Prefix("PigRPG", 4) + "输入/pr equip help")
 				.tooltip(
-						CommandHelp.valueOf(Help.PIGRPG, "pigrpg equip")
+						TCommandHelp.valueOf(Help.PIGRPG, "pigrpg equip")
 								.getDescribe())
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr equip help").tooltip("").send((Player) sender);

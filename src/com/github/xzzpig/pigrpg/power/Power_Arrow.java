@@ -37,6 +37,17 @@ public class Power_Arrow extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		launcher = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			launcher = (Player) event.getDamager();
+	}
+
+	@Override
 	public void run() {
 		for (Arrow arr : arrows)
 			arr.remove();
@@ -52,16 +63,5 @@ public class Power_Arrow extends Power implements PT_Damage, PT_RightClick {
 			launcher.playSound(launcher.getLocation(), Sound.SHOOT_ARROW, 1.0f,
 					1.0f);
 		}
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player)
-			launcher = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		launcher = event.getPlayer();
 	}
 }

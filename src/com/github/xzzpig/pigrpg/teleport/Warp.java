@@ -6,25 +6,14 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.Vars;
 
 public class Warp {
 	private static List<Warp> warps = new ArrayList<Warp>();
 	public final static Warp Null = new Warp("Null", new Location(Bukkit
 			.getWorlds().get(0), 0, 0, 0));
-
-	String name;
-	Location loc;
-
-	public Warp(String name, Location loc) {
-		this.name = name;
-		this.loc = loc;
-		if (name.equalsIgnoreCase("Null"))
-			return;
-		warps.add(this);
-	}
 
 	public static Warp getWarp(String name) {
 		for (Warp warp : warps) {
@@ -33,7 +22,6 @@ public class Warp {
 		}
 		return Null;
 	}
-
 	public static Warp[] getWarps() {
 		return warps.toArray(new Warp[0]);
 	}
@@ -61,6 +49,18 @@ public class Warp {
 		for (String name : TConfig.getConfigPath("PigRPG", "warp.yml", "warp")) {
 			load(name);
 		}
+	}
+
+	String name;
+
+	Location loc;
+
+	public Warp(String name, Location loc) {
+		this.name = name;
+		this.loc = loc;
+		if (name.equalsIgnoreCase("Null"))
+			return;
+		warps.add(this);
 	}
 
 	public Location getLocation() {

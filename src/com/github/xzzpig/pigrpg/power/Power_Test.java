@@ -10,11 +10,6 @@ public class Power_Test extends Power implements PT_RightClick {
 	String var;
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-
-	}
-
-	@Override
 	public String getPowerName() {
 		return "Test";
 	}
@@ -23,6 +18,11 @@ public class Power_Test extends Power implements PT_RightClick {
 	public Power reBuild(ConfigurationSection path, PowerLore pl) {
 		var = pl.getReplaced(path.getString("var"));
 		return this;
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+
 	}
 
 	@Override

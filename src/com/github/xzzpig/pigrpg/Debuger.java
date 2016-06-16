@@ -2,7 +2,7 @@ package com.github.xzzpig.pigrpg;
 
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TPlayer;
+import com.github.xzzpig.pigapi.bukkit.TPlayer;
 
 public class Debuger {
 	public static long time;

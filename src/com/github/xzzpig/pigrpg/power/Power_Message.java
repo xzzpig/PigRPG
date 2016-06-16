@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_Damage;
@@ -40,20 +40,14 @@ public class Power_Message extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void run() {
-		if (player == null)
-			return;
-		message = Power_Condition.buildStr(message, player, false);
-		User.getUser(player).sendPluginMessage(message);
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
+	public void rebuildEquip(InventoryCloseEvent event) {
 		if (target.equalsIgnoreCase("point")) {
-			if (event.getEntity() instanceof Player)
-				player = (Player) event.getEntity();
-		} else if (event.getDamager() instanceof Player)
-			player = (Player) event.getDamager();
+			LivingEntity entity = TEntity
+					.getTarget(event.getPlayer(), distance);
+			if (entity instanceof Player)
+				player = (Player) entity;
+		} else
+			player = (Player) event.getPlayer();
 	}
 
 	@Override
@@ -68,14 +62,12 @@ public class Power_Message extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
 		if (target.equalsIgnoreCase("point")) {
-			LivingEntity entity = TEntity
-					.getTarget(event.getPlayer(), distance);
-			if (entity instanceof Player)
-				player = (Player) entity;
-		} else
-			player = (Player) event.getPlayer();
+			if (event.getEntity() instanceof Player)
+				player = (Player) event.getEntity();
+		} else if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
 	}
 
 	@Override
@@ -84,5 +76,13 @@ public class Power_Message extends Power implements PT_Damage, PT_RightClick,
 			player = event.getEntity().getKiller();
 		} else if (event.getEntity() instanceof Player)
 			player = (Player) event.getEntity();
+	}
+
+	@Override
+	public void run() {
+		if (player == null)
+			return;
+		message = Power_Condition.buildStr(message, player, false);
+		User.getUser(player).sendPluginMessage(message);
 	}
 }

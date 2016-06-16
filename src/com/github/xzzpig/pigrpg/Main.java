@@ -1,18 +1,16 @@
 package com.github.xzzpig.pigrpg;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.earth2me.essentials.Essentials;
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TUpdate;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TUpdate;
 import com.github.xzzpig.pigrpg.chat.ChatListener;
 import com.github.xzzpig.pigrpg.commands.Commands;
 import com.github.xzzpig.pigrpg.commands.Help;
@@ -32,6 +30,18 @@ import com.github.xzzpig.pigrpg.teleport.Warp;
 import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
 
 public class Main extends JavaPlugin {
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label,
+			String[] args) {
+		return Commands.command(sender, cmd, label, args);
+	}
+
+	// 插件停用函数
+	@Override
+	public void onDisable() {
+		getLogger().info(getName() + "插件已被停用 ");
+	}
+
 	@Override
 	public void onEnable() {
 		getLogger().info(getName() + getDescription().getVersion() + "插件已被加载");
@@ -100,16 +110,11 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new RPGListener(), this);
 	}
 
-	// 插件停用函数
 	@Override
-	public void onDisable() {
-		getLogger().info(getName() + "插件已被停用 ");
-	}
-
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
-		return Commands.command(sender, cmd, label, args);
+	public List<String> onTabComplete(CommandSender sender, Command command,
+			String alias, String[] args) {
+		return Help.PIGRPG.getTabComplete(getName(), sender, command, alias,
+				args);
 	}
 
 	private boolean setupEss() {
@@ -118,34 +123,5 @@ public class Main extends JavaPlugin {
 					"Essentials");
 		}
 		return (Vars.ess != null);
-	}
-	
-	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command,
-			String alias, String[] args) {
-		//Debuger.print(command.getName()+"|"+alias+"|"+Arrays.toString(args));
-		List<String> tab = new ArrayList<String>();
-		String cmd = command.getName();
-		for(String arg:args){
-			cmd = cmd +" " + arg;
-		}
-		if(cmd.endsWith(" "))
-			cmd = cmd.substring(0,cmd.length()-1);
-		for(CommandHelp help:CommandHelp.valueOf(Help.PIGRPG,cmd).getSubCommandHelps()){
-			tab.add(help.toStrings()[help.toStrings().length-1]);
-		}
-		List<String> tab2 = new ArrayList<String>();
-		for(String str:tab){
-			if(str.contains(args[args.length-1])){
-				tab2.add(str);
-			}
-		}
-		if(!tab2.isEmpty())
-			tab = tab2;
-		for(String str:tab)
-			CommandHelp.valueOf(Help.PIGRPG,cmd).getSubCommandHelp(str).getHelpMessage().send((Player)sender);
-		if(tab.isEmpty())
-			tab.add(CommandHelp.valueOf(Help.PIGRPG,cmd).getVar());
-		return tab;
 	}
 }

@@ -10,23 +10,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TMessage;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
+import com.github.xzzpig.pigapi.bukkit.TString;
 
 public class Friend {
 	public static HashMap<String, List<String>> friendlist = new HashMap<String, List<String>>();
 	public static HashMap<String, String> friendque = new HashMap<String, String>();
-
-	public static List<String> getFriends(String player) {
-		if (!friendlist.containsKey(player)) {
-			ArrayList<String> list = new ArrayList<String>();
-			friendlist.put(player, list);
-			return list;
-		}
-		return friendlist.get(player);
-	}
 
 	public static void addFriend(String player, String friend) {
 		Friend.getFriends(player).add(friend);
@@ -37,17 +28,6 @@ public class Friend {
 				TString.Prefix("PigRPG", 3) + "你成功添加好友" + friend);
 		TEntity.toPlayer(friend).sendMessage(
 				TString.Prefix("PigRPG", 3) + "你成功添加好友" + player);
-	}
-
-	public static void delFriend(String player, String friend) {
-		Friend.getFriends(player).remove(friend);
-		Friend.getFriends(friend).remove(player);
-		Friend.save(player);
-		Friend.save(friend);
-		TEntity.toPlayer(player).sendMessage(
-				TString.Prefix("PigRPG", 3) + "你成功删除好友" + friend);
-		TEntity.toPlayer(friend).sendMessage(
-				TString.Prefix("PigRPG", 3) + "你成功删除好友" + player);
 	}
 
 	public static void addFriendQue(Player player, final Player friend) {
@@ -79,6 +59,17 @@ public class Friend {
 		}).start();
 	}
 
+	public static void delFriend(String player, String friend) {
+		Friend.getFriends(player).remove(friend);
+		Friend.getFriends(friend).remove(player);
+		Friend.save(player);
+		Friend.save(friend);
+		TEntity.toPlayer(player).sendMessage(
+				TString.Prefix("PigRPG", 3) + "你成功删除好友" + friend);
+		TEntity.toPlayer(friend).sendMessage(
+				TString.Prefix("PigRPG", 3) + "你成功删除好友" + player);
+	}
+
 	@SuppressWarnings("deprecation")
 	public static void delFriendQue(Player player, String friend) {
 		if (!Bukkit.getOfflinePlayer(friend).isOnline()) {
@@ -88,8 +79,7 @@ public class Friend {
 		final Player pfriend = TEntity.toPlayer(friend);
 		pfriend.sendMessage(TString.Prefix("PigRPG", 5) + player.getName()
 				+ TString.Color(3) + "请求与你断绝好友关系");
-		new TMessage(
-				TString.Prefix("PigRPG", 3) + "输入/pr friend del ")
+		new TMessage(TString.Prefix("PigRPG", 3) + "输入/pr friend del ")
 				.then(ChatColor.GREEN.toString() + ChatColor.UNDERLINE
 						+ "accept")
 				.tooltip("同意\n/pr friend del accept")
@@ -115,6 +105,15 @@ public class Friend {
 		}).start();
 	}
 
+	public static List<String> getFriends(String player) {
+		if (!friendlist.containsKey(player)) {
+			ArrayList<String> list = new ArrayList<String>();
+			friendlist.put(player, list);
+			return list;
+		}
+		return friendlist.get(player);
+	}
+
 	public static boolean hasFriend(String player, String friend) {
 		if (getFriends(player).contains(friend))
 			return true;
@@ -122,8 +121,10 @@ public class Friend {
 			return false;
 	}
 
-	public static void save(String player) {
-		TConfig.saveConfig("PigRPG", "friend.yml", player, getFriends(player));
+	public static void loadFriend(String player) {
+		friendlist.put(player, TConfig.getConfigFile("PigRPG", "friend.yml")
+				.getStringList(player));
+		TString.Print(TString.Prefix("PigRPG") + player + "的好友列表已加载");
 	}
 
 	public static void save() {
@@ -136,9 +137,7 @@ public class Friend {
 		}
 	}
 
-	public static void loadFriend(String player) {
-		friendlist.put(player, TConfig.getConfigFile("PigRPG", "friend.yml")
-				.getStringList(player));
-		TString.Print(TString.Prefix("PigRPG") + player + "的好友列表已加载");
+	public static void save(String player) {
+		TConfig.saveConfig("PigRPG", "friend.yml", player, getFriends(player));
 	}
 }

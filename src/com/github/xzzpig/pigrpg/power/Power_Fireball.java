@@ -33,6 +33,17 @@ public class Power_Fireball extends Power implements PT_Damage, PT_RightClick {
 	}
 
 	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		launcher = event.getPlayer();
+	}
+
+	@Override
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		if (event.getDamager() instanceof Player)
+			launcher = (Player) event.getDamager();
+	}
+
+	@Override
 	public void run() {
 		if (launcher == null)
 			return;
@@ -44,16 +55,5 @@ public class Power_Fireball extends Power implements PT_Damage, PT_RightClick {
 			launcher.playSound(launcher.getLocation(), Sound.GHAST_FIREBALL,
 					1.0f, 1.0f);
 		}
-	}
-
-	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player)
-			launcher = (Player) event.getDamager();
-	}
-
-	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		launcher = event.getPlayer();
 	}
 }

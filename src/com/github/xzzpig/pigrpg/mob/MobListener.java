@@ -13,7 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-import com.github.xzzpig.BukkitTools.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
 import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 import com.github.xzzpig.pigrpg.rpgworld.RpgWorld;
 

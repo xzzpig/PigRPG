@@ -5,17 +5,13 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.earth2me.essentials.craftbukkit.SetExpFix;
-import com.github.xzzpig.BukkitTools.TCalculate;
-import com.github.xzzpig.BukkitTools.TEntity;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.TCalculate;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.mob.CustomMob;
 import com.github.xzzpig.pigrpg.rpgworld.RpgChunk;
 
 public class StringMatcher {
-	public static String solve(String ps) {
-		return ps.replaceAll("&", TString.s);
-	}
-
 	@SuppressWarnings("deprecation")
 	public static String buildStr(String str, LivingEntity entity, boolean isInt) {
 		State state = State.getFrom(entity);
@@ -49,7 +45,7 @@ public class StringMatcher {
 				.replaceAll("</pdefence/>", state.getPhysicDefence() + "")
 				.replaceAll("</mdefence/>", state.getMagicDefine() + "")
 				.replaceAll("</mp/>", state.getMp() + "")
-				.replaceAll("</lastdamage/>",state.getLastDamage()+"");
+				.replaceAll("</lastdamage/>", state.getLastDamage() + "");
 		if (entity instanceof Player) {
 			Player player = (Player) entity;
 			User user = User.getUser(player);
@@ -77,5 +73,9 @@ public class StringMatcher {
 			re = ((int) TCalculate.getResult(re)) + "";
 		re = solve(re);
 		return re;
+	}
+
+	public static String solve(String ps) {
+		return ps.replaceAll("&", TString.s);
 	}
 }

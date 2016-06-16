@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.github.xzzpig.BukkitTools.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigrpg.State;
 import com.github.xzzpig.pigrpg.equip.PowerLore;
 import com.github.xzzpig.pigrpg.power.type.PT_BeDamage;
@@ -49,14 +49,30 @@ public class Power_Potion extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void run() {
-		if (entity == null)
-			return;
-		if (type.equalsIgnoreCase("add")) {
-			if (rand.nextInt(100) <= chance)
-				new PotionEffect(potion, time, level).apply(entity);
-		} else
-			entity.removePotionEffect(potion);
+	public void rebuildEquip(InventoryCloseEvent event) {
+		if (target.equalsIgnoreCase("self"))
+			entity = event.getPlayer();
+		else
+			entity = TEntity.getTarget(event.getPlayer(), distance);
+		if (type.equalsIgnoreCase("add"))
+			State.getFrom(entity).potions.add(potion);
+	}
+
+	@Override
+	public void rebuildRC(PlayerInteractEvent event) {
+		if (target.equalsIgnoreCase("self"))
+			entity = event.getPlayer();
+		else
+			entity = TEntity.getTarget(event.getPlayer(), distance);
+	}
+
+	@Override
+	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
+		if (target.equalsIgnoreCase("target")) {
+			if (event.getDamager() instanceof LivingEntity)
+				entity = (LivingEntity) event.getDamager();
+		} else if (event.getEntity() instanceof LivingEntity)
+			entity = (LivingEntity) event.getEntity();
 	}
 
 	@Override
@@ -69,29 +85,13 @@ public class Power_Potion extends Power implements PT_Damage, PT_RightClick,
 	}
 
 	@Override
-	public void rebuildRC(PlayerInteractEvent event) {
-		if (target.equalsIgnoreCase("self"))
-			entity = event.getPlayer();
-		else
-			entity = TEntity.getTarget(event.getPlayer(), distance);
-	}
-
-	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
-		if (target.equalsIgnoreCase("self"))
-			entity = event.getPlayer();
-		else
-			entity = TEntity.getTarget(event.getPlayer(), distance);
-		if (type.equalsIgnoreCase("add"))
-			State.getFrom(entity).potions.add(potion);
-	}
-
-	@Override
-	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
-		if (target.equalsIgnoreCase("target")) {
-			if (event.getDamager() instanceof LivingEntity)
-				entity = (LivingEntity) event.getDamager();
-		} else if (event.getEntity() instanceof LivingEntity)
-			entity = (LivingEntity) event.getEntity();
+	public void run() {
+		if (entity == null)
+			return;
+		if (type.equalsIgnoreCase("add")) {
+			if (rand.nextInt(100) <= chance)
+				new PotionEffect(potion, time, level).apply(entity);
+		} else
+			entity.removePotionEffect(potion);
 	}
 }

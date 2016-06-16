@@ -15,6 +15,10 @@ import com.github.xzzpig.pigrpg.power.type.PT_RightClick;
 
 public class Power_Effect extends Power implements PT_RightClick, PT_Damage,
 		PT_Equip, PT_BeDamage {
+	public static void playEffect(Location loc, Effect effect, int i) {
+		loc.getWorld().playEffect(loc, effect, i);
+	}
+
 	Effect effect;
 
 	Location loc;
@@ -31,8 +35,8 @@ public class Power_Effect extends Power implements PT_RightClick, PT_Damage,
 	}
 
 	@Override
-	public void run() {
-		playEffect(loc, effect, 0);
+	public void rebuildEquip(InventoryCloseEvent event) {
+		loc = (Location) event.getPlayer();
 	}
 
 	@Override
@@ -41,21 +45,17 @@ public class Power_Effect extends Power implements PT_RightClick, PT_Damage,
 	}
 
 	@Override
-	public void rebulidDamage(EntityDamageByEntityEvent event) {
-		loc = event.getDamager().getLocation();
-	}
-
-	@Override
 	public void rebulidBeDamage(EntityDamageByEntityEvent event) {
 		loc = event.getEntity().getLocation();
 	}
 
 	@Override
-	public void rebuildEquip(InventoryCloseEvent event) {
-		loc = (Location) event.getPlayer();
+	public void rebulidDamage(EntityDamageByEntityEvent event) {
+		loc = event.getDamager().getLocation();
 	}
 
-	public static void playEffect(Location loc, Effect effect, int i) {
-		loc.getWorld().playEffect(loc, effect, i);
+	@Override
+	public void run() {
+		playEffect(loc, effect, 0);
 	}
 }

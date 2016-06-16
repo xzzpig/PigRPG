@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.xzzpig.BukkitTools.TConfig;
-import com.github.xzzpig.BukkitTools.TPremission;
-import com.github.xzzpig.BukkitTools.TString;
+import com.github.xzzpig.pigapi.bukkit.TConfig;
+import com.github.xzzpig.pigapi.bukkit.TPremission;
+import com.github.xzzpig.pigapi.bukkit.TString;
 
 public class EquipType {
 	private static HashMap<String, EquipType> typelist = new HashMap<String, EquipType>();
@@ -27,39 +27,14 @@ public class EquipType {
 	public static final EquipType Prefix = new EquipType("称号", 1,
 			Arrays.asList(new String[] { "prefix" }));
 
-	private String typename;
-	private boolean show = true;
-	private TPremission Inherit;
-	private int type = 1;
-	private String parent = "无";
-	public List<PowerLore> pls = new ArrayList<PowerLore>();
-
-	EquipType(String typename, int typeid, List<String> spls) {
-		build(typename, typeid, spls);
-	}
-
-	EquipType(String typename, boolean show, int typeid, List<String> spls) {
-		build(typename, typeid, spls);
-		this.show = show;
-	}
-
-	EquipType(String typename, boolean show, int typeid, String parent,
-			List<String> spls) {
-		build(typename, typeid, spls);
-		this.show = show;
-		this.parent = parent;
-	}
-
 	public static EquipType getFrom(String typename) {
 		if (typelist.containsKey(typename))
 			return typelist.get(typename);
 		return null;
 	}
-
 	public static boolean hasType(String typename) {
 		return typelist.containsKey(typename);
 	}
-
 	public static void load() {
 		FileConfiguration config = TConfig.getConfigFile("PigRPG",
 				"equiptype.yml");
@@ -87,26 +62,6 @@ public class EquipType {
 		EquipType.resetParents();
 		EquipType.saveAll();
 	}
-
-	public static void saveAll() {
-		for (EquipType et : EquipType.values())
-			et.save();
-	}
-
-	public static EquipType[] values() {
-		return typelist.values().toArray(new EquipType[0]);
-	}
-
-	private void build(String typename, int typeid, List<String> spls) {
-		this.typename = typename;
-		this.type = typeid;
-		typelist.put(typename, this);
-		this.Inherit = new TPremission(typename, null);
-		if (spls != null)
-			for (String name : spls)
-				pls.add(PowerLore.getFromName(name));
-	}
-
 	private static void resetParents() {
 		for (EquipType et : EquipType.values()) {
 			if (et.parent.equalsIgnoreCase("无"))
@@ -121,6 +76,51 @@ public class EquipType {
 			tparent.addChild(TPremission.valueOf(et.toString()));
 		}
 	}
+	public static void saveAll() {
+		for (EquipType et : EquipType.values())
+			et.save();
+	}
+	public static EquipType[] values() {
+		return typelist.values().toArray(new EquipType[0]);
+	}
+
+	private String typename;
+
+	private boolean show = true;
+
+	private TPremission Inherit;
+
+	private int type = 1;
+
+	private String parent = "无";
+
+	public List<PowerLore> pls = new ArrayList<PowerLore>();
+
+	EquipType(String typename, boolean show, int typeid, List<String> spls) {
+		build(typename, typeid, spls);
+		this.show = show;
+	}
+
+	EquipType(String typename, boolean show, int typeid, String parent,
+			List<String> spls) {
+		build(typename, typeid, spls);
+		this.show = show;
+		this.parent = parent;
+	}
+
+	EquipType(String typename, int typeid, List<String> spls) {
+		build(typename, typeid, spls);
+	}
+
+	private void build(String typename, int typeid, List<String> spls) {
+		this.typename = typename;
+		this.type = typeid;
+		typelist.put(typename, this);
+		this.Inherit = new TPremission(typename, null);
+		if (spls != null)
+			for (String name : spls)
+				pls.add(PowerLore.getFromName(name));
+	}
 
 	public EquipType getFinalParent() {
 		EquipType type = this;
@@ -134,17 +134,12 @@ public class EquipType {
 		return Inherit;
 	}
 
-	public boolean isShow() {
-		return show;
-	}
-
-	public EquipType setShow(boolean show) {
-		this.show = show;
-		return this;
-	}
-
 	public int getItemTypeId() {
 		return type;
+	}
+
+	public boolean isShow() {
+		return show;
 	}
 
 	public void save() {
@@ -158,6 +153,11 @@ public class EquipType {
 			spls.add(pl.name);
 		config.set("type." + typename + ".powerlore", spls);
 		TConfig.saveConfig("PigRPG", config, "equiptype.yml");
+	}
+
+	public EquipType setShow(boolean show) {
+		this.show = show;
+		return this;
 	}
 
 	@Override
