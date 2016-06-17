@@ -18,11 +18,51 @@ permissions:
     default: op
     children:
       pigrpg.command.*: true
+  pigrpg.rclist.*:
+    description: 右键系统的所有权限
+    default: op
+    children:
+      pigrpg.rclist.open.*: true
+  pigrpg.rclist.open.*:
+    description: 打开所有右键菜单的权限
+    default: op
+    children:
+      pigrpg.rclist.open.player: true
+      pigrpg.rclist.open.other: true
+  pigrpg.rclist.open.player:
+    description: 打开玩家右键菜单的权限
+    default: op
+  pigrpg.rclist.open.other:
+    description: 打开其他生物右键菜单的权限
+    default: op
+  pigrpg.friend.*:
+    description: 好友系统的所有权限
+    default: op
+    children:
+      pigrpg.command.friend.*: true
+      pigrpg.friend.addque: true
+      pigrpg.friend.delque: true
+  pigrpg.friend.addque:
+    description: 添加好友的权限
+    default: op
+  pigrpg.friend.delque:
+    description: 删除好友的权限
+    default: op
+  pigrpg.trade.*:
+    description: 好友系统的所有权限
+    default: op
+    children:
+      pigrpg.command.trade: true
+      pigrpg.trade.que: true
+  pigrpg.trade.que:
+    description: 申请的权限
+    default: op
   pigrpg.command.*:
     description: PigRPG的所有命令权限
     default: op
     children:
       pigrpg.command.friend.*: true
+      pigrpg.command.trade: true
   pigrpg.command.friend.*:
     description: PigRPG的好友系统所有命令权限
     default: op
@@ -34,4 +74,7 @@ permissions:
     default: op
   pigrpg.command.friend.other:
     description: pr friend 其他子命令权限
+    default: op
+  pigrpg.command.trade:
+    description: PigRPG的交易系统所有命令权限(accept,deny)
     default: op

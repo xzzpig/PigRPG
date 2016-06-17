@@ -16,8 +16,8 @@ public class RCChest {
 		Inventory inv = Bukkit.createInventory(null, 9, TString.Color(5)
 				+ player.getName() + "的右键菜单");
 		User user = User.getUser(player);
-		//玩家信息
-		ItemStack iuserinfo = new ItemStack(Material.BOOK,1);
+		// 玩家信息
+		ItemStack iuserinfo = new ItemStack(Material.BOOK, 1);
 		ItemMeta imuserinfo = iuserinfo.getItemMeta();
 		imuserinfo.setDisplayName(TString.Color(3) + "玩家信息");
 		imuserinfo.setLore(user.getInfos());
@@ -26,6 +26,10 @@ public class RCChest {
 		if (Vars.enables.containsKey("Friend") && Vars.enables.get("Friend")) {
 			inv.addItem(ItemForChest.AddFriend(opener.getName(),
 					player.getName()));
+		}
+		if (Vars.enables.containsKey("Trade") && Vars.enables.get("Trade")
+				&& opener.hasPermission("pigrpg.trade.que")) {
+			inv.addItem(ItemForChest.tradeQue());
 		}
 		return inv;
 	}

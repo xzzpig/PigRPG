@@ -13,6 +13,7 @@ import com.github.xzzpig.pigrpg.command.Help;
 import com.github.xzzpig.pigrpg.command.PigCommand;
 import com.github.xzzpig.pigrpg.friend.FriendListener;
 import com.github.xzzpig.pigrpg.rclist.RCListListener;
+import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
 
 public class Main extends JavaPlugin {
 
@@ -54,6 +55,10 @@ public class Main extends JavaPlugin {
 		if (Vars.enables.containsKey("Friend") && Vars.enables.get("Friend")) {// 加载好友系统
 			this.getServer().getPluginManager()
 					.registerEvents(FriendListener.self, this);
+		}
+		if (Vars.enables.containsKey("Trade") && Vars.enables.get("Trade")) {// 加载交易系统
+			this.getServer().getPluginManager()
+					.registerEvents(PlayerTradeListener.self, this);
 		}
 	}
 	@Override

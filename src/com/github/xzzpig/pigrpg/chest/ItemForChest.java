@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
+import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigrpg.friend.Friend;
 
@@ -19,8 +20,11 @@ public class ItemForChest {
 		ItemMeta im = is.getItemMeta();
 		if (Friend.hasFriend(player, target))
 			im.setDisplayName(TString.Color(3) + "对方已是你的好友");
-		else
+		else if (TEntity.toPlayer(player).hasPermission("pigrpg.friend.addque"))
 			im.setDisplayName(TString.Color(3) + "添加好友");
+		else
+			im.setDisplayName(TString.Color(4) + "无权限添加好友");
+		;
 		List<String> lore = new ArrayList<String>();
 		im.setLore(lore);
 		is.setItemMeta(im);
@@ -99,16 +103,16 @@ public class ItemForChest {
 	// return is;
 	// }
 	//
-	// protected static ItemStack tradeQue() {
-	// @SuppressWarnings("deprecation")
-	// ItemStack is = new ItemStack(399);
-	// ItemMeta im = is.getItemMeta();
-	// im.setDisplayName(TString.Color(3) + "申请交易");
-	// List<String> lore = new ArrayList<String>();
-	// im.setLore(lore);
-	// is.setItemMeta(im);
-	// return is;
-	// }
+	protected static ItemStack tradeQue() {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(399);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3) + "申请交易");
+		List<String> lore = new ArrayList<String>();
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
 	//
 	// protected static ItemStack warpInfo(Warp warp) {
 	// @SuppressWarnings("deprecation")

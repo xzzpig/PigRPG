@@ -3,6 +3,7 @@ pigrpg:
   enable:
     RCList: true
     Friend: true
+    Trade: true
   rclist: 
     cancel: true
   playerinfo:
