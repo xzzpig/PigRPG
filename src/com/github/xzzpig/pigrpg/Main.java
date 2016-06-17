@@ -3,16 +3,19 @@ package com.github.xzzpig.pigrpg;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.earth2me.essentials.Essentials;
 import com.github.xzzpig.pigapi.PigData;
 import com.github.xzzpig.pigapi.bukkit.TConfig;
 import com.github.xzzpig.pigrpg.command.Help;
 import com.github.xzzpig.pigrpg.command.PigCommand;
 import com.github.xzzpig.pigrpg.friend.FriendListener;
 import com.github.xzzpig.pigrpg.rclist.RCListListener;
+import com.github.xzzpig.pigrpg.sale.SaleListener;
 import com.github.xzzpig.pigrpg.trade.PlayerTradeListener;
 
 public class Main extends JavaPlugin {
@@ -33,13 +36,16 @@ public class Main extends JavaPlugin {
 		self = this;
 		getLogger().info(getName() + getDescription().getVersion() + "插件已被加载");
 		saveDefaultConfig();// 初始化
+		if (Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials")) {//加载ESS
+			Vars.ess = (Essentials) Bukkit.getPluginManager().getPlugin(
+					"Essentials");
+		}
 		Vars.config = TConfig.getConfigFile("PigRPG", "config.yml");// 加载配置
 		Vars.debuger = Vars.config.getBoolean("pigrpg.debuger",false);
 		Vars.pdata = new PigData();
 		Vars.playerinfotype = Vars.config.getString("pigrpg.playerinfo.type");
 		Vars.playerinfo = Vars.config.getStringList("pigrpg.playerinfo.custom");
 		Vars.enables = new HashMap<String, Boolean>();
-
 		for (String key : Vars.config.getConfigurationSection("pigrpg.enable")
 				.getKeys(false))
 			Vars.enables.put(key,
@@ -59,6 +65,10 @@ public class Main extends JavaPlugin {
 		if (Vars.enables.containsKey("Trade") && Vars.enables.get("Trade")) {// 加载交易系统
 			this.getServer().getPluginManager()
 					.registerEvents(PlayerTradeListener.self, this);
+		}
+		if (Vars.enables.containsKey("Sale") && Vars.enables.get("Sale")) {// 加载拍卖系统
+			this.getServer().getPluginManager()
+					.registerEvents(SaleListener.self, this);
 		}
 	}
 	@Override

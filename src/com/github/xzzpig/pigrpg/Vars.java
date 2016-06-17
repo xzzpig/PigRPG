@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.earth2me.essentials.Essentials;
 import com.github.xzzpig.pigapi.PigData;
 
 public class Vars {
@@ -21,4 +22,6 @@ public class Vars {
 	public static List<String> playerinfo;
 
 	public static boolean debuger;
+
+	public static Essentials ess;
 }

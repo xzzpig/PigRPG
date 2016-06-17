@@ -4,6 +4,7 @@ pigrpg:
     RCList: true
     Friend: true
     Trade: true
+    Sale: true
   rclist: 
     cancel: true
   playerinfo:

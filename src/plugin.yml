@@ -49,13 +49,22 @@ permissions:
     description: 删除好友的权限
     default: op
   pigrpg.trade.*:
-    description: 好友系统的所有权限
+    description: 交易系统的所有权限
     default: op
     children:
       pigrpg.command.trade: true
       pigrpg.trade.que: true
   pigrpg.trade.que:
-    description: 申请的权限
+    description: 申请交易的权限
+    default: op
+  pigrpg.sale.*:
+    description: 拍卖系统的所有权限
+    default: op
+    children:
+      pigrpg.command.sale.*: true
+      pigrpg.sale.buy: true
+  pigrpg.sale.buy:
+    description: 从拍卖行购买的权限
     default: op
   pigrpg.command.*:
     description: PigRPG的所有命令权限
@@ -77,4 +86,16 @@ permissions:
     default: op
   pigrpg.command.trade:
     description: PigRPG的交易系统所有命令权限(accept,deny)
+    default: op
+  pigrpg.command.sale.*:
+    description: PigRPG的拍卖系统所有命令权限
+    default: op
+    children:
+      pigrpg.command.sale.list: true
+      pigrpg.command.sale.sell: true
+  pigrpg.command.sale.list:
+    description: pr sale list命令权限
+    default: op
+  pigrpg.command.sale.sell:
+    description: pr sale sell命令权限
     default: op

@@ -14,7 +14,7 @@ import com.github.xzzpig.pigrpg.trade.PlayerTrade;
 public class PigCommand_PlayerTrade {
 	public static boolean onCommand(CommandSender sender, Command cmd,
 			String label, String[] args) {
-		String arg1="help";
+		String arg1 = "help";
 		try {
 			arg1 = args[1];
 		} catch (Exception e) {
@@ -22,7 +22,7 @@ public class PigCommand_PlayerTrade {
 		if (arg1.equalsIgnoreCase("help")) {
 			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg trade").getSubCommandHelps())
-				ch.getHelpMessage("PigRPG").send((Player) sender);
+				ch.getHelpMessage("PigRPG").send(sender);
 			return true;
 		}
 		if (!(Vars.enables.containsKey("Trade") && Vars.enables.get("Trade"))) {// 好友系统未启用

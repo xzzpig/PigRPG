@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.github.xzzpig.pigapi.Debuger;
 import com.github.xzzpig.pigapi.PigData;
 import com.github.xzzpig.pigapi.bukkit.TEntity;
+import com.github.xzzpig.pigapi.bukkit.TMessage;
 import com.github.xzzpig.pigapi.bukkit.TString;
 import com.github.xzzpig.pigapi.bukkit.TStringMatcher;
 
@@ -50,12 +51,14 @@ public class User {
 	}
 
 	public static void removeOffline(){
+		List<User> removelist = new ArrayList<User>();
 		for (User user : users) {
 			if(!user.player.isOnline()){
 				Debuger.print(user.player.getName()+"已移除");				
-				users.remove(user);//移除User
+				removelist.add(user);//移除User
 			}
 		}
+		users.removeAll(removelist);
 	}
 
 	public static void saveAllData(){
@@ -68,6 +71,7 @@ public class User {
 	private File dataFile;
 	private PigData data = new PigData();
 	private String name;
+	private Eco eco;
 
 	private User(Player player) {
 		if(player==null)
@@ -76,6 +80,7 @@ public class User {
 		this.player = player;
 		this.name = player.getName();
 		dataFile = new File(dataDir,player.getName()+".pigdata");
+		this.eco = new Eco(this);
 		try {
 			dataFile.createNewFile();
 			data = new PigData(dataFile);
@@ -139,5 +144,15 @@ public class User {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void sendPluginMessage(String message) {
+		for (String mes : (TString.Prefix("PigRPG", 3) + message.replaceAll(
+				"&", "§")).split("\n"))
+			TMessage.getBy(mes, true).send(player);
+	}
+
+	public Eco getEcoAPI() {
+		return this.eco;
 	}
 }
