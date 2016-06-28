@@ -11,7 +11,10 @@ import org.bukkit.material.MaterialData;
 
 import com.github.xzzpig.pigapi.bukkit.TEntity;
 import com.github.xzzpig.pigapi.bukkit.TString;
+import com.github.xzzpig.pigapi.bukkit.TStringMatcher;
+import com.github.xzzpig.pigrpg.User;
 import com.github.xzzpig.pigrpg.friend.Friend;
+import com.github.xzzpig.pigrpg.teleport.Warp;
 
 public class ItemForChest {
 	protected static ItemStack AddFriend(String player, String target) {
@@ -71,6 +74,19 @@ public class ItemForChest {
 		return is;
 	}
 
+	protected static ItemStack friendTel(User target) {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(368);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3) + "传送");
+		List<String> lore = new ArrayList<String>();
+		lore.add(TString.Color(7) + "所在位置:"
+				+ TStringMatcher.buildStr("</world/>(</x/>,</y/>,</z/>)", target.getPlayer(),false));
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
+
 	// protected static ItemStack teamAsk(Player player, Player opener) {
 	// @SuppressWarnings("deprecation")
 	// ItemStack is = new ItemStack(1);
@@ -113,17 +129,17 @@ public class ItemForChest {
 		is.setItemMeta(im);
 		return is;
 	}
-	//
-	// protected static ItemStack warpInfo(Warp warp) {
-	// @SuppressWarnings("deprecation")
-	// ItemStack is = new ItemStack(368);
-	// ItemMeta im = is.getItemMeta();
-	// im.setDisplayName(TString.Color(3) + warp.getName());
-	// List<String> lore = new ArrayList<String>();
-	// lore.add(TString.Color(7) + "所在世界:"
-	// + warp.getLocation().getWorld().getName());
-	// im.setLore(lore);
-	// is.setItemMeta(im);
-	// return is;
-	// }
+
+	protected static ItemStack warpInfo(Warp warp) {
+		@SuppressWarnings("deprecation")
+		ItemStack is = new ItemStack(368);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(TString.Color(3) + warp.getName());
+		List<String> lore = new ArrayList<String>();
+		lore.add(TString.Color(7) + "所在世界:"
+				+ warp.getLocation().getWorld().getName());
+		im.setLore(lore);
+		is.setItemMeta(im);
+		return is;
+	}
 }

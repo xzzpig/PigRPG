@@ -19,23 +19,6 @@ public class RCListListener implements Listener {
 	public static final RCListListener self = new RCListListener();
 
 	@EventHandler
-	public void onClickPlayer(PlayerInteractEntityEvent event) {// 右键玩家打开右键菜单
-		if (!(event.getRightClicked() instanceof Player))// 非玩家返回
-			return;
-		Player player = event.getPlayer(), target = (Player) event
-				.getRightClicked();
-		if (!player.isSneaking())// 玩家未潜行
-			return;
-		if (!player.hasPermission("pigrpg.rclist.open.player")) {
-			player.sendMessage(ChatColor.GOLD + "[PigRPG]" + ChatColor.RED
-					+ "你沒有权限打开玩家右键菜单");
-		}
-		player.openInventory(RCChest.getInventory(target, player));
-		if (Vars.pdata.getBoolean("config.relist.canel"))
-			event.setCancelled(true);
-	}
-
-	@EventHandler
 	public void onChestClick(InventoryClickEvent event) {
 		if (event.getInventory().getTitle().contains("的右键菜单"))
 			event.setCancelled(true);
@@ -60,5 +43,22 @@ public class RCListListener implements Listener {
 			// new TeamQue(clicker, target);
 			event.getWhoClicked().closeInventory();
 		}
+	}
+
+	@EventHandler
+	public void onClickPlayer(PlayerInteractEntityEvent event) {// 右键玩家打开右键菜单
+		if (!(event.getRightClicked() instanceof Player))// 非玩家返回
+			return;
+		Player player = event.getPlayer(), target = (Player) event
+				.getRightClicked();
+		if (!player.isSneaking())// 玩家未潜行
+			return;
+		if (!player.hasPermission("pigrpg.rclist.open.player")) {
+			player.sendMessage(ChatColor.GOLD + "[PigRPG]" + ChatColor.RED
+					+ "你沒有权限打开玩家右键菜单");
+		}
+		player.openInventory(RCChest.getInventory(target, player));
+		if (Vars.pdata.getBoolean("config.relist.canel"))
+			event.setCancelled(true);
 	}
 }

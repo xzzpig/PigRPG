@@ -35,6 +35,12 @@ public class PigCommand {
 		else if (arg0.equalsIgnoreCase("sale")) {
 			return PigCommand_Sale.onCommand(sender, command, label, args);
 		}
+		else if (arg0.equalsIgnoreCase("tel")) {
+			return PigCommand_Teleport.onCommand(sender, command, label, args);
+		}
+		else if (arg0.equalsIgnoreCase("score")) {
+			return PigCommand_Score.onCommand(sender, command, label, args);
+		}
 		else if (arg0.equalsIgnoreCase("test")) {
 			System.err.println("\n"+User.getUser((Player) sender).getData().getPrintString());
 		}

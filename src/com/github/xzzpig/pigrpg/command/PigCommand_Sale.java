@@ -19,6 +19,13 @@ import com.github.xzzpig.pigrpg.chest.SaleChest;
 import com.github.xzzpig.pigrpg.sale.Sale;
 
 public class PigCommand_Sale {
+	public static String getarg(String[] args, int num) {
+		if (args.length <= num) {
+			return "";
+		}
+		return args[num];
+	}
+
 	public static boolean onCommand(CommandSender sender, Command cmd,
 			String label, String[] args) {
 		String arg1 = "help";
@@ -26,7 +33,7 @@ public class PigCommand_Sale {
 			arg1 = args[1];
 		} catch (Exception e) {
 		}
-		if (getarg(args, 1).equalsIgnoreCase("help")) {
+		if (arg1.equalsIgnoreCase("help")) {
 			for (TCommandHelp ch : TCommandHelp.valueOf(Help.PIGRPG,
 					"pigrpg sale").getSubCommandHelps())
 				ch.getHelpMessage("PigRPG").send(sender);
@@ -104,12 +111,5 @@ public class PigCommand_Sale {
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr sale help").tooltip("").send(sender);
 		return true;
-	}
-
-	public static String getarg(String[] args, int num) {
-		if (args.length <= num) {
-			return "";
-		}
-		return args[num];
 	}
 }

@@ -5,7 +5,9 @@ pigrpg:
     Friend: true
     Trade: true
     Sale: true
-  rclist: 
+    Teleport: true
+    Score: true
+  rclist:
     cancel: true
   playerinfo:
     type: auto
@@ -15,3 +17,21 @@ pigrpg:
     - 等级:</level/>
     - OP:</op/>
     - 允许飞行:</fly/>
+  teleport:
+    warp:
+      enable: true
+    friend:
+      enable: true
+      overworld: true
+      allworld: true
+      enableworld:
+      - world
+    cooldown: 5000
+  score:
+    autofresh: true
+    freshtime: 1000
+    head: §6§l[PigRPG]
+    scores:
+    - '&4&lHP:</currenthealth/>/</maxhealth/>'
+    - '&3Level:</level/>'
+    - '&3EXP:</exp/>'

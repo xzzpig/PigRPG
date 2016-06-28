@@ -12,6 +12,13 @@ import com.github.xzzpig.pigrpg.Vars;
 import com.github.xzzpig.pigrpg.trade.PlayerTrade;
 
 public class PigCommand_PlayerTrade {
+	public static String getarg(String[] args, int num) {
+		if (args.length <= num) {
+			return "";
+		}
+		return args[num];
+	}
+
 	public static boolean onCommand(CommandSender sender, Command cmd,
 			String label, String[] args) {
 		String arg1 = "help";
@@ -68,12 +75,5 @@ public class PigCommand_PlayerTrade {
 				.then(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "获取帮助")
 				.suggest("/pr trade help").tooltip("").send((Player) sender);
 		return true;
-	}
-
-	public static String getarg(String[] args, int num) {
-		if (args.length <= num) {
-			return "";
-		}
-		return args[num];
 	}
 }

@@ -66,6 +66,18 @@ permissions:
   pigrpg.sale.buy:
     description: 从拍卖行购买的权限
     default: op
+  pigrpg.teleport.*:
+    description: 传送系统的所有权限
+    default: op
+    children:
+      pigrpg.command.teleport.*: true
+      pigrpg.teleport.warp.*: true
+  pigrpg.teleport.warp.*:
+    description: 传送所有的warp
+    default: op
+  pigrpg.teleport.friend:
+    description: 好友传送
+    default: op
   pigrpg.command.*:
     description: PigRPG的所有命令权限
     default: op
@@ -99,3 +111,28 @@ permissions:
   pigrpg.command.sale.sell:
     description: pr sale sell命令权限
     default: op
+  pigrpg.command.teleport.*:
+    description: PigRPG的传送系统所有命令权限
+    default: op
+    children:
+      pigrpg.command.teleport.list: true
+      pigrpg.command.teleport.setwarp: true
+  pigrpg.command.teleport.list:
+    description: pr tel list命令权限
+    default: op
+  pigrpg.command.teleport.setwarp:
+    description: pr tel setwarp命令权限
+    default: op
+  pigrpg.command.score.*:
+    description: PigRPG的计分板系统所有命令权限
+    default: op
+    children:
+      pigrpg.command.score.show.other: true
+  pigrpg.command.score.show.self:
+    description: 设置是否开启自己计分板命令权限
+    default: op
+  pigrpg.command.score.show.other:
+    description: 设置是否开启他人计分板命令权限
+    default: op
+    children:
+      pigrpg.command.score.show.self: true
